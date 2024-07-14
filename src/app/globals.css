@@ -1,33 +1,291 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import 'material-icons/iconfont/material-icons.css';
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer tailwind-base, primereact, tailwind-utilities;
+
+/* IMPORTANT: In "styled" mode you must add the PrimeReact Theme here. Do NOT include in "unstyled" mode */
+@import 'primereact/resources/themes/lara-light-blue/theme.css' layer(primereact);
+
+@layer tailwind-base {
+  @tailwind base;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+
+
+body *{
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+
+.slide-door-enter-active,
+.slide-door-leave-active {
+  transition: all 0.2s ease-out;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -ms-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+}
+
+/* Geser dari kanan ke kiri saat masuk */
+.slide-door-enter-from {
+  transform: translateX(5%);
+  /*Mulaidiluarlayardisebelahkanan*/opacity: 0;
+  -webkit-transform: translateX(5%);
+  -moz-transform: translateX(5%);
+  -ms-transform: translateX(5%);
+  -o-transform: translateX(5%);
+}
+
+/* Geser dari kiri ke kanan saat keluar */
+.slide-door-leave-to {
+  transform: translateX(5%);
+  /*Geserkeluarlayarkekiri*/opacity: 0;
+  -webkit-transform: translateX(5%);
+  -moz-transform: translateX(5%);
+  -ms-transform: translateX(5%);
+  -o-transform: translateX(5%);
+}
+
+.expand-enter-active,
+.expand-leave-active {
+  transition: max-height .5s ease;
+  max-height: 400px;
+}
+
+.wipe-up-enter-active, .wipe-up-leave-active {
+  transition: transform 0.5s ease; /* Ubah properti dan durasi sesuai kebutuhan */
+}
+.wipe-up-enter, .wipe-up-leave-to {
+  transform: translateY(0); /* Sesuaikan nilai transform dengan animasi yang diinginkan */
+}
+.wipe-up-enter-to, .wipe-up-leave {
+  transform: translateY(-100%); /* Sesuaikan nilai transform dengan animasi yang diinginkan */
+}
+
+.pop-enter-active,
+.pop-leave-active {
+  transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+}
+
+.pop-enter,
+.pop-leave-to {
+  opacity: 0;
+  transform: scale(0.3) translateY(-50%);
+}
+
+.masuk-enter-active{
+  transition: opacity 0.5s ease;
+}
+
+.masuk-leave-active {
+  transition: opacity 0.5s ease;
+  -webkit-transition: opacity 0.5s ease;
+  -moz-transition: opacity 0.5s ease;
+  -ms-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+}
+
+.masuk-enter-from,
+.masuk-leave-to {
+  opacity: 0;
+}
+
+.slide-top-enter-active,
+.slide-top-leave-active {
+    transition-property: transform;
+    transition-duration: 0.6s;
+    transition-timing-function: ease;
+}
+
+.slide-top-enter-from {
+    transform: translate3d(0%, 100%, 0);
+    -webkit-transform: translate3d(0%, 100%, 0);
+    -moz-transform: translate3d(0%, 100%, 0);
+    -ms-transform: translate3d(0%, 100%, 0);
+    -o-transform: translate3d(0%, 100%, 0);
+}
+.slide-top-leave-to {
+  transform: translate3d(0%, 100%, 0);
+  -webkit-transform: translate3d(0%, 100%, 0);
+  -moz-transform: translate3d(0%, 100%, 0);
+  -ms-transform: translate3d(0%, 100%, 0);
+  -o-transform: translate3d(0%, 100%, 0);
+}
+
+.slide-top-leave-from {
+    transform: translate3d(0%, 0%, 0);
+    -webkit-transform: translate3d(0%, 0%, 0);
+    -moz-transform: translate3d(0%, 0%, 0);
+    -ms-transform: translate3d(0%, 0%, 0);
+    -o-transform: translate3d(0%, 0%, 0);
+}
+
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+    transition-property: transform;
+    transition-duration: 0.6s;
+    transition-timing-function: ease-in-out;
+}
+
+.slide-right-enter-from {
+    transform: translate3d(100%, 0%, 0);
+    -webkit-transform: translate3d(100%, 0%, 0);
+    -moz-transform: translate3d(100%, 0%, 0);
+    -ms-transform: translate3d(100%, 0%, 0);
+    -o-transform: translate3d(100%, 0%, 0);
+}
+
+.slide-right-leave-from {
+    transform: translate3d(0%, 0%, 0);
+    -webkit-transform: translate3d(0%, 0%, 0);
+    -moz-transform: translate3d(0%, 0%, 0);
+    -ms-transform: translate3d(0%, 0%, 0);
+    -o-transform: translate3d(0%, 0%, 0);
+}
+
+.slide-right-leave-to {
+    transform: translate3d(100%, 0%, 0);
+    -webkit-transform: translate3d(100%, 0%, 0);
+    -moz-transform: translate3d(100%, 0%, 0);
+    -ms-transform: translate3d(100%, 0%, 0);
+    -o-transform: translate3d(100%, 0%, 0);
+}
+
+
+.slide-kanan-enter-active,
+.slide-kanan-leave-active {
+    transition-property: transform;
+    transition-duration: 0.6s;
+    transition-timing-function: ease;
+}
+
+.slide-kanan-enter-from {
+    transform: translate3d(100%, 0%, 0);
+}
+
+.slide-kanan-leave-to,
+.slide-kanan-leave-from {
+    transform: translate3d(0%, 0%, 0);
+}
+
+.slide-kanan-leave-to {
+    transform: translate3d(-100%, 0%, 0);
+}
+
+
+.slide-bawah-enter-active,
+.slide-bawah-leave-active {
+    transition-property: transform;
+    transition-duration: 0.6s;
+    transition-timing-function: ease;
+}
+
+.slide-bawah-enter-from {
+    transform: translate3d(0%, -100%, 0); /* Ubah nilai Y ke -100% untuk slide down */
+}
+
+.slide-bawah-leave-to,
+.slide-bawah-leave-from {
+    transform: translate3d(0%, 0%, 0);
+}
+
+.slide-bawah-leave-to {
+    transform: translate3d(0%, 100%, 0); /* Ubah nilai Y ke 100% untuk slide down */
+}
+
+.typing-indicator {
+  width: 60px;
+  height: 30px;
+  position: relative;
+  z-index: 4;
+}
+
+.typing-circle {
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  border-radius: 50%;
+  background-color: #000;
+  left: 15%;
+  transform-origin: 50%;
+  animation: typing-circle7124 0.5s alternate infinite ease;
+}
+
+@keyframes typing-circle7124 {
+  0% {
+    top: 20px;
+    height: 5px;
+    border-radius: 50px 50px 25px 25px;
+    transform: scaleX(1.7);
+  }
+
+  40% {
+    height: 8px;
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+
+  100% {
+    top: 0%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.typing-circle:nth-child(2) {
+  left: 45%;
+  animation-delay: 0.2s;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.typing-circle:nth-child(3) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
+}
+
+.typing-shadow {
+  width: 5px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 30px;
+  transform-origin: 50%;
+  z-index: 3;
+  left: 15%;
+  filter: blur(1px);
+  animation: typing-shadow046 0.5s alternate infinite ease;
+}
+
+@keyframes typing-shadow046 {
+  0% {
+    transform: scaleX(1.5);
   }
+
+  40% {
+    transform: scaleX(1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scaleX(0.2);
+    opacity: 0.4;
+  }
+}
+
+.typing-shadow:nth-child(4) {
+  left: 45%;
+  animation-delay: 0.2s;
+}
+
+.typing-shadow:nth-child(5) {
+  left: auto;
+  right: 15%;
+  animation-delay: 0.3s;
 }
