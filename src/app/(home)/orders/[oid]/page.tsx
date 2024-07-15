@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { useEffect } from "react";
+import FileUpload from "@/components/input/FileUpload";
 import { OrderDetailViewModel } from "@/viewmodel/OrderDetail.vm";
 
 export default function Page() {
@@ -51,8 +52,16 @@ export default function Page() {
                         <span className="text-neutral-40">{vm.data.data.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
                 </div>
+               {vm.data.data.payment.value === 'cash' && 
+                    <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
+                        <span className="text-center font-medium text-neutral-40">Silahkan Menuju ke Kasir untuk melakukan proses pembayaran</span>
+                    </div>
+                }
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
-                    <span className="text-center font-medium text-neutral-40">Silahkan Menuju ke Kasir untuk melakukan proses pembayaran</span>
+                        <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>
+                       <FileUpload
+                       onFileSelect={vm.handleFileSelect}
+                       />
                 </div>
             </div>
         );

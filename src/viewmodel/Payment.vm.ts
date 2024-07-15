@@ -13,7 +13,7 @@ import {parseCookies} from 'nookies'
 const http = new HttpClient()
 export const PaymentViewModel = () => {
     const payemntData = paymentMethods
-    const order = JSON.parse(localStorage.getItem('order') || '')
+    const order = localStorage.getItem('order') ? JSON.parse(localStorage.getItem('order') || '') : undefined
     const guested = localStorage.getItem('guest') || '' 
     const cookies = parseCookies()
 
@@ -24,7 +24,7 @@ export const PaymentViewModel = () => {
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [table, setTable] = useState(JSON.parse(localStorage.getItem('table') || ''));
+    const [table, setTable] = useState(localStorage.getItem('table') ? JSON.parse(localStorage.getItem('table') || '') : undefined);
     const [address, setAddress] = useState('');
     const [mode, setMode] = useState('dine-in');
     const [disabled, setDisabled] = useState(false);
@@ -50,6 +50,9 @@ export const PaymentViewModel = () => {
                 }))
             })
             const newData = new DomainOrder(data.data)
+            localStorage.removeItem('order')
+            localStorage.removeItem('table')
+            localStorage.removeItem('orderSummary')
             router.push(`/orders/${newData.uuid}`)
         } catch (error) {
             console.log(error)

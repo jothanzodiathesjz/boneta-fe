@@ -25,6 +25,14 @@ export function deleteCookie(name: string, path?: string, domain?: string) {
     }
 }
 
+
+export function parseCookie(cookie: string) {
+    const jsonString = decodeURIComponent(cookie);
+    const dataObject = JSON.parse(jsonString);
+    return dataObject;
+}
+
+
 // Contoh penggunaan:
 // const myCookie = getCookie('cookieName');
 // console.log(myCookie); // Mencetak nilai cookie 'cookieName'

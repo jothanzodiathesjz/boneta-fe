@@ -11,6 +11,7 @@ type SidebarProps = {
 const Sidebar: React.FC<SidebarProps> = ({toogle, isOpen}) => {
     const sidebarRef = useRef<HTMLDivElement>(null);
     const router = useRouter()
+    const ref = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = React.useState(false);
     const handleClickOutside = (event: MouseEvent) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
@@ -18,15 +19,39 @@ const Sidebar: React.FC<SidebarProps> = ({toogle, isOpen}) => {
       }
     };
 
+    const token = getCookie('accessToken')
+    const user = getCookie('user')
+    const jsonString =  user ? decodeURIComponent(user) : '';
+    const dataObject = jsonString && JSON.parse(jsonString);
+
     const hanldeLogout = () => {
-        deleteCookie('accessToken')
+         deleteCookie('accessToken')
         deleteCookie('user')
         router.push('/')
+        toogle(false)
     }
   
     useEffect(() => {
       setVisible(isOpen);
-    }, [isOpen]);
+      console.log(dataObject)
+    }, [isOpen,hanldeLogout]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (ref.current && !ref.current.contains(event.target as Node)) {
+            toogle(false);
+          }
+        };
+    
+        // Menambahkan event listener untuk mendeteksi klik di luar elemen
+        document.addEventListener('mousedown', handleClickOutside);
+    
+        return () => {
+          // Membersihkan event listener saat komponen dibongkar
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, [toogle]);
+    
   
     return (
         <PSidebar
@@ -57,7 +82,8 @@ const Sidebar: React.FC<SidebarProps> = ({toogle, isOpen}) => {
         <div
         className="w-full flex justify-center">
             <div className="md:w-[500px] w-full pl-20">
-             <div 
+             <div
+            ref={ref}
             className=" flex flex-col h-screen bg-white rounded-s-md p-3 layout-border gap-2">
                 <div className="w-full flex justify-end">
                     <button
@@ -68,27 +94,32 @@ const Sidebar: React.FC<SidebarProps> = ({toogle, isOpen}) => {
                 </div>
                 <div className="flex flex-col justify-center items-center py-3 border-b-2 gap-2 border-neutral-300">
                     <span className="material-icons text-neutral-500 text-5xl">account_circle</span>
-                    <span className="text-neutral-700 font-bold">Login | Username</span>
+                    <span className="text-neutral-700 font-semibold">{dataObject ? (dataObject.profile.firstName + ' ' + dataObject.profile.lastName) : 'Guest'}</span>
                 </div>
                 <div className="flex flex-col justify-center items-center py-3  gap-2">
                     <button 
                      onClick={() => router.push('/orders')}
                     className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
                         <span className="material-icons  text-neutral-500">list_alt</span>
-                        <span className="text-neutral-500 font-bold">Orders</span>
+                        <span className="text-neutral-500 font-semibold">Orders</span>
                     </button>
                     <button 
-                   
                     className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
                         <span className="material-icons  text-neutral-500">manage_accounts</span>
-                        <span className="text-neutral-500 font-bold">Account Settings</span>
+                        <span className="text-neutral-500 font-semibold">Account Settings</span>
                     </button>
-                    <button 
-                    onClick={hanldeLogout}
+                    {token && <button 
+                    onClick={()=>hanldeLogout()}
                     className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
                         <span className="material-icons text-neutral-500">logout</span>
                         <span className="text-neutral-500 font-bold">Logout</span>
-                    </button>
+                    </button>}
+                    {!token && <button 
+                    onClick={()=>router.push('/login')}
+                    className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
+                        <span className="material-icons text-neutral-500">login</span>
+                        <span className="text-neutral-500 font-semibold">Login</span>
+                    </button>}
                 </div>
             </div>
             </div>

@@ -10,6 +10,11 @@ export const OrderDetailViewModel = () => {
     const { oid } = useParams()
     const cookies = parseCookies()
     const guest = localStorage.getItem('guest') || ''
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const handleFileSelect = (file: File) => {
+        console.log('Selected file:', file);
+        setSelectedFile(file);
+      };
     const {data,isError,isLoading,error,mutate} = http.Send<DomainOrder>(`/api/order/${oid}`,undefined,{
         headers: {
             'Authorization': `Basic ${guest}`
@@ -18,7 +23,8 @@ export const OrderDetailViewModel = () => {
         // refreshInterval: 3000,
         revalidateOnMount: true
     })
-
+   
+    
 
     return {
         oid,
@@ -26,6 +32,9 @@ export const OrderDetailViewModel = () => {
         isError,
         isLoading,
         error,
-        mutate
+        mutate,
+        handleFileSelect,
+        selectedFile
+
     }
 }
