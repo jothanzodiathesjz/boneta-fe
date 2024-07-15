@@ -71,11 +71,14 @@ const Sidebar: React.FC<SidebarProps> = ({toogle, isOpen}) => {
                     <span className="text-neutral-700 font-bold">Login | Username</span>
                 </div>
                 <div className="flex flex-col justify-center items-center py-3  gap-2">
-                    <button className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
+                    <button 
+                     onClick={() => router.push('/orders')}
+                    className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
                         <span className="material-icons  text-neutral-500">list_alt</span>
                         <span className="text-neutral-500 font-bold">Orders</span>
                     </button>
                     <button 
+                   
                     className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
                         <span className="material-icons  text-neutral-500">manage_accounts</span>
                         <span className="text-neutral-500 font-bold">Account Settings</span>

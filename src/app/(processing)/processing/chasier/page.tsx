@@ -55,7 +55,7 @@ useEffect(()=>{
                     </DataTable>
                 </div>
                 <div className="w-full h-full p-3 bg-white shadow-lg rounded-md border-r border-neutral-60/30">
-                <span>Order List</span>
+                <span>On Process</span>
                     <DataTable 
                     value={vm.data2.data?.data} 
                     scrollable
@@ -70,8 +70,39 @@ useEffect(()=>{
                        
                     </DataTable>
                 </div>
-                <div className="w-full h-full p-3">
-                    <span>Proccess</span>
+                <div className='w-full flex flex-col'>
+                <div className="w-full h-full p-3 bg-white shadow-lg rounded-md border-r border-neutral-60/30">
+                <span>On </span>
+                    <DataTable 
+                    value={vm.data2.data?.data} 
+                    scrollable
+                    selection={vm.selectedOrder}
+                    onRowSelect={onRowSelect}
+                    selectionMode={"single"}
+                    scrollHeight='30vh'>
+                        <Column field="order_id" header="Order Id" sortable></Column>
+                        <Column field="status" header="Status" sortable></Column>
+                        <Column field="table" header="Table" sortable></Column>
+                        <Column field="total_price" header="Total Price" sortable></Column>
+                       
+                    </DataTable>
+                </div>
+                <div className="w-full h-full p-3 bg-white shadow-lg rounded-md border-r border-neutral-60/30">
+                <span>On Delivery</span>
+                    <DataTable 
+                    value={vm.data2.data?.data} 
+                    scrollable
+                    selection={vm.selectedOrder}
+                    onRowSelect={onRowSelect}
+                    selectionMode={"single"}
+                    scrollHeight='30vh'>
+                        <Column field="order_id" header="Order Id" sortable></Column>
+                        <Column field="status" header="Status" sortable></Column>
+                        <Column field="table" header="Table" sortable></Column>
+                        <Column field="total_price" header="Total Price" sortable></Column>
+                       
+                    </DataTable>
+                </div>
                 </div>
             </div>
             <ChasierModal 
