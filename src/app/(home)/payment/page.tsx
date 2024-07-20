@@ -26,16 +26,18 @@ useEffect(() => {
   if(localStorage.getItem('table')){
     vm.setTable(JSON.parse(localStorage.getItem('table') || ''))
   }
-  if(localStorage.getItem('orderSummary')){
-    const orderSummary = JSON.parse(localStorage.getItem('orderSummary') || '');
-    vm.setSelectedPayment(new DomainPaymentMethod(orderSummary.orderSummary.payment))
-    vm.setAddress(orderSummary.customer.address)
-    vm.setFullName(orderSummary.customer.name)
-    vm.setPhone(orderSummary.customer.phone)
-    vm.setEmail(orderSummary.customer.email)
-    vm.setMode(orderSummary.mode)
-    console.log(orderSummary.orderSummary.payment)
-  }
+
+  if(localStorage.getItem('table'))
+  // if(localStorage.getItem('orderSummary')){
+  //   const orderSummary = JSON.parse(localStorage.getItem('orderSummary') || '');
+  //   vm.setSelectedPayment(new DomainPaymentMethod(orderSummary.orderSummary.payment))
+  //   vm.setAddress(orderSummary.customer.address)
+  //   vm.setFullName(orderSummary.customer.name)
+  //   vm.setPhone(orderSummary.customer.phone)
+  //   vm.setEmail(orderSummary.customer.email)
+  //   vm.setMode(orderSummary.mode)
+  //   console.log(orderSummary.orderSummary.payment)
+  // }
   // console.log(vm.table)
   console.log(vm.user)
 },[])
@@ -59,13 +61,23 @@ useEffect(() => {
         >
           <span className="material-icons text-3xl">navigate_before</span>
         </button>
-        <span className="font-bold text-neutral-500">Order Summary</span>
+        <span className="font-bold text-neutral-500">Payment</span>
       </div>
+        <div className="w-full flex flex-row justify-between px-5">
+          <span className="text-neutral-40">Mode</span>
+          <span className="bg-orange-300 rounded-md text-dark px-2">{vm.table ? 'Dine In' : 'Delivery'}</span>
+        </div>
       {/* content start */}
-      <span className="ms-5 font-bold">Payment Method</span>
+      <span className="ms-5 ">Payment Method</span>
       <div className="w-full pb-5 flex bg-white flex-col gap-3 px-5 pt-5">
         {/* items */}
-        {   vm.paymentOption.map((item) => (
+        {   vm.paymentOption.filter((item) => {
+          if(vm.table){
+            return item.value !== 'cod'
+          }else{
+            return item.value !== 'cash'
+          }
+        }).map((item) => (
          
           <SelectedButton
             key={item.id}
@@ -76,7 +88,7 @@ useEffect(() => {
           </SelectedButton>
         ))}
       </div>
-      <span className="ms-5 font-bold">Customer Information</span>
+      <span className="ms-5 ">Customer Information</span>
       <div className="w-full pb-44 flex bg-white flex-col gap-3 px-5 pt-5">
         {/* items */}
         <TextInput
@@ -118,7 +130,7 @@ useEffect(() => {
         disabled
         className="shadow-sm"
         /> */}
-        <TextInput
+        {vm.table && <TextInput
           id="table"
           icon="table_restaurant"
           label="table"
@@ -126,7 +138,17 @@ useEffect(() => {
           value={vm.table}
           placeholder="Masukkan table"
           onChange={(e) => vm.setTable(e.target.value)}
-        />
+        />}
+        <div >
+          <iframe 
+          width="100%" 
+          height="600" 
+          frameborder="0" 
+          scrolling="no" 
+          marginheight="0" 
+          marginwidth="0" 
+          src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=uki%20paulus%20makassar+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/">gps tracker sport</a></iframe>
+          </div>
       </div>
       {/* order summary */}
       <div className="md:w-[500px] w-full flex flex-col gap-2 bottom-0 fixed border-[1px] rounded-md bg-white p-5 shadow-lg">

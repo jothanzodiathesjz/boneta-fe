@@ -17,7 +17,7 @@ export default function Chasier() {
     icon: "kitchen",
   },
   {
-    name: "Order List",
+    name: "Orders Report",
     path: "/processing/orders",
     icon: "list",
   },

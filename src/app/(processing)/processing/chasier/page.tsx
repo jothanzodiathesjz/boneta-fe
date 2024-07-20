@@ -36,70 +36,107 @@ useEffect(()=>{
 
 
     return (
-        <main className="min-h-screen pt-24">
+        <main className="min-h-screen pt-20">
             <div className="w-full h-full grid grid-cols-3">
-                <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r bg-white shadow-lg rounded-md border-neutral-60/30">
+                <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r  border-neutral-60/30">
                     <span>Order List</span>
                     <DataTable 
                     value={vm.orders} 
                     scrollable
+                    pt={
+                        {
+                            column:{bodyCell:{className:'scroller'}},
+                            wrapper:{
+                                className:'h-[75vh] overflow-y-scroll scroller'
+                            }
+                        }
+                    }
+                    className='border border-neutral-60/30 scroller'
                     selection={vm.selectedOrder}
                     onRowSelect={onRowSelect}
                     selectionMode={"single"}
-                    scrollHeight='70vh'>
-                        <Column field="order_id" header="Order Id" sortable></Column>
-                        <Column field="status" header="Status" sortable></Column>
-                        <Column field="table" header="Table" sortable></Column>
-                        <Column field="total_price" body={bodyTambahan} header="Total Price" sortable></Column>
+                    >
+                        <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="table" header="Table" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="total_price" body={bodyTambahan} header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
                         
                     </DataTable>
                 </div>
-                <div className="w-full h-full p-3 bg-white shadow-lg rounded-md border-r border-neutral-60/30">
+                <div className="w-full h-full p-3  border-r border-neutral-60/30">
                 <span>On Process</span>
                     <DataTable 
                     value={vm.data2.data?.data} 
                     scrollable
+                    pt={
+                        {
+                            column:{bodyCell:{className:'scroller'}},
+                            wrapper:{
+                                className:'h-[75vh] overflow-y-scroll scroller'
+                            }
+                        }
+                    }
+                    className='border border-neutral-60/30'
                     selection={vm.selectedOrder}
                     onRowSelect={onRowSelect}
                     selectionMode={"single"}
-                    scrollHeight='70vh'>
-                        <Column field="order_id" header="Order Id" sortable></Column>
-                        <Column field="status" header="Status" sortable></Column>
-                        <Column field="table" header="Table" sortable></Column>
-                        <Column field="total_price" header="Total Price" sortable></Column>
+                    >
+                        <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="table" header="Table"  headerClassName='bg-primary-surface'sortable></Column>
+                        <Column field="total_price" header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
                        
                     </DataTable>
                 </div>
                 <div className='w-full flex flex-col'>
-                <div className="w-full h-full p-3 bg-white shadow-lg rounded-md border-r border-neutral-60/30">
+                <div className="w-full h-full p-3  border-r border-neutral-60/30">
                 <span>On </span>
                     <DataTable 
                     value={vm.data2.data?.data} 
                     scrollable
+                    pt={
+                        {
+                            column:{bodyCell:{className:'scroller'}},
+                            wrapper:{
+                                className:'h-[30vh] overflow-y-scroll scroller'
+                            }
+                        }
+                    }
+                    className='border border-neutral-60/30'
                     selection={vm.selectedOrder}
                     onRowSelect={onRowSelect}
                     selectionMode={"single"}
-                    scrollHeight='30vh'>
-                        <Column field="order_id" header="Order Id" sortable></Column>
-                        <Column field="status" header="Status" sortable></Column>
-                        <Column field="table" header="Table" sortable></Column>
-                        <Column field="total_price" header="Total Price" sortable></Column>
+                    
+                    >
+                        <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="table" header="Table" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="total_price" header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
                        
                     </DataTable>
                 </div>
-                <div className="w-full h-full p-3 bg-white shadow-lg rounded-md border-r border-neutral-60/30">
+                <div className="w-full h-full p-3  border-r border-neutral-60/30">
                 <span>On Delivery</span>
                     <DataTable 
                     value={vm.data2.data?.data} 
                     scrollable
+                    pt={
+                        {
+                            column:{bodyCell:{className:'scroller'}},
+                            wrapper:{
+                                className:'h-[30vh] overflow-y-scroll scroller'
+                            }
+                        }
+                    }
+                    className='border border-neutral-60/30'
                     selection={vm.selectedOrder}
                     onRowSelect={onRowSelect}
                     selectionMode={"single"}
-                    scrollHeight='30vh'>
-                        <Column field="order_id" header="Order Id" sortable></Column>
-                        <Column field="status" header="Status" sortable></Column>
-                        <Column field="table" header="Table" sortable></Column>
-                        <Column field="total_price" header="Total Price" sortable></Column>
+                    >
+                        <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="table" header="Table" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="total_price" header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
                        
                     </DataTable>
                 </div>
@@ -109,6 +146,7 @@ useEffect(()=>{
             data={vm.selectedOrder}
             handleProcess={vm.handleProcess}
             closeModal={() => vm.setSelectedOrder(null)}
+            hanldeReject={vm.handleReject}
             />
         </main>
     );

@@ -3,7 +3,7 @@ import { MainButton } from "@/components/button/MainButton.component";
 import { SelectedButton } from "@/components/button/SelectedButton";
 import { ProductCard } from "@/components/product/Card.product";
 import TextInput from "@/components/input/TextInput.component";
-import React, {useEffect, useState } from "react";
+import React, {useEffect, useState,useRef } from "react";
 import { CartPopup } from "@/components/CartPopup";
 import {CartResult} from "@/components/CartResult";
 import { CategoryViewModel } from "@/viewmodel/Category";
@@ -12,18 +12,65 @@ import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
 import { DomainOrderItem, OrderItemResult } from "@/domain/OrderItem";
 import { CartPopFinal } from "@/components/CartPopFinal";
+import { Toast } from 'primereact/toast';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { getCookie } from "@/utils/cookies";
 
 export default function Home() {
   const vm_category = CategoryViewModel()
   const routeAnimation =useRouteAnimation()
   const [cartVisible, setCartVisible] = useState(false)
-  const vm = MainPageViewModel()
+  const vm = MainPageViewModel();
+  const token = getCookie('accessToken');
+  const toast = useRef<Toast>(null);
 
-  function handleProsesOrder(){
+  const accept = () => {
+    if(!token){
+      routeAnimation.handleRoute('/login')
+      return
+    }
     localStorage.setItem('order',JSON.stringify(vm.cartResult))
+    localStorage.setItem('delivery','yes')
     routeAnimation.handleRoute('/payment')
   }
 
+  const reject = () => {
+      toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+  }
+
+  const confirm = () => {
+    confirmDialog({
+        message: 'Apakah anda ingin melakukan pemesanan delivery?',
+        header: 'Delivery Confirmation',
+        icon: 'pi pi-info-circle',
+        draggable: false,
+        position:"bottom",
+        className:'md:w-[500px] w-full flex-shrink-0',
+        accept,
+        reject
+    });
+};
+
+  function handleProsesOrder(){
+    if(vm.query.get('mode')==='dine-in' && vm.query.get('table')!==null){
+      localStorage.setItem('order',JSON.stringify(vm.cartResult))
+      routeAnimation.handleRoute('/payment')
+      return
+    }
+    if(localStorage.getItem('delivery')){
+      if(!token){
+        routeAnimation.handleRoute('/login')
+        return
+      }
+      localStorage.setItem('order',JSON.stringify(vm.cartResult))
+      localStorage.setItem('delivery','yes')
+      routeAnimation.handleRoute('/payment')
+      return
+    }
+    confirm()
+  }
+
+ 
   const order = localStorage.getItem('order')
   
   useEffect(() => {
@@ -34,13 +81,17 @@ export default function Home() {
     if(vm.query.get('mode')==='dine-in' && vm.query.get('table')!==null){
       if(localStorage.getItem('guest')===null)localStorage.setItem('guest',generateRandomString(50))
       if(!localStorage.getItem('table'))localStorage.setItem('table',vm.query.get('table')!)
+      localStorage.removeItem('delivery')
+    }else{
+      localStorage.removeItem('table')
     }
     if(localStorage.getItem('order')){
       const order = JSON.parse(localStorage.getItem('order') || '')
       vm.setOrderToCart(order.items)
     }
     
-    console.log(vm.cartResult)
+  
+
 
   }, []);
 
@@ -93,6 +144,9 @@ console.log(vm.cartResult)
           <span className="text-red-800"> Food</span>
         </span>
       </div>
+      <ConfirmDialog 
+      
+      />
       <TextInput
         icon="search"
         id="search"

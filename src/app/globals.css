@@ -15,6 +15,32 @@
   @tailwind utilities;
 }
 
+.scroller {
+  /* Default scrollbar settings for all browsers */
+  --scrollbar-width: thin;
+
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+ 
+}
+
+  &::-webkit-scrollbar-thumb {
+    background-color: darkgrey; /* Sesuaikan dengan kebutuhan Anda */
+    border-radius: 10px; /* Sesuaikan dengan kebutuhan Anda */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Sesuaikan dengan kebutuhan Anda */
+  }
+}
+
+@supports (scrollbar-width: thin) {
+  .scroller {
+    scrollbar-width: var(--scrollbar-width);
+  }
+}
 
 
 body *{
@@ -298,3 +324,4 @@ body *{
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
 }
+

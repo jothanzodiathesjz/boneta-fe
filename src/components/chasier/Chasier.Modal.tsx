@@ -3,11 +3,13 @@ import { useState } from "react";
 import { DomainOrder } from "@/domain/Orders";
 import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
+import { Image } from 'primereact/image';
 
 type ChasierModalProps = {
     data: DomainOrder | null;
     closeModal: () => void;
     handleProcess: () => void;
+    hanldeReject: () => void;
 };
 
 const stylePt = {
@@ -32,7 +34,7 @@ const stylePt = {
     }
 }
 
-export default function ChasierModal({ data, closeModal, handleProcess }: ChasierModalProps) {
+export default function ChasierModal({ data, closeModal, handleProcess, hanldeReject }: ChasierModalProps) {
     const [visibleBottom, setVisibleBottom] = useState(true);
     const [totalBayar, setTotalBayar] = useState(0);
     const [kembalian, setKembalian] = useState(0);
@@ -118,7 +120,9 @@ export default function ChasierModal({ data, closeModal, handleProcess }: Chasie
                         <span>Total Price</span>
                         <span>{data?.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
-                    {data?.status === 'pending' && data?.payment.value === 'cash' && <><div className="w-full flex flex-col mt-3 gap-2">
+                    {data?.status === 'pending' && 
+                    data?.payment.value === 'cash' && 
+                    <><div className="w-full flex flex-col mt-3 gap-2">
                         <span>Masukkan Nominal Diterima</span>
                         <InputNumber
                         value={totalBayar}
@@ -132,12 +136,35 @@ export default function ChasierModal({ data, closeModal, handleProcess }: Chasie
                         value={kembalian}
                         />
                     </div>
-                    <Button
+                     </>
+                    }
+                    {data?.status === 'pending' && data?.payment.value !== 'cash' && <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
+                        <span>Bukti Pembayaran</span>
+                        <Image 
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
+                        alt="Image" width="250" 
+                        preview />
+                    </div>}
+                    {data?.status === 'pending' && !data?.payment_image && <Button
                     label="Proses"
+                    disabled={totalBayar < data?.total_price! }
                     severity="success"
-                    onClick={handleProcess}
+                    onClick={()=>(handleProcess(),setTotalBayar(0),setKembalian(0))}
                     className="w-full"
-                    /> </>}
+                    />}
+                    {data?.status === 'pending' && data?.payment_image && <Button
+                    label="Proses"
+                    disabled={!data?.payment_image }
+                    severity="success"
+                    onClick={()=>(handleProcess(),setTotalBayar(0),setKembalian(0))}
+                    className="w-full"
+                    />}
+                    <Button
+                    label="Reject"
+                    severity="warning"
+                    onClick={hanldeReject}
+                    className="w-full"
+                    />
                     </div>
                 </div>
             </div>

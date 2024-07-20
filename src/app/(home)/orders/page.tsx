@@ -1,6 +1,7 @@
 "use client"
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { DateTimeToDateString,UnixToDateString } from "@/utils/date";
 
 
 import OrdersViewModel from "@/viewmodel/Orders";
@@ -53,7 +54,7 @@ export default function Orders() {
                                         item.quantity
                                     } item)
                                 </span>
-                                <span className="text-red-400">{unixToDatestring(item.created_at!)}</span>
+                                <span className="text-red-400">{UnixToDateString(item.created_at!)}</span>
                             </div>
                             <span style={{ fontSize: '1.8rem' }} className="material-icons ">chevron_right</span>
                         </div>

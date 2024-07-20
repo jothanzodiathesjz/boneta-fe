@@ -20,9 +20,18 @@ export const OrderDetailViewModel = () => {
             'Authorization': `Basic ${guest}`
         }
     },{
-        // refreshInterval: 3000,
-        revalidateOnMount: true
+        revalidateOnMount: true,
+        refreshInterval: 5000
     })
+
+    const handleUploadImage = async () => {
+        try {
+            const data = await http.PostWithFile<DomainOrder>(`/api/payment-wimg/${guest}/${oid}`,selectedFile!)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    } 
    
     
 
@@ -34,7 +43,8 @@ export const OrderDetailViewModel = () => {
         error,
         mutate,
         handleFileSelect,
-        selectedFile
+        selectedFile,
+        handleUploadImage
 
     }
 }

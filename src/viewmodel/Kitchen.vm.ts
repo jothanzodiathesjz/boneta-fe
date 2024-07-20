@@ -5,10 +5,10 @@ import { getCookie } from "@/utils/cookies";
 const cockies = getCookie('accessToken');
 
 const http = new HttpClient();
-const ChasierViewModel = () => {
+const kitchenViewModel = () => {
     const [selectedOrder, setSelectedOrder] = useState<DomainOrder | null>(null);
 
-    const {data,isError,isLoading,mutate} = http.Send<DomainOrder[]>('/api/orders?status=pending',undefined,{
+    const {data,isError,isLoading,mutate} = http.Send<DomainOrder[]>('/api/orders?status=process',undefined,{
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${cockies}`
@@ -27,33 +27,14 @@ const ChasierViewModel = () => {
         revalidateOnMount: true
     })
 
-    const handleProcess = async () => {
+    const handleProcess = async (status:string) => {
         try {
             const response = await http.Put<DomainOrder>(`/api/order`,{
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${cockies}`
                 },
-                body: JSON.stringify({uuid: selectedOrder?.uuid, status: 'process'})
-            })
-            setSelectedOrder(null)
-            mutate()
-            data2.mutate()
-        } catch (error) {
-            console.log(error)
-        }
-        mutate()
-            data2.mutate()
-    }
-
-    const handleReject = async () => {
-        try {
-            const response = await http.Put<DomainOrder>(`/api/order`,{
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cockies}`
-                },
-                body: JSON.stringify({uuid: selectedOrder?.uuid, status: 'reject'})
+                body: JSON.stringify({uuid: selectedOrder?.uuid, status: status})
             })
             setSelectedOrder(null)
             mutate()
@@ -93,10 +74,9 @@ const ChasierViewModel = () => {
         handleProcess,
         orders,
         setOrders,
-        updateSeen,
-        handleReject
+        updateSeen
     }
 }
 
 
-export default ChasierViewModel
+export default kitchenViewModel

@@ -103,5 +103,10 @@ export const paymentMethods: PaymentMethodType[] = [
         id: "2",
         name: "Transfer Bank",
         value: "transfer"
+    },
+    {
+        id: "3",
+        name: "Cash On Delivery",
+        value: "cod"
     }
 ]

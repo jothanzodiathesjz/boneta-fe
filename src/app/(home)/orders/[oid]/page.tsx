@@ -23,7 +23,7 @@ export default function Page() {
                     >
                         <span className="material-icons text-3xl">navigate_before</span>
                     </button>
-                    <span className="font-bold text-neutral-500">End Payment</span>
+                    <span className="font-bold text-neutral-500">End Payment</span>  
                 </div>
                 <span className="font-semibold ml-3">Order Detail</span>
                 <div className="w-full flex flex-col bg-white gap-3 p-5">
@@ -52,17 +52,46 @@ export default function Page() {
                         <span className="text-neutral-40">{vm.data.data.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
                 </div>
-               {vm.data.data.payment.value === 'cash' && 
+               {vm.data.data.payment.value === 'cash' && vm.data.data.status === 'pending' && 
                     <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                         <span className="text-center font-medium text-neutral-40">Silahkan Menuju ke Kasir untuk melakukan proses pembayaran</span>
                     </div>
                 }
+                {(vm.data.data.payment.value === 'transfer' && 
+                vm.data.data.status === 'pending' && 
+                !vm.data.data.payment_image ) ?
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                         <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>
                        <FileUpload
+                       allowedFileTypes={['image/png', 'image/jpeg', 'image/jpg']}
                        onFileSelect={vm.handleFileSelect}
                        />
+                       <Button
+                       disabled={vm.selectedFile === null}
+                       onClick={vm.handleUploadImage}
+                       label="Upload"
+                       className="w-full"
+                       />
                 </div>
+
+                :
+                <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
+                    <span className="text-center font-medium text-neutral-40">
+                        {
+                            (vm.data.data.status === 'pending' && vm.data.data.payment.value === 'transfer' ? "Menunggu konfirmasi dari kasir" : "")
+                        }
+                        {
+                            (vm.data.data.status === 'process' ? "Pesanan sedang diproses" : "")
+                        }
+                        {
+                            (vm.data.data.status === 'ended' ? "Terimakasih telah melakukan pemesanan" : "")
+                        }
+                        {
+                            (vm.data.data.status === 'rejected' ? "Pesanan ditolak, Silahakan pesan kembali" : "")
+                        }
+                    </span>
+                </div>
+                }
             </div>
         );
     }else{

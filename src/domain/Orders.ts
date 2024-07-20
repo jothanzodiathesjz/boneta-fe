@@ -13,6 +13,7 @@ export interface OrderInit {
     total_price: number
     quantity: number
     payment: DomainPaymentMethod
+    payment_image?: string
     seen?: boolean
     created_at?: number
     deleted_at?: number
@@ -30,6 +31,7 @@ export class DomainOrder {
     total_price: number
     quantity: number
     payment: DomainPaymentMethod
+    payment_image?: string
     seen?: boolean
     created_at?: number
     deleted_at?: number
@@ -46,6 +48,7 @@ export class DomainOrder {
         this.total_price = data.total_price
         this.quantity = data.quantity
         this.payment = data.payment
+        this.payment_image = data.payment_image
         this.seen = data.seen
         this.created_at = data.created_at
         this.deleted_at = data.deleted_at
