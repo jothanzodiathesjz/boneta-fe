@@ -6,6 +6,7 @@ import Sidebar from "@/layouts/Sidebar";
 import { useState, useEffect } from "react";
 import { usePathname } from 'next/navigation';
 import { useAnimationStore } from '@/store/AnimateStore';
+import 'leaflet/dist/leaflet.css';
 const slideRightVariants = {
   hidden: { opacity: 0, x: -1000 },  // posisi awal di sebelah kiri dan tidak terlihat
   visible: { opacity: 1, x: 0 },    // posisi akhir di tempat semula dan terlihat

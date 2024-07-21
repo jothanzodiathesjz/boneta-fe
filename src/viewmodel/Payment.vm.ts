@@ -30,6 +30,7 @@ export const PaymentViewModel = () => {
     const [disabled, setDisabled] = useState(false);
     const [paymentOption, setPaymentOption] = useState<PaymentMethodType[]>(payemntData);
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethodType>(paymentOption[0]);
+    const [mapUrl, setMapUrl] = useState<string | null>(null);
     const router = useRouter()
 
     const handleCreateOrder = async () => {
@@ -42,10 +43,12 @@ export const PaymentViewModel = () => {
                     items: orderItem?.items || [],
                     customer: new DomainCustomer({name:fullName,email,phone,address,uuid:generateRandomString(20)}),
                     status: 'pending',
-                    table: table,
+                    table: table ?? 'delivery',
                     total_price: orderItem?.total_price || 0,
                     quantity: orderItem?.quantity || 0,
                     payment: selectedPayment || paymentOption[0],
+                    delivery:!table,
+                    customer_location: mapUrl ?? undefined,
                     created_at: new Date().getTime()
                 }))
             })
@@ -82,6 +85,8 @@ export const PaymentViewModel = () => {
         setSelectedPayment,
         handleCreateOrder,
         cookies,
-        user
+        user,
+        mapUrl,
+        setMapUrl
     }
 }

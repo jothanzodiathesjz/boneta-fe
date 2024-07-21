@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import 'primeicons/primeicons.css';
+
+import 'leaflet/dist/leaflet.css';
 import { PrimeReactProvider } from 'primereact/api';
 
 const inter = Inter({ subsets: ["latin"] });

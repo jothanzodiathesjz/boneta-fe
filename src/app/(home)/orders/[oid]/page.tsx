@@ -1,13 +1,16 @@
 'use client';
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import FileUpload from "@/components/input/FileUpload";
 import { OrderDetailViewModel } from "@/viewmodel/OrderDetail.vm";
 
 export default function Page() {
     const router = useRouter()
     const vm = OrderDetailViewModel()
+   
+
+ 
     useEffect(() => {
         console.log(vm.data)
     },[vm.data])
@@ -88,6 +91,15 @@ export default function Page() {
                         }
                         {
                             (vm.data.data.status === 'rejected' ? "Pesanan ditolak, Silahakan pesan kembali" : "")
+                        }
+                        {
+                            (vm.data.data.status === 'pending' && vm.data.data.payment.value === 'cod' ? "Menunggu konfirmasi" : "")
+                        }
+                        {
+                            (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
+                        }
+                        {
+                            (vm.data.data.status === 'in-delivery' && vm.data.data.payment.value === 'cod' ? "Pesanan dalam perjalanan" : "")
                         }
                     </span>
                 </div>

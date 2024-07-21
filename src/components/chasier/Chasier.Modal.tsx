@@ -72,6 +72,10 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                             <span className={`w-full  text-black ${data?.status === 'pending' ? 'text-yellow-500' : 'text-green-500'}`}>: {data?.status}</span>
                         </div>
                         <div className="flex flex-row w-full">
+                            <span className="w-32 flex-shrink-0 ">Mode</span>
+                            <span className="text-info-main">: {data?.delivery ? 'Delivery' : 'Dine In'}</span>
+                        </div>
+                        <div className="flex flex-row w-full">
                             <span className="w-32 flex-shrink-0 ">Table</span>
                             <span className="w-full  text-black">: {data?.table}</span>
                         </div>
@@ -138,14 +142,14 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                     </div>
                      </>
                     }
-                    {data?.status === 'pending' && data?.payment.value !== 'cash' && <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
+                    {data?.status === 'pending' && data?.payment.value === 'transfer' && <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
                         <span>Bukti Pembayaran</span>
                         <Image 
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
                         alt="Image" width="250" 
                         preview />
                     </div>}
-                    {data?.status === 'pending' && !data?.payment_image && <Button
+                    {data?.status === 'pending' && data?.payment.value === 'cash' && <Button
                     label="Proses"
                     disabled={totalBayar < data?.total_price! }
                     severity="success"
@@ -155,6 +159,12 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                     {data?.status === 'pending' && data?.payment_image && <Button
                     label="Proses"
                     disabled={!data?.payment_image }
+                    severity="success"
+                    onClick={()=>(handleProcess(),setTotalBayar(0),setKembalian(0))}
+                    className="w-full"
+                    />}
+                    {data?.status === 'pending' && data?.delivery && <Button
+                    label="Proses"
                     severity="success"
                     onClick={()=>(handleProcess(),setTotalBayar(0),setKembalian(0))}
                     className="w-full"

@@ -41,7 +41,7 @@ export default function Orders() {
                             key={index}
                             onClick={() => router.push(`/orders/${item.uuid}`)}
                             className="w-full flex flex-row justify-between rounded-xl p-3 items-center border cursor-pointer border-neutral-80 shadow-sm">
-                            <div className="flex flex-col gap-1 ">
+                            <div className="flex flex-col gap-1">
                                 <span>{item.order_id}</span>
                                 <span className="text-neutral-40">
                                     {
@@ -54,7 +54,10 @@ export default function Orders() {
                                         item.quantity
                                     } item)
                                 </span>
-                                <span className="text-red-400">{UnixToDateString(item.created_at!)}</span>
+                                <div className="flex flex-row gap-3 text-neutral-50">
+                                <span className="text-red-400">{UnixToDateString(item.created_at!)}</span> -
+                                <span className="text-neutral-40">{item.delivery ? 'Delivery' : 'Dine In'}</span>
+                                </div>
                             </div>
                             <span style={{ fontSize: '1.8rem' }} className="material-icons ">chevron_right</span>
                         </div>

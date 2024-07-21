@@ -15,6 +15,8 @@ export interface OrderInit {
     payment: DomainPaymentMethod
     payment_image?: string
     seen?: boolean
+    delivery?: boolean
+    customer_location?: string
     created_at?: number
     deleted_at?: number
 }
@@ -33,6 +35,8 @@ export class DomainOrder {
     payment: DomainPaymentMethod
     payment_image?: string
     seen?: boolean
+    delivery?: boolean
+    customer_location?: string
     created_at?: number
     deleted_at?: number
 
@@ -50,6 +54,8 @@ export class DomainOrder {
         this.payment = data.payment
         this.payment_image = data.payment_image
         this.seen = data.seen
+        this.delivery = data.delivery
+        this.customer_location = data.customer_location
         this.created_at = data.created_at
         this.deleted_at = data.deleted_at
     }
