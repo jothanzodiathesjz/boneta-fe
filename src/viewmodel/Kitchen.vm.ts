@@ -34,7 +34,7 @@ const kitchenViewModel = () => {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${cockies}`
                 },
-                body: JSON.stringify({uuid: selectedOrder?.uuid, status: selectedOrder?.delivery ? 'in-delivery' : status})
+                body: JSON.stringify({uuid: selectedOrder?.uuid, status: selectedOrder?.delivery ? 'ready-to-delivered' : status})
             })
             setSelectedOrder(null)
             mutate()

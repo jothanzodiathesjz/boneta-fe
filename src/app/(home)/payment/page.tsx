@@ -116,14 +116,14 @@ useEffect(() => {
           onChange={(e) => vm.setPhone(e.target.value)}
         />
 
-        {/* <TextInput
+       {!vm.table && <TextInput
           id="address"
           icon="location_on"
           value={vm.address}
           label="address"
           placeholder="Masukkan alamat"
           onChange={(e) => vm.setAddress(e.target.value)}
-        /> */}
+        />}
         {/* <InputText
         value={vm.table}
         disabled

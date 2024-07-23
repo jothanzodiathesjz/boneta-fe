@@ -3,12 +3,14 @@ import { useParams } from "next/navigation";
 import { DomainOrder } from "@/domain/Orders";
 import { HttpClient } from "@/services/httpClient";
 import {parseCookies} from 'nookies'
+import { DomainUserWithProfile } from "@/domain/Users";
 
 
 const http = new HttpClient()
 export const OrderDetailViewModel = () => {
     const { oid } = useParams()
     const cookies = parseCookies()
+    const user:DomainUserWithProfile | null = cookies.user ? new DomainUserWithProfile(JSON.parse(cookies.user)) : null
     const guest = localStorage.getItem('guest') || ''
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const handleFileSelect = (file: File) => {
@@ -17,7 +19,7 @@ export const OrderDetailViewModel = () => {
       };
     const {data,isError,isLoading,error,mutate} = http.Send<DomainOrder>(`/api/order/${oid}`,undefined,{
         headers: {
-            'Authorization': `Basic ${guest}`
+            'Authorization': `Basic ${user ? `user:${user?.uuid}` : `guest:${guest}`  }`
         }
     },{
         revalidateOnMount: true,

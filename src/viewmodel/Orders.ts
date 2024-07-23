@@ -10,7 +10,7 @@ const OrdersViewModel = () => {
     const guest = localStorage.getItem('guest') || '';
     const user = getCookie('user')
     const parseUser = user ? parseCookie(user) : null
-    const {data,error,isError,isLoading,mutate} = http.Send<DomainOrder[]>(`${parseUser ? `/api/orders/${parseUser.uuid}/${guest}` : `/api/orderswg/${guest}`}`,undefined,undefined)
+    const {data,error,isError,isLoading,mutate} = http.Send<DomainOrder[]>(`${parseUser ? `/api/orders/${parseUser.uuid}` : `/api/orderswg/${guest}`}`,undefined,undefined)
 
     return{
         orders,
