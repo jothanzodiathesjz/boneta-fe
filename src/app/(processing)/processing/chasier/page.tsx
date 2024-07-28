@@ -34,6 +34,10 @@ useEffect(()=>{
     vm.setOrders(vm.data?.data ?? [])
 },[vm.data])
 
+useEffect(()=>{
+   
+},[vm.selectedOrder])
+
 
     return (
         <main className="min-h-screen pt-20">
@@ -90,15 +94,15 @@ useEffect(()=>{
                 </div>
                 <div className='w-full flex flex-col'>
                 <div className="w-full h-full p-3  border-r border-neutral-60/30">
-                <span>On </span>
+                <span>On Ended</span>
                     <DataTable 
-                    value={vm.data2.data?.data} 
+                    value={vm.data3.data?.data} 
                     scrollable
                     pt={
                         {
                             column:{bodyCell:{className:'scroller'}},
                             wrapper:{
-                                className:'h-[30vh] overflow-y-scroll scroller'
+                                className:'h-[40vh] overflow-y-scroll scroller'
                             }
                         }
                     }
@@ -144,9 +148,10 @@ useEffect(()=>{
             </div>
             <ChasierModal 
             data={vm.selectedOrder}
-            handleProcess={vm.handleProcess}
+            handleProcess={(e)=>vm.handleProcess(e)}
             closeModal={() => vm.setSelectedOrder(null)}
             hanldeReject={vm.handleReject}
+            handleDeleteItem={(uuid,uuid_item) => vm.handleDeleteItem(uuid,uuid_item)}
             />
         </main>
     );

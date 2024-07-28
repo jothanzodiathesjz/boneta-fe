@@ -71,7 +71,7 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ onCoordsChange}) => {
     }
   }, [map, currentPosition]);
 
-  return currentPosition === null ? null : (
+  return currentPosition && (
     <Marker  position={currentPosition}>
       <Popup>You are here: now </Popup>
     </Marker>

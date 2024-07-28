@@ -35,14 +35,67 @@ useEffect(()=>{
     vm.setOrders(vm.data?.data ?? [])
 },[vm.data])
 
+useEffect(()=>{
+
+},[vm.selectedOrder])
 
     return (
         <main className="min-h-screen pt-20">
             <div className="w-full h-full flex">
+                <div className='w-full flex flex-col'>
+                <div className="w-full flex flex-col  p-3 gap-3 border-r  border-neutral-60/30">
+                    <span>Order On Waiting</span>
+                    <DataTable 
+                    value={vm.orders} 
+                    scrollable
+                    pt={
+                        {
+                            column:{bodyCell:{className:'scroller'}},
+                            wrapper:{
+                                className:'h-[30vh] overflow-y-scroll scroller'
+                            }
+                        }
+                    }
+                    selection={vm.selectedOrder}
+                    onRowSelect={onRowSelect}
+                    selectionMode={"single"}
+                    >
+                        <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="table" header="Table" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="total_price" body={bodyTambahan} header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
+                        
+                    </DataTable>
+                </div>   
+                <div className="w-full flex flex-col  p-3 gap-3 border-r  border-neutral-60/30">
+                    <span>Accepted By Chasier</span>
+                    <DataTable 
+                    value={vm.data3.data?.data} 
+                    scrollable
+                    pt={
+                        {
+                            column:{bodyCell:{className:'scroller'}},
+                            wrapper:{
+                                className:'h-[40vh] overflow-y-scroll scroller'
+                            }
+                        }
+                    }
+                    selection={vm.selectedOrder}
+                    onRowSelect={onRowSelect}
+                    selectionMode={"single"}
+                    >
+                        <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="table" header="Table" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column field="total_price" body={bodyTambahan} header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
+                        
+                    </DataTable>
+                </div>   
+                </div>
                 <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r  border-neutral-60/30">
                     <span>Order List</span>
                     <DataTable 
-                    value={vm.orders} 
+                    value={vm.data2.data?.data} 
                     scrollable
                     pt={
                         {
@@ -66,8 +119,9 @@ useEffect(()=>{
                
             </div>
             <KitchenModal 
+            handleDeleteItem={(u,i)=>vm.handleDeleteItem(u,i)}
             data={vm.selectedOrder}
-            handleProcess={()=>vm.handleProcess('ended')}
+            handleProcess={(e)=>vm.handleProcess(e)}
             closeModal={() => vm.setSelectedOrder(null)}
             />
         </main>

@@ -48,7 +48,7 @@ useEffect(() => {
     const isFormComplete =
       vm.fullName && vm.email && vm.phone && vm.selectedPayment;
     vm.setDisabled(!isFormComplete);
-  }, [vm.fullName, vm.email, vm.phone, vm.selectedPayment]);
+  }, [vm.fullName, vm.selectedPayment]);
 
   return (
     <div className=" w-full flex flex-col gap-4 bg-[#FAFAFD] min-h-screen rounded-sm layout-border">
@@ -99,22 +99,22 @@ useEffect(() => {
           placeholder="Masukkan nama lengkap"
         />
         {/* items */}
-        <TextInput
+        {/* <TextInput
           id="email"
           value={vm.email}
           onChange={(e) => vm.setEmail(e.target.value)}
           icon="email"
           label="email"
           placeholder="Masukkan email"
-        />
-        <TextInput
+        /> */}
+        {/* <TextInput
           id="telepon"
           icon="phone"
           value={vm.phone}
           label="telepon"
           placeholder="Masukkan Telepon"
           onChange={(e) => vm.setPhone(e.target.value)}
-        />
+        /> */}
 
        {!vm.table && <TextInput
           id="address"

@@ -100,7 +100,9 @@ export default function Home() {
       ...v,
       quantity: 0,
       total_price: 0,
-      stage:1
+      stage:1,
+      status:'proses',
+      uuid_item: generateRandomString(40)
     })) || [])
     if(vm.orderToCart.length>0){
       vm.setCartResult({

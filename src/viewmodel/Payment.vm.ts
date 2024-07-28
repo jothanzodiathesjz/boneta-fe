@@ -42,7 +42,7 @@ export const PaymentViewModel = () => {
                     guest: guest,
                     items: orderItem?.items || [],
                     customer: new DomainCustomer({name:fullName,email,phone,address,uuid:generateRandomString(20)}),
-                    status: 'pending',
+                    status: 'waiting',
                     table: table ?? 'delivery',
                     total_price: orderItem?.total_price || 0,
                     quantity: orderItem?.quantity || 0,

@@ -1,19 +1,50 @@
 'use client';
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
-import { useEffect,useState } from "react";
+import { useEffect,useState,useRef } from "react";
 import FileUpload from "@/components/input/FileUpload";
 import { OrderDetailViewModel } from "@/viewmodel/OrderDetail.vm";
-
+import OrderMenuModal from "@/components/orders/OrderMenuModal";
 export default function Page() {
     const router = useRouter()
     const vm = OrderDetailViewModel()
-   
-
- 
+    const contentRef = useRef(null);
     useEffect(() => {
         console.log(vm.data)
     },[vm.data])
+
+    const receiptHtml = () => (
+        <div></div>
+
+        // <div
+        //   ref={contentRef}
+        //   className="w-full  flex-col justify-center items-center gap-4 pb-3 bg-white border-b border-neutral-80"
+        // >
+        //   {/* {vm.data?.data?.items.map((item, index) => (
+        //     <div key={index} className="flex flex-row w-full ">
+        //       <span className="w-44 flex-shrink-0">{item.name}</span>
+        //       <span className="w-32 flex-shrink-0 text-danger-main">
+        //         {item.stage > 1 ? 'Tambahan' : ''}
+        //       </span>
+        //       <div className="flex w-full ">
+        //         {item.deleted_at ? (
+        //           <span className="text-neutral-40 w-full text-end line-through">Habis</span>
+        //         ) : (
+        //           <>
+        //             <span className="w-full text-neutral-40">{item.quantity} x</span>
+        //             <span className="text-neutral-40">
+        //               {item.price.toLocaleString('id-ID', {
+        //                 style: 'currency',
+        //                 currency: 'IDR',
+        //               })}
+        //             </span>
+        //           </>
+        //         )}
+        //       </div>
+        //     </div>
+        //   ))} */}
+        // </div>
+      );
 
     if(vm.data?.data){
         return (
@@ -28,7 +59,18 @@ export default function Page() {
                     </button>
                     <span className="font-bold text-neutral-500">End Payment</span>  
                 </div>
+                <div className="w-full flex flex-row justify-between">
                 <span className="font-semibold ml-3">Order Detail</span>
+                {vm.data.data.status === 'ended' ? (
+                    <button 
+                    onClick={()=>vm.handleDownload(contentRef.current!)}
+                    className="text-primary-hover"><i className="pi pi-download"></i> Receipt
+                    </button>
+                ) :(<button 
+                onClick={()=>router.push(`/adjustment/${vm.data?.data.uuid}`)}
+                className="text-primary-hover">+ Tambah Pesanan
+                </button>)}
+                </div>
                 <div className="w-full flex flex-col bg-white gap-3 p-5">
                     <div className="flex w-full justify-between">
                         <span>Order ID</span>
@@ -39,13 +81,23 @@ export default function Page() {
                         <span className="text-danger-pressed">{vm.data.data.status}</span>
                     </div>
                 <div className="w-full flex flex-col justify-center items-center gap-4 pb-3 bg-white border-b border-neutral-80">
-                    {vm.data?.data?.items.map((item)=>(
+                    {vm.data?.data?.items.map((item,index)=>(
                         <div 
-                        key={item.uuid}
+                        key={index}
                         className="flex flex-row w-full ">
                         <span className="w-44 flex-shrink-0">{item.name}</span>
-                        <span className="w-full text-neutral-40">{item.quantity} x</span>
-                        <span className="text-neutral-40">{item.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                        <span className="w-32  flex-shrink-0 text-danger-main">{item.stage > 1 ? 'Tambahan' : ''} </span>
+                        <div className="flex w-full ">
+                            {item.deleted_at ? (
+                                <span className="text-neutral-40 w-full text-end line-through">Habis</span>
+                            ) : (
+                                <>
+                                    <span className="w-full text-neutral-40">{item.quantity} x</span>
+                                    <span className="text-neutral-40">{item.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                                </>
+                            )}
+                           
+                        </div>
                     </div>
                     )) }
                 </div>
@@ -57,11 +109,11 @@ export default function Page() {
                 </div>
                {vm.data.data.payment.value === 'cash' && vm.data.data.status === 'pending' && 
                     <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
-                        <span className="text-center font-medium text-neutral-40">Silahkan Menuju ke Kasir untuk melakukan proses pembayaran</span>
+                        <span className="text-center font-medium text-neutral-40">Menunggu Konfirmasi</span>
                     </div>
                 }
                 {(vm.data.data.payment.value === 'transfer' && 
-                vm.data.data.status === 'pending' && 
+                vm.data.data.status === 'ready' && 
                 !vm.data.data.payment_image ) ?
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                         <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>
@@ -84,6 +136,9 @@ export default function Page() {
                             (vm.data.data.status === 'pending' && vm.data.data.payment.value === 'transfer' ? "Menunggu konfirmasi dari kasir" : "")
                         }
                         {
+                            (vm.data.data.status === 'ready' && vm.data.data.payment_image ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
+                        }
+                        {
                             (vm.data.data.status === 'process' ? "Pesanan sedang diproses" : "")
                         }
                         {
@@ -93,7 +148,7 @@ export default function Page() {
                             (vm.data.data.status === 'rejected' ? "Pesanan ditolak, Silahakan pesan kembali" : "")
                         }
                         {
-                            (vm.data.data.status === 'pending' && vm.data.data.payment.value === 'cod' ? "Menunggu konfirmasi" : "")
+                            (vm.data.data.status === 'ready' && vm.data.data.delivery ? "Menunggu Konfirmasi Kurir" : "")
                         }
                         {
                             (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
@@ -103,7 +158,18 @@ export default function Page() {
                         }
                     </span>
                 </div>
+
+
                 }
+
+                {/* <OrderMenuModal
+                visible={vm.showModal}
+                closeModal={()=>vm.setShowModal(false)}
+                data={vm.order}
+                handleProcess={()=>console.log('hello')}
+                /> */}
+
+            {receiptHtml()}
             </div>
         );
     }else{

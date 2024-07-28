@@ -13,10 +13,12 @@ import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
 import { DomainOrderItem, OrderItemResult } from "@/domain/OrderItem";
 import { CartPopFinal } from "@/components/CartPopFinal";
 
+
 export default function Home() {
   const vm_category = CategoryViewModel()
   const routeAnimation =useRouteAnimation()
   const [cartVisible, setCartVisible] = useState(false)
+
   const vm = MainPageViewModel()
 
   function handleProsesOrder(){
@@ -31,25 +33,23 @@ export default function Home() {
     if(vm.isLoading) {
       vm.animationStore.setIsOpen(true)
     }
-    if(vm.query.get('mode')==='dine-in' && vm.query.get('table')!==null){
-      if(localStorage.getItem('guest')===null)localStorage.setItem('guest',generateRandomString(50))
-      if(!localStorage.getItem('table'))localStorage.setItem('table',vm.query.get('table')!)
-    }
-    if(localStorage.getItem('order')){
-      const order = JSON.parse(localStorage.getItem('order') || '')
-      vm.setOrderToCart(order.items)
-    }
-    
-    console.log(vm.cartResult)
-
+   
   }, []);
+
+  useEffect(() => {
+    vm.getOrder
+    vm.setOrder(vm.getOrder?.data?.data ?? null)
+    console.log(vm.order)
+  },[vm.getOrder])
 
   useEffect(() => {
     vm.setOrderItemList(vm.data?.data.map((v) => new DomainOrderItem({
       ...v,
       quantity: 0,
       total_price: 0,
-      stage:1
+      stage:1,
+      status:"proses",
+      uuid_item: generateRandomString(40)
     })) || [])
     if(vm.orderToCart.length>0){
       vm.setCartResult({
@@ -175,7 +175,7 @@ console.log(vm.cartResult)
       data={vm.cartResult!}
       visible={cartVisible}
       onVisibleChange={()=>setCartVisible(false)}
-      click={()=>handleProsesOrder()}
+      click={()=>vm.handleAdjustment()}
       onUpdateData={(e)=>(vm.setCartResult(e),vm.setOrderToCart(e.items))}
       />
     </main>

@@ -13,6 +13,9 @@ export const OrderDetailViewModel = () => {
     const user:DomainUserWithProfile | null = cookies.user ? new DomainUserWithProfile(JSON.parse(cookies.user)) : null
     const guest = localStorage.getItem('guest') || ''
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [order, setOrder] = useState<DomainOrder | null>(null);
+
     const handleFileSelect = (file: File) => {
         console.log('Selected file:', file);
         setSelectedFile(file);
@@ -35,6 +38,25 @@ export const OrderDetailViewModel = () => {
         }
     } 
    
+    const handleDownload = (e:HTMLElement) => {
+        // Buat canvas dan gambar elemen ke canvas
+        const canvas = document.createElement('canvas');
+        canvas.width = 5000;
+        canvas.height = 1000;
+        const context = canvas.getContext('2d');
+    
+        context!.font = "16px Arial";
+        context!.fillText(e.innerText, 10, 50);
+    
+        // Konversi canvas ke data URL
+        const dataURL = canvas.toDataURL('image/pdf');
+    
+        // Buat link download
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'download.pdf';
+        link.click();
+      };
     
 
     return {
@@ -46,7 +68,12 @@ export const OrderDetailViewModel = () => {
         mutate,
         handleFileSelect,
         selectedFile,
-        handleUploadImage
+        handleUploadImage,
+        showModal,
+        setShowModal,
+        order,
+        setOrder,
+        handleDownload
 
     }
 }
