@@ -17,10 +17,10 @@ console.log(userData)
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  if(user && !userData?.roles.includes('admin')) {
+  if(pathname === '/processing' && !userData?.roles.includes('admin')) {
     return NextResponse.redirect(new URL('/', request.url));
   }
-  if(user && !userData?.roles.includes('kurir')) {
+  if(pathname === '/kurir' && !userData?.roles.includes('kurir')) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
