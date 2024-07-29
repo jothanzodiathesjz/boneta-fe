@@ -183,7 +183,7 @@ console.log(vm.cartResult)
 
       {/* PRODUCT CARD START */}
       <div className="grid grid-cols-2 gap-3">
-        {vm.orderItemList.map((v,k) => (
+        {vm.orderItemList.filter((v)=>v.category?.name.toLowerCase().includes(vm.selectedButton?.name.toLowerCase() ?? '')).map((v,k) => (
           <ProductCard
             key={k}
             className="w-full flex flex-col justify-center shadow-xl "
@@ -194,7 +194,6 @@ console.log(vm.cartResult)
               width={200}
               height={300}
               className="rounded mx-auto"
-             
             />
             <div className="px-3 mt-2 flex flex-col py-3">
               <span className="font-semibold text-normal text-dark">

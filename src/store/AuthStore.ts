@@ -1,13 +1,15 @@
 import { create } from 'zustand';
 import { DomainUserWithProfile } from '@/domain/Users';
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
 
 export type AuthStore = {
     user: DomainUserWithProfile | null;
     isAuthenticated: boolean;
     setUser: (user: DomainUserWithProfile | null) => void;
     fetchUser: (token: string) => Promise<void>;
+    logOut: () => Promise<void>;
 }
+
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
     user: null,
@@ -44,6 +46,12 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
             set({ user: null, isAuthenticated: false });
         }
     },
+    logOut: async () => {
+        set({ user: null, isAuthenticated: false });
+        destroyCookie(null, 'user')
+        destroyCookie(null, 'accessToken')
+        localStorage.removeItem('access_token')
+    }
 }));
 
 // Usage example (in a component):

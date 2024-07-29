@@ -40,6 +40,10 @@ useEffect(() => {
             <span className='text-neutral-50'>: {vm.data1.data?.data.customer.address}</span>
         </div>
         <div className='w-full flex flex-row'>
+            <span className='w-44 flex-shrink-0'>No Telepon</span>
+            <span className='text-neutral-50'>: {vm.data1.data?.data.customer.phone}</span>
+        </div>
+        <div className='w-full flex flex-row'>
             <span className='w-44 flex-shrink-0'>Lihat Lokasi</span>
             <Button
             label='Lihat Lokasi'
@@ -87,10 +91,14 @@ useEffect(() => {
                         <span className="text-neutral-40">{vm.data1?.data?.data.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
 
-                    <Button
+                   {vm.data1.data?.data.status === 'ready' && <Button
                     label='Antar Pesanan'
                     onClick={()=>vm.handleProcess(vm.data1.data?.data.uuid!,'in-delivery')}
-                    />
+                    />}
+                    {vm.data1.data?.data.status === 'in-delivery' &&<Button
+                    label='Akhiri Pesanan'
+                    onClick={()=>vm.handleProcess(vm.data1.data?.data.uuid!,'ended')}
+                    />}
                 </div>
     </div>
   )

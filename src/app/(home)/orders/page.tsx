@@ -26,7 +26,7 @@ export default function Orders() {
             <div className="p-5"></div>
             <div className="relative p-5 flex justify-center items-center bg-white shadow-sm">
                 <button
-                    onClick={() => router.back()}
+                    onClick={() => router.push("/")}
                     className="absolute left-3 flex items-center font-bold text-neutral-500"
                 >
                     <span className="material-icons text-3xl">navigate_before</span>
@@ -56,7 +56,8 @@ export default function Orders() {
                                 </span>
                                 <div className="flex flex-row gap-3 text-neutral-50">
                                 <span className="text-red-400">{UnixToDateString(item.created_at!)}</span> -
-                                <span className="text-neutral-40">{item.delivery ? 'Delivery' : 'Dine In'}</span>
+                                <span className="text-neutral-40">{item.delivery ? 'Delivery' : 'Dine In'}</span> -
+                                <span className="text-neutral-40">{item.status}</span>
                                 </div>
                             </div>
                             <span style={{ fontSize: '1.8rem' }} className="material-icons ">chevron_right</span>

@@ -52,7 +52,7 @@ export default function Page() {
                 <div className="p-5"></div>
                 <div className="relative p-5 flex justify-center items-center bg-white shadow-sm">
                     <button
-                        onClick={() => router.back()}
+                        onClick={() => router.push(`/orders`)}
                         className="absolute left-3 flex items-center font-bold text-neutral-500"
                     >
                         <span className="material-icons text-3xl">navigate_before</span>
@@ -66,10 +66,10 @@ export default function Page() {
                     onClick={()=>vm.handleDownload(contentRef.current!)}
                     className="text-primary-hover"><i className="pi pi-download"></i> Receipt
                     </button>
-                ) :(<button 
+                ) :(!vm.data.data.delivery ? <button 
                 onClick={()=>router.push(`/adjustment/${vm.data?.data.uuid}`)}
                 className="text-primary-hover">+ Tambah Pesanan
-                </button>)}
+                </button> : null)}
                 </div>
                 <div className="w-full flex flex-col bg-white gap-3 p-5">
                     <div className="flex w-full justify-between">
@@ -114,7 +114,10 @@ export default function Page() {
                 }
                 {(vm.data.data.payment.value === 'transfer' && 
                 vm.data.data.status === 'ready' && 
-                !vm.data.data.payment_image ) ?
+                !vm.data.data.payment_image ) 
+                
+                ?
+
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                         <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>
                        <FileUpload
@@ -133,7 +136,7 @@ export default function Page() {
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                     <span className="text-center font-medium text-neutral-40">
                         {
-                            (vm.data.data.status === 'pending' && vm.data.data.payment.value === 'transfer' ? "Menunggu konfirmasi dari kasir" : "")
+                            (vm.data.data.status === 'waiting' && vm.data.data.payment.value === 'transfer' ? "Menunggu konfirmasi dari kasir" : "")
                         }
                         {
                             (vm.data.data.status === 'ready' && vm.data.data.payment_image ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
@@ -154,12 +157,32 @@ export default function Page() {
                             (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
                         }
                         {
-                            (vm.data.data.status === 'in-delivery' && vm.data.data.payment.value === 'cod' ? "Pesanan dalam perjalanan" : "")
+                            (vm.data.data.status === 'in-delivery'  ? "Pesanan dalam perjalanan" : "")
                         }
                     </span>
                 </div>
 
 
+                }
+                
+                {
+                    vm.data.data.status === 'waiting' && 
+                    vm.data.data.delivery &&
+                    !vm.data.data.payment_image &&
+                    vm.data.data.payment.value === "transfer" &&
+                    <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
+                        <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>
+                       <FileUpload
+                       allowedFileTypes={['image/png', 'image/jpeg', 'image/jpg']}
+                       onFileSelect={vm.handleFileSelect}
+                       />
+                       <Button
+                       disabled={vm.selectedFile === null}
+                       onClick={vm.handleUploadImage}
+                       label="Upload"
+                       className="w-full"
+                       />
+                </div>
                 }
 
                 {/* <OrderMenuModal

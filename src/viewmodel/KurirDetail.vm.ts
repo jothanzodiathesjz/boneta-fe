@@ -30,6 +30,7 @@ const data1 = http.Send<DomainOrder>('/api/orderone/'+oid,undefined,{
         } catch (error) {
             console.log(error)
         }
+        data1.mutate()
     }
 
 

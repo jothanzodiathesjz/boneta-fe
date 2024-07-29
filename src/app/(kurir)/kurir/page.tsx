@@ -13,8 +13,8 @@ export default function page() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const items = [
-      { label: 'Dashboard', icon: 'pi pi-home' },
-      { label: 'Transactions', icon: 'pi pi-chart-line' },
+      { label: 'Ready', icon: 'pi pi-bars' },
+      { label: 'In Delivery', icon: 'pi pi-send' },
   ];
 
   useEffect(() => {

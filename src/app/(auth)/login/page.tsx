@@ -70,6 +70,7 @@ export default function Login() {
           <InputText
             id="username"
             placeholder="Username"
+            inputMode="text"
             value={vm.auth.username}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => vm.setAuth({ ...vm.auth, username: e.target.value })}
           />
@@ -78,6 +79,13 @@ export default function Login() {
             id="password"
             type="password"
             placeholder="Password"
+            enterKeyHint="go"
+            onKeyUp={(e) => {
+              if(e.code === 'Enter') {
+                handleLogin()
+              }
+            }}
+          
             value={vm.auth.password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => vm.setAuth({ ...vm.auth, password: e.target.value })}
           />

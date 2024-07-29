@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar as PSidebar } from "primereact/sidebar";
 import { getCookie, deleteCookie } from "@/utils/cookies";
+import { useAuthStore } from "@/store/AuthStore";
 type SidebarProps = {
   toogle: (v: boolean) => void;
   isOpen: boolean;
@@ -11,6 +12,7 @@ type SidebarProps = {
 const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const authStore = useAuthStore();
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = React.useState(false);
   const handleClickOutside = (event: MouseEvent) => {
@@ -27,17 +29,17 @@ const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
   const jsonString = user ? decodeURIComponent(user) : "";
   const dataObject = jsonString && JSON.parse(jsonString);
 
-  const hanldeLogout = () => {
-    deleteCookie("accessToken");
-    deleteCookie("user");
-    router.push("/");
+  const logout = async () => {
+    await authStore.logOut()
     toogle(false);
-  };
+    router.push("/")
+  }
+
 
   useEffect(() => {
     setVisible(isOpen);
     console.log(dataObject);
-  }, [isOpen, hanldeLogout]);
+  }, [isOpen, logout]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -125,7 +127,7 @@ const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
               </button>
               {token && (
                 <button
-                  onClick={() => hanldeLogout()}
+                  onClick={() => logout()}
                   className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md"
                 >
                   <span className="material-icons text-neutral-500">

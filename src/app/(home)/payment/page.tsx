@@ -5,6 +5,7 @@ import React, { useEffect, useState ,useMemo,useCallback} from "react";
 import dynamic from "next/dynamic";
 // import MapComponent from "@/components/Map";
 import TextInput from "@/components/input/TextInput.component";
+import { InputText } from "primereact/inputtext";
 import {useRouter} from "next/navigation";
 import {useCountStore} from "@/store/TriggerStore";
 import { PaymentViewModel } from "@/viewmodel/Payment.vm";
@@ -90,14 +91,22 @@ useEffect(() => {
       <span className="ms-5 ">Customer Information</span>
       <div className="w-full pb-44 flex bg-white flex-col gap-3 px-5 pt-5">
         {/* items */}
-        <TextInput
-          onChange={(e) => vm.setFullName(e.target.value)}
-          id="name"
-          icon="person"
-          label="Name"
-          value={vm.fullName}
-          placeholder="Masukkan nama lengkap"
+        <div className="w-full flex flex-col gap-2">
+        <span>Nama Lengkap</span>
+        <div className="p-inputgroup flex-1">
+                <span className="p-inputgroup-addon">
+                    <i className="pi pi-user"></i>
+                </span>
+                <InputText
+        value={vm.fullName}
+        onChange={(e) => vm.setFullName(e.target.value)}  
+        placeholder="Masukkan Nama Lengkap"
+
         />
+            </div>
+        </div>
+        
+    
         {/* items */}
         {/* <TextInput
           id="email"
@@ -107,37 +116,61 @@ useEffect(() => {
           label="email"
           placeholder="Masukkan email"
         /> */}
-        {/* <TextInput
-          id="telepon"
-          icon="phone"
-          value={vm.phone}
-          label="telepon"
-          placeholder="Masukkan Telepon"
-          onChange={(e) => vm.setPhone(e.target.value)}
-        /> */}
+       {!vm.table && 
+       <div className="w-full flex flex-col gap-2">
+       <span>No Telepon</span>
+       <div className="p-inputgroup flex-1">
+                <span className="p-inputgroup-addon">
+                    <i className="pi pi-phone"></i>
+                </span>
+                <InputText
+        value={vm.phone}
+        maxLength={14}
+        onChange={(e) => vm.setPhone(e.target.value)}  
+        placeholder="Masukkan Nomor Telepon"
+        />
+            </div>
+       </div>
+            
+            }
 
-       {!vm.table && <TextInput
-          id="address"
-          icon="location_on"
-          value={vm.address}
-          label="address"
-          placeholder="Masukkan alamat"
-          onChange={(e) => vm.setAddress(e.target.value)}
-        />}
+       {!vm.table && 
+       <div className="w-full flex flex-col gap-2">
+       <span>Alamat</span>
+       <div className="p-inputgroup flex-1">
+                <span className="p-inputgroup-addon">
+                    <i className="pi pi-map-marker"></i>
+                </span>
+                <InputText
+        value={vm.address}
+        onChange={(e) => vm.setAddress(e.target.value)}  
+        placeholder="Masukkan Alamat Lengkap"
+
+        />
+            </div>
+       </div>
+            }
         {/* <InputText
         value={vm.table}
         disabled
         className="shadow-sm"
         /> */}
-        {vm.table && <TextInput
-          id="table"
-          icon="table_restaurant"
-          label="table"
-          disabled
-          value={vm.table}
-          placeholder="Masukkan table"
-          onChange={(e) => vm.setTable(e.target.value)}
-        />}
+        {vm.table && 
+        <div className="w-full flex flex-col gap-2">
+        <span>Meja</span>
+        <div className="p-inputgroup flex-1">
+                <span className="p-inputgroup-addon">
+                    <i className="pi pi-file"></i>
+                </span>
+                <InputText
+        value={vm.table}
+        onChange={(e) => vm.setTable(e.target.value)}  
+        placeholder="Masukkan Nama Lengkap"
+
+        />
+            </div>
+        </div>
+            }
         {vm.table === undefined && <div className="w-full flex flex-col gap-3">
         <span>Pilih Lokasi Anda</span>
         <MapComponent onCoordsChange={handleCoordsChange} />

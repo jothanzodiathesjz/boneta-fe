@@ -28,6 +28,7 @@ export const MainPageViewModel = () => {
     const [cartResult, setCartResult] = useState<OrderItemResult | null>(null);
     const {data,isError,isLoading} = http.Send<DomainMenu[]>('/api/menu?search='+search);
     const [order, setOrder] = useState<DomainOrder | null>(null);
+    const [filtered, setFiltered] = useState<string>("");
     const cookies = parseCookies()
     const guest = localStorage.getItem('guest') || ''
     const user:DomainUserWithProfile | null = cookies.user ? new DomainUserWithProfile(JSON.parse(cookies.user)) : null
@@ -170,6 +171,8 @@ export const MainPageViewModel = () => {
         order,
         setOrder,
         getOrder,
-        handleAdjustment
+        handleAdjustment,
+        filtered,
+        setFiltered
     }
 }

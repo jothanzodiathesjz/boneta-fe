@@ -171,7 +171,23 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                     </div>
                      </>
                     }
-                    {data?.status === 'ready' && data.payment_image && <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
+                    {
+                    data?.status === 'ready' && 
+                    data.payment_image && 
+                    
+                    <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
+                        <span>Bukti Pembayaran</span>
+                        <Image 
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
+                        alt="Image" width="250" 
+                        preview />
+                    </div>}
+                    {
+                    data?.status === 'waiting' && 
+                    data.payment_image && 
+                    data.delivery && 
+                    
+                    <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
                         <span>Bukti Pembayaran</span>
                         <Image 
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
