@@ -20,11 +20,17 @@ console.log(userData)
   if(user && !userData?.roles.includes('admin')) {
     return NextResponse.redirect(new URL('/', request.url));
   }
+  if(user && !userData?.roles.includes('kurir')) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
 
   return NextResponse.next();
 }
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: '/processing/:route*',
+  matcher: [
+    '/processing/:route*',
+    '/kurir/:route*',
+  ],
 }
