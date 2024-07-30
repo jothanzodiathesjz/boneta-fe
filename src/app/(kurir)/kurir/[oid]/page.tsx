@@ -60,6 +60,10 @@ useEffect(() => {
                         <span>Order ID</span>
                         <span>{vm.data1.data?.data.order_id}</span>
                     </div>
+                    <div className="flex w-full justify-between">
+                        <span>Order ID</span>
+                        <span>{vm.data1.data?.data.payment.name}</span>
+                    </div>
                     <div className="flex w-full justify-between border-b border-neutral-80 pb-3">
                         <span>Order Status</span>
                         <span className="text-danger-pressed">{vm.data1.data?.data.status}</span>
