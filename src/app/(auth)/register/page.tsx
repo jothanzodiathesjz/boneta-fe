@@ -35,34 +35,72 @@ export default function RegisterPage() {
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         const [mainField, subField] = name.split('.');
-
+    
         if (subField) {
-            setFormData((prevState) => ({
-                ...prevState,
-                [mainField]: {
-                    ...prevState[mainField as keyof typeof formData],
-                    [subField]: value
+            setFormData((prevState) => {
+                const mainFieldObject = prevState[mainField as keyof typeof formData] as unknown;
+                if (typeof mainFieldObject === 'object' && mainFieldObject !== null) {
+                    return {
+                        ...prevState,
+                        [mainField]: {
+                            ...mainFieldObject,
+                            [subField]: value
+                        }
+                    };
                 }
-            }));
+                return prevState;
+            });
+    
+            if (value.trim() === '') {
+                setErrors((prevState) => {
+                    const mainFieldErrors = prevState[mainField as keyof typeof errors] as unknown;
+                    if (typeof mainFieldErrors === 'object' && mainFieldErrors !== null) {
+                        return {
+                            ...prevState,
+                            [mainField]: {
+                                ...mainFieldErrors,
+                                [subField]: `${subField} is required`
+                            }
+                        };
+                    }
+                    return prevState;
+                });
+            } else {
+                setErrors((prevState) => {
+                    const mainFieldErrors = prevState[mainField as keyof typeof errors] as unknown;
+                    if (typeof mainFieldErrors === 'object' && mainFieldErrors !== null) {
+                        return {
+                            ...prevState,
+                            [mainField]: {
+                                ...mainFieldErrors,
+                                [subField]: ''
+                            }
+                        };
+                    }
+                    return prevState;
+                });
+            }
         } else {
             setFormData((prevState) => ({
                 ...prevState,
                 [name]: value
             }));
-        }
-
-        if (value.trim() === '') {
-            setErrors((prevState) => ({
-                ...prevState,
-                [name]: `${name} is required`,
-            }));
-        } else {
-            setErrors((prevState) => ({
-                ...prevState,
-                [name]: '',
-            }));
+    
+            if (value.trim() === '') {
+                setErrors((prevState) => ({
+                    ...prevState,
+                    [name]: `${name} is required`,
+                }));
+            } else {
+                setErrors((prevState) => ({
+                    ...prevState,
+                    [name]: '',
+                }));
+            }
         }
     };
+    
+    
 
     const handleNumberChange = (name: string, value: number) => {
         setFormData((prevState) => ({
