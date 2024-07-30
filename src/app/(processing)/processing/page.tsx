@@ -37,8 +37,8 @@ export default function Chasier() {
     icon: "more",
   },
   {
-    name: "Stok",
-    path: "/processing/stok",
+    name: "Stocks",
+    path: "/processing/stocks",
     icon: "inventory_2",
   }
 ];

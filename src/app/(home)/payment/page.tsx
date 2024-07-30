@@ -164,6 +164,7 @@ useEffect(() => {
                 </span>
                 <InputText
         value={vm.table}
+        disabled
         onChange={(e) => vm.setTable(e.target.value)}  
         placeholder="Masukkan Nama Lengkap"
 

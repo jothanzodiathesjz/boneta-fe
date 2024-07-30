@@ -7,7 +7,7 @@ import React, {useEffect, useState,useRef } from "react";
 import { CartPopup } from "@/components/CartPopup";
 import {CartResult} from "@/components/CartResult";
 import { CategoryViewModel } from "@/viewmodel/Category";
-import { generateRandomString } from "@/utils/randomstring";
+import { generateRandomString,generateMantulString,getPrefixMantulString } from "@/utils/randomstring";
 import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
 import { DomainOrderItem, OrderItemResult } from "@/domain/OrderItem";
@@ -78,9 +78,12 @@ export default function Home() {
     if(vm.isLoading) {
       vm.animationStore.setIsOpen(true)
     }
-    if(vm.query.get('mode')==='dine-in' && vm.query.get('table')!==null){
-      if(localStorage.getItem('guest')===null)localStorage.setItem('guest',generateRandomString(50))
-      if(!localStorage.getItem('table'))localStorage.setItem('table',vm.query.get('table')!)
+    if(
+      vm.query.get('mode')==='dine-in' && 
+      vm.query.get('table') 
+    ){
+      if(!localStorage.getItem('guest'))localStorage.setItem('guest',generateRandomString(50))
+      localStorage.setItem('table',vm.query.get('table')!)
       localStorage.removeItem('delivery')
     }else{
       localStorage.removeItem('table')
