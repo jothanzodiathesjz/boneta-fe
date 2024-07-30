@@ -95,5 +95,18 @@ export class HttpClient {
     }
     
     
+    async Get<T>(endpoint: string, options?: FetchOptions): Promise<Response<T>> {
+      const response = await fetch(`${this.base_url}${endpoint}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${this.token}`,
+        },
+        ...options
+      });
+      const data = await response.json();
+      return data;
+    }
+    
+    
     
   }

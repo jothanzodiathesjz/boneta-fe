@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent, useRef } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useRef, useEffect } from 'react';
+import { userModalViewModel } from '@/viewmodel/User.vm';
 import { Sidebar } from 'primereact/sidebar';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
@@ -6,13 +7,16 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { InputNumber } from 'primereact/inputnumber';
-import { DomainProfile } from '@/domain/Users';
+import { DomainProfile,DomainUser, DomainUserWithProfile } from '@/domain/Users';
 import { DomainAuth } from '@/domain/Auth';
+import { Checkbox } from "primereact/checkbox";
+import { CheckboxChangeEvent } from 'primereact/checkbox';
 
 type UserModalFormType = {
     uuid: string;
     visible: boolean;
     updating: boolean;
+    selected: DomainUserWithProfile | null;
     submit: (data: any) => void;
     closeModal: () => void;
 };
@@ -39,8 +43,9 @@ const stylePt = {
     },
 };
 
-export default function UserModalForm({ uuid, closeModal, visible, submit, updating }: UserModalFormType) {
+export default function UserModalForm({ uuid, closeModal, visible, submit, updating,selected }: UserModalFormType) {
     const toast = useRef<Toast>(null);
+    const vm = userModalViewModel();
     const [auth, setAuth] = useState<DomainAuth>({
         password: '',
         username: '',
@@ -63,6 +68,26 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
         fullName: '',
         email: '',
     });
+
+    const [roles, setRoles] = useState<string[]>([]);
+    const role_options = [
+        "admin",
+        "user",
+        "kurir",
+        "kasir",
+        "pimpinan",
+        "kitchen",
+    ]
+    const onIngredientsChange = (e: CheckboxChangeEvent) => {
+        let _roles = [...roles];
+
+        if (e.checked)
+            _roles.push(e.value);
+        else
+            _roles.splice(_roles.indexOf(e.value), 1);
+
+        setRoles(_roles);
+    }
 
     const handleAuthChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -160,6 +185,22 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
         }
     };
 
+    const clearForm = () => {
+        setAuth({
+            password: '',
+            username: '',
+        });
+        setProfile({
+            address: '',
+            age: 0,
+            firstName: '',
+            lastName: '',
+        })
+        setFullName('');
+        setRoles([]);
+        setEmail('');
+    }
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         let valid = true;
@@ -235,9 +276,21 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                 fullName,
                 email,
             };
-            submit(userData);
+            vm.createUser(auth,profile,fullName,roles,email);
         }
     };
+useEffect(() => {
+    if(updating && selected){
+        setAuth({
+            username:selected?.username!,
+            password:""
+        })
+        setProfile(selected.profile)
+        setEmail(selected.email!)
+        setFullName("")
+        setRoles(selected.roles)
+    }
+},[updating,uuid])
 
     return (
         <Sidebar
@@ -246,7 +299,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
             visible={visible}
             header="User Form"
             position="bottom"
-            onHide={closeModal}
+            onHide={()=>(closeModal(),clearForm())}
         >
             <Toast ref={toast} />
             <div className="w-full flex flex-row">
@@ -262,6 +315,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                     <InputText
                                         id="username"
                                         name="username"
+                                        placeholder='Masuukan username'
                                         value={auth.username}
                                         onChange={handleAuthChange}
                                         className="w-full p-2 border rounded"
@@ -275,6 +329,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                     <InputText
                                         id="password"
                                         name="password"
+                                        placeholder='Masuukan password'
                                         type="password"
                                         value={auth.password}
                                         onChange={handleAuthChange}
@@ -289,6 +344,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                     <InputText
                                         id="firstName"
                                         name="firstName"
+                                        placeholder='Masuukan first name'
                                         value={profile.firstName}
                                         onChange={handleProfileChange}
                                         className="w-full p-2 border rounded"
@@ -302,6 +358,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                     <InputText
                                         id="lastName"
                                         name="lastName"
+                                        placeholder='Masuukan last name'
                                         value={profile.lastName}
                                         onChange={handleProfileChange}
                                         className="w-full p-2 border rounded"
@@ -315,6 +372,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                     <InputText
                                         id="fullName"
                                         name="fullName"
+                                        placeholder='Masukan full name'
                                         value={fullName}
                                         onChange={handleFullNameChange}
                                         className="w-full p-2 border rounded"
@@ -333,6 +391,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                         id="age"
                                         name="age"
                                         value={profile.age}
+                                        placeholder='Masukan age'
                                         onValueChange={(e) => handleNumberChange('age', e.value ?? 0)}
                                         className="w-full p-0"
                                     />
@@ -345,6 +404,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                     <InputText
                                         id="email"
                                         name="email"
+                                        placeholder='Masukan email'
                                         type="email"
                                         value={email}
                                         onChange={handleEmailChange}
@@ -360,6 +420,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                         id="address"
                                         name="address"
                                         value={profile.address}
+                                        placeholder='Masukan address'
                                         onChange={handleProfileChange}
                                         rows={3}
                                         className="w-full p-2 border rounded"
@@ -367,11 +428,26 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                                     {errors.address && <small className="p-error">{errors.address}</small>}
                                 </div>
                                 
-
+                                <label htmlFor="" className="block text-gray-700 font-bold mb-2">
+                                        roles
+                                    </label>
+                                <div className="card flex flex-row justify-content-center gap-3">
+                                    {role_options.map((role,index) => 
+                                    <div 
+                                    key={index}
+                                    className="flex align-items-center">
+                                        <Checkbox inputId={"role"+role} id={"role"+role} name={role} value={role} onChange={onIngredientsChange} checked={roles.includes(role)} />
+                                        <label htmlFor={"role"+role}className="ml-2">{role}</label>
+                                    </div>
+                                )}
+                                </div>
                                 </div>
                             </div>
                         </div>
-                        <Button type="submit" label="Submit" className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                        {!updating && <Button 
+                        type="submit" 
+                        label="Submit" 
+                        className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />}
                     </form>
                 </div>
             </div>

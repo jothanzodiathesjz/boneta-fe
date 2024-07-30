@@ -117,14 +117,14 @@ const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
                 </span>
                 <span className="text-neutral-500 font-semibold">Orders</span>
               </button>
-              <button className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
+              {/* <button className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
                 <span className="material-icons  text-neutral-500">
                   manage_accounts
                 </span>
                 <span className="text-neutral-500 font-semibold">
                   Account Settings
                 </span>
-              </button>
+              </button> */}
               {token && (
                 <button
                   onClick={() => logout()}

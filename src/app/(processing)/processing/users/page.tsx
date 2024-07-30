@@ -1,6 +1,6 @@
 "use client";
 import { DataTable, DataTableSelectEvent } from "primereact/datatable";
-import { useRef } from "react";
+import { useRef,useState } from "react";
 import { Column } from "primereact/column";
 import { useEffect } from "react";
 import { useAnimationStore } from "@/store/AnimateStore";
@@ -15,11 +15,12 @@ export default function page() {
   const animationStore = useAnimationStore();
   const vm = UsersViewModel();
   const toast = useRef<Toast>(null);
+  const [uuid,setUuid] = useState("")
   const onRowSelect = async (event: DataTableSelectEvent) => {
        console.log(event.data)
-      //  vm.setStock(event.data)
+       vm.setSelectedUser(event.data)
        vm.setIsOpen(true)
-      //  vm.setUpdating(true)
+       vm.setUpdating(true)
   };
 
   const bodyTambahan1 = (rowData: DomainUserWithProfile) => {
@@ -119,10 +120,11 @@ export default function page() {
       </div>
       <UserModalForm
       visible={vm.isOpen}
-      updating={true}
-      closeModal={() => vm.setIsOpen(false)}
+      selected={vm.selectedUser}
+      updating={vm.updating}
+      closeModal={() => (vm.setIsOpen(false),vm.setUpdating(false),vm.setSelectedUser(null))}
       submit={() => console.log("submit")}
-      uuid=""
+      uuid={uuid}
       />
     </main>
   );

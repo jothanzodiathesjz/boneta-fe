@@ -15,6 +15,9 @@ export const UsersViewModel = () => {
     const [auth,setAuth] = useState<DomainAuth>();
     const [profile,setProfile] = useState<DomainProfile>();
     const [isOpen,setIsOpen] = useState(false);
+    const [updating, setUpdating] = useState(false);
+    const [selectedUser,setSelectedUser] = useState<DomainUserWithProfile | null>(null);
+    
 
     const data = http.Send<DomainUserWithProfile[]>('/api/userlist',undefined,{
         headers: {
@@ -25,37 +28,7 @@ export const UsersViewModel = () => {
         revalidateOnMount: true
     })
 
-    const createStock = async (d:DomainStocks) => {
-        // try {
-        //     if(updating){
-        //         const response = await http.Put<DomainStocks>(`/api/stock/${d.uuid}`, {
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 "Authorization": `Bearer ${coockies}`
-        //             },
-        //             body: JSON.stringify(new DomainStocks({
-        //                 ...d
-        //             }))
-        //         })
-        //     }else{
-        //         const response = await http.Post<DomainStocks>('/api/stock', {
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //                 "Authorization": `Bearer ${coockies}`
-        //             },
-        //             body: JSON.stringify(new DomainStocks({
-        //                 ...d,
-        //                 created_at: new Date().getTime()
-        //             }))
-        //         })
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
-        // data.mutate()
-        // setUpdating(false)
-        
-    }
+  
 
     const deleteUser = async (d:DomainUserWithProfile) => {
         const accept =async () => {
@@ -105,8 +78,70 @@ export const UsersViewModel = () => {
         isOpen,
         setIsOpen,
         deleteUser,
+        updating,
+        setUpdating,
+        selectedUser,
+        setSelectedUser,
     }
 
 
 
+}
+
+export const userModalViewModel = () => {
+    const [uuid,setUuid] = useState("")
+    const [updating,setUpdating] = useState(false)
+   
+    const getUser = async (uuid:string) => {
+        try {
+            const data = await http.Get<DomainUserWithProfile>(`/api/user/${uuid}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${coockies}`
+                }
+            })
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const createUser = async (
+        auth:DomainAuth,
+        profile:DomainProfile,
+        fullName:string,
+        roles:string[],
+        email:string
+    ) => {
+        try {
+                const response = await http.Post<DomainUserWithProfile>('/api/create-user', {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${coockies}`
+                    },
+                    body: JSON.stringify({
+                        username: auth.username,
+                        password: auth.password,
+                        profile,
+                        roles,
+                        fullName,
+                        email
+                    })
+                })
+            
+        } catch (error) {
+            console.log(error)
+        }
+        setUpdating(false)
+        
+    }
+
+    return {
+        uuid,
+        setUuid,
+        createUser,
+        getUser,
+    }
+
+    
 }

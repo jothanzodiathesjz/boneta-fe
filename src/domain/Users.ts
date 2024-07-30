@@ -60,3 +60,4 @@ export class DomainUserWithProfile extends DomainUser{
 export interface UserWithPasswordInit extends UserInit{
     password: string
 }
+
