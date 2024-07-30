@@ -8,42 +8,46 @@ import { DomainStocks } from "@/domain/Stocks";
 import { Button } from "primereact/button";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-import { StocksViewModel } from "@/viewmodel/Stocks.vm";
-import StockModal from "@/components/stocks/StockModal";
+import { UsersViewModel } from "@/viewmodel/User.vm";
+import { DomainUserWithProfile } from "@/domain/Users";
+import UserModalForm from "@/components/user/UserModalForm";
 export default function page() {
   const animationStore = useAnimationStore();
-  const vm = StocksViewModel();
+  const vm = UsersViewModel();
   const toast = useRef<Toast>(null);
   const onRowSelect = async (event: DataTableSelectEvent) => {
        console.log(event.data)
-       vm.setStock(event.data)
+      //  vm.setStock(event.data)
        vm.setIsOpen(true)
-       vm.setUpdating(true)
+      //  vm.setUpdating(true)
   };
-  function convertToISOWithoutOffset(dateString: string) {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0];
-  }
-  const bodyTambahan = (rowData: DomainStocks) => {
+
+  const bodyTambahan1 = (rowData: DomainUserWithProfile) => {
+    return (
+      <span>{rowData.profile.firstName + " - " + rowData.profile.lastName}</span>
+    );
+  };
+  const bodyTambahan2 = (rowData: DomainUserWithProfile) => {
+    return (
+      <span>{rowData.roles.join()}</span>
+    );
+  };
+  const bodyTambahan = (rowData: DomainUserWithProfile) => {
     return (
       <div className="flex flex-row gap-3">
         <Button
           icon="pi pi-trash"
           className="p-button-danger"
-          onClick={() => vm.deleteStock(rowData)}
+          onClick={() => vm.deleteUser(rowData)}
         />
       </div>
     );
   };
 
   useEffect(() => {
-    console.log(convertToISOWithoutOffset("2024/07/29"));
     return animationStore.setIsOpen(true);
   }, [animationStore.isOpen]);
 
-  useEffect(()=>{
-
-  },[vm.updating])
 
   return (
     <main className="min-h-screen pt-20">
@@ -52,10 +56,10 @@ export default function page() {
       <div className="w-full h-full flex gap-4 px-5">
         <div className="w-full flex flex-col gap-3 bg-white rounded-sm ">
             <div className="w-full flex justify-between items-center">
-                <span>Stocks</span>
+                <span>Users</span>
                 <Button
                 size="small"
-                label="Add Stock"
+                label="Add user"
                 onClick={()=>vm.setIsOpen(true)}
                 />
             </div>
@@ -77,52 +81,48 @@ export default function page() {
               selectionMode={"single"}
             >
               <Column
-                field="name"
-                header="Name"
-                headerClassName="bg-primary-surface p-2 font-normal "
+                field="username"
+                header="Username"
+                headerClassName="bg-primary-surface py-2 px-4 font-normal "
                 sortable
               ></Column>
               <Column
-                field="quantity"
-                header="Quantity"
+                field=""
+                body={bodyTambahan1}
+                header="Full Name"
+                headerClassName="bg-primary-surface py-2 px-4 font-normal"
+                sortable
+              ></Column>
+              <Column
+                field="email"
+                header="Email"
                 headerClassName="bg-primary-surface p-2 font-normal"
                 sortable
               ></Column>
               <Column
-                field="category"
-                header="Category"
-                headerClassName="bg-primary-surface p-2 font-normal"
-                sortable
-              ></Column>
-              <Column
-                field="unit"
-                header="Unit"
-                headerClassName="bg-primary-surface p-2 font-normal"
-                sortable
-              ></Column>
-              <Column
-                field="price"
-                header="Price"
+                field=""
+                body={bodyTambahan2}
+                header="Roles"
                 headerClassName="bg-primary-surface p-2 font-normal"
                 sortable
               ></Column>
               <Column
                 field=""
                 body={bodyTambahan}
-                header="Total Price"
-                headerClassName="bg-primary-surface p-2 font-normal"
-                sortable
+                header=""
+                headerClassName="bg-primary-surface py-2 px-4 font-normal"
+      
               ></Column>
             </DataTable>
           </div>
         </div>
       </div>
-      <StockModal
+      <UserModalForm
       visible={vm.isOpen}
-      udpating={vm.updating}
-      submit={(e)=>vm.createStock(e)}
-      closeModal={() => (vm.setIsOpen(false),vm.setUpdating(false))}
-      data={vm.stock}
+      updating={true}
+      closeModal={() => vm.setIsOpen(false)}
+      submit={() => console.log("submit")}
+      uuid=""
       />
     </main>
   );

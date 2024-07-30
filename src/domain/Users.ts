@@ -1,15 +1,15 @@
 export interface ProfileInit{
-    firstName: String,
-    lastName: String,
-    age: Number,
-    address: String
+    firstName: string,
+    lastName: string,
+    age: number,
+    address: string
 }
 
 export class DomainProfile{
-    firstName: String;
-    lastName: String;
-    age: Number;
-    address: String;
+    firstName: string;
+    lastName: string;
+    age: number;
+    address: string;
 
     constructor(init:ProfileInit) {
         this.firstName = init.firstName
@@ -55,4 +55,8 @@ export class DomainUserWithProfile extends DomainUser{
         super(init)
         this.profile = new DomainProfile(init.profile)
     }
+}
+
+export interface UserWithPasswordInit extends UserInit{
+    password: string
 }
