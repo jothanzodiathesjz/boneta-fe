@@ -212,12 +212,12 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                     onClick={()=>(handleProcess('ended'),setTotalBayar(0),setKembalian(0))}
                     className="w-full"
                     />}
-                    <Button
+                   {data?.status === 'waiting' && <Button
                     label="Reject"
                     severity="warning"
                     onClick={hanldeReject}
                     className="w-full"
-                    />
+                    />}
                     </div>
                 </div>
             </div>
