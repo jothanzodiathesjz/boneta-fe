@@ -5,7 +5,7 @@ import { DomainUserWithProfile } from "@/domain/Users";
 import { useAuthStore } from "@/store/AuthStore";
 import { useState,useEffect } from "react";
 import { getCookie,parseCookie } from "@/utils/cookies";
-
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
 export default function DashboardHeader({toogle}:any) {
   const {route} = useBackRouteStore((state) => state)
   const authStore = useAuthStore();
@@ -14,6 +14,9 @@ export default function DashboardHeader({toogle}:any) {
   const [user, setUser] = useState<DomainUserWithProfile | null>(null)
 const logout = async () => {
   await authStore.logOut()
+  destroyCookie(null, 'user')
+  destroyCookie(null, 'accessToken')
+  localStorage.removeItem('access_token')
   router.push("/")
 }
 

@@ -170,20 +170,20 @@ export default function RegisterPage() {
             }));
             valid = false;
         }
-        if (formData.profile.address.trim() === '') {
-            setErrors((prevState) => ({
-                ...prevState,
-                address: 'Address is required',
-            }));
-            valid = false;
-        }
-        if (formData.profile.age <= 0) {
-            setErrors((prevState) => ({
-                ...prevState,
-                age: 'Age must be greater than 0',
-            }));
-            valid = false;
-        }
+        // if (formData.profile.address.trim() === '') {
+        //     setErrors((prevState) => ({
+        //         ...prevState,
+        //         address: 'Address is required',
+        //     }));
+        //     valid = false;
+        // }
+        // if (formData.profile.age <= 0) {
+        //     setErrors((prevState) => ({
+        //         ...prevState,
+        //         age: 'Age must be greater than 0',
+        //     }));
+        //     valid = false;
+        // }
 
         if (valid) {
             // Submit data
@@ -292,7 +292,7 @@ export default function RegisterPage() {
                         />
                         {errors.lastName && <small className="p-error">{errors.lastName}</small>}
                     </div>
-                    <div className="w-full">
+                    {/* <div className="w-full">
                         <label htmlFor="address" className="block text-gray-700 font-bold mb-2">
                             Address
                         </label>
@@ -305,8 +305,8 @@ export default function RegisterPage() {
                             className="w-full p-2 border rounded"
                         />
                         {errors.address && <small className="p-error">{errors.address}</small>}
-                    </div>
-                    <div className="w-full">
+                    </div> */}
+                    {/* <div className="w-full">
                         <label htmlFor="age" className="block text-gray-700 font-bold mb-2">
                             Age
                         </label>
@@ -318,7 +318,7 @@ export default function RegisterPage() {
                             className="w-full"
                         />
                         {errors.age && <small className="p-error">{errors.age}</small>}
-                    </div>
+                    </div> */}
                     <Button type="submit" label="Register" className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
                     <div className="w-full flex justify-end gap-3">
                         <span>Already have an account?</span>
