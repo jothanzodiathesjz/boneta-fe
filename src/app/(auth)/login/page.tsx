@@ -65,7 +65,6 @@ export default function Login() {
           <span style={{ fontSize: "1.2rem" }} className="font-semibold text-4xl text-center">Login</span>
         </div>
         <div className="w-full h-full p-5 flex flex-col gap-4">
-
           <label htmlFor="username">Username</label>
           <InputText
             id="username"
@@ -96,6 +95,12 @@ export default function Login() {
             }}
           />
           <Messages ref={msgs} />
+          <div className="w-full flex justify-end gap-3">
+            <span>Don't have an account?</span>
+            <button className="text-blue-600" 
+            onClick={() => router.push('/register')}
+            >Register</button>
+          </div>
         </div>
       </div>
     </div>

@@ -125,8 +125,10 @@ useEffect(() => {
                 </span>
                 <InputText
         value={vm.phone}
-        maxLength={14}
-        onChange={(e) => vm.setPhone(e.target.value)}  
+        max={14}
+        type="number"
+        onChange={(e) => (
+          e.target.value.length <= 14 && vm.setPhone(e.target.value))}  
         placeholder="Masukkan Nomor Telepon"
         />
             </div>

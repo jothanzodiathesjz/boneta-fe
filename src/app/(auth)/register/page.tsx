@@ -320,6 +320,12 @@ export default function RegisterPage() {
                         {errors.age && <small className="p-error">{errors.age}</small>}
                     </div>
                     <Button type="submit" label="Register" className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                    <div className="w-full flex justify-end gap-3">
+                        <span>Already have an account?</span>
+                        <button className="text-blue-600" 
+                        onClick={() => router.push('/login')}
+                        >Login</button>
+                    </div>
                 </form>
             </div>
         </div>

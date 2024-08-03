@@ -37,9 +37,9 @@ export default function Chasier() {
     icon: "more",
   },
   {
-    name: "Stocks",
-    path: "/processing/stocks",
-    icon: "inventory_2",
+    name:"Kurir",
+    path:"/processing/kurir",
+    icon:"local_shipping"
   }
 ];
 const authStore = useAuthStore();

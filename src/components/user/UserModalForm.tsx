@@ -277,6 +277,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                 email,
             };
             vm.createUser(auth,profile,fullName,roles,email);
+            closeModal();
         }
     };
 useEffect(() => {

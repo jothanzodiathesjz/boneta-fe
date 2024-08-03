@@ -20,12 +20,6 @@ export default function Others() {
         return (
             <React.Fragment >
                 <div className="flex flex-row ">
-                    <Button
-                        icon="pi pi-pencil"
-                        rounded
-                        outlined
-                        className="mr-2"
-                    />
                     <Button icon="pi pi-trash" onClick={() => (vm_category.confirm2(rowData))} rounded outlined severity="danger" />
                 </div>
             </React.Fragment>
