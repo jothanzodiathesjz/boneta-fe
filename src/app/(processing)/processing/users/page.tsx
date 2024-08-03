@@ -49,6 +49,8 @@ export default function page() {
     return animationStore.setIsOpen(true);
   }, [animationStore.isOpen]);
 
+  useEffect(() => {
+  }, [vm.data]);
 
   return (
     <main className="min-h-screen pt-20">
