@@ -71,8 +71,7 @@ useEffect(() => {
                         <div 
                         key={index}
                         className="flex flex-row w-full ">
-                        <span className="w-44 flex-shrink-0">{item.name}</span>
-                        <span className="w-32  flex-shrink-0 text-danger-main">{item.stage > 1 ? 'Tambahan' : ''} </span>
+                        <span className="w-44 ">{item.name}</span>
                         <div className="flex w-full ">
                             {item.deleted_at ? (
                                 <span className="text-neutral-40 w-full text-end line-through">Habis</span>

@@ -5,6 +5,9 @@ import { useEffect,useState,useRef } from "react";
 import Loader from "@/components/Loader";
 import FileUpload from "@/components/input/FileUpload";
 import { OrderDetailViewModel } from "@/viewmodel/OrderDetail.vm";
+import { UnixToDateString } from "@/utils/date";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 export default function Page() {
     const router = useRouter()
     const vm = OrderDetailViewModel()
@@ -12,41 +15,69 @@ export default function Page() {
     useEffect(() => {
         console.log(vm.data)
     },[vm.data])
+    const receiptRef = useRef<HTMLDivElement>(null);
+    const handleDownloadPdf = async () => {
+        if (receiptRef.current) {
+        receiptRef.current.style.display = 'block';
+          const element = receiptRef.current;
+          const canvas = await html2canvas(element);
+          const data = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          const imgProperties = pdf.getImageProperties(data);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+          pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
+          pdf.save('receipt.pdf');
+          receiptRef.current.style.display = 'none';
+        }
+      };
 
     useEffect(() => {
     },[vm.loading])
 
     const receiptHtml = () => (
-        <div></div>
-
-        // <div
-        //   ref={contentRef}
-        //   className="w-full  flex-col justify-center items-center gap-4 pb-3 bg-white border-b border-neutral-80"
-        // >
-        //   {/* {vm.data?.data?.items.map((item, index) => (
-        //     <div key={index} className="flex flex-row w-full ">
-        //       <span className="w-44 flex-shrink-0">{item.name}</span>
-        //       <span className="w-32 flex-shrink-0 text-danger-main">
-        //         {item.stage > 1 ? 'Tambahan' : ''}
-        //       </span>
-        //       <div className="flex w-full ">
-        //         {item.deleted_at ? (
-        //           <span className="text-neutral-40 w-full text-end line-through">Habis</span>
-        //         ) : (
-        //           <>
-        //             <span className="w-full text-neutral-40">{item.quantity} x</span>
-        //             <span className="text-neutral-40">
-        //               {item.price.toLocaleString('id-ID', {
-        //                 style: 'currency',
-        //                 currency: 'IDR',
-        //               })}
-        //             </span>
-        //           </>
-        //         )}
-        //       </div>
-        //     </div>
-        //   ))} */}
-        // </div>
+        <div ref={receiptRef} style={{display:'none',position:'relative',zIndex:'-999'}}>
+            <div className="w-full flex flex-col bg-white gap-3 p-5">
+                    <div className="flex w-full justify-center border-b border-neutral-80 py-2">
+                        <span className="font-bold">{vm.data?.data.order_id}</span>
+                    </div>
+                    <div className="flex flex-col w-full justify-center border-b gap-2 border-neutral-80 py-2">
+                        <span>RM Boneta</span>
+                        <span>Alamat: Jl Perintis Kemerdekaan</span>
+                        <span>Date: {UnixToDateString(vm.data?.data.created_at ? vm.data?.data.created_at : 0)}</span>
+                        <span className="text-danger-pressed">Mode: {vm.data?.data.delivery ? 'Delivery' : 'Dine In'}</span>
+                    </div>
+                <div className="w-full flex flex-col justify-center items-center gap-4 pb-3 bg-white border-b border-neutral-80">
+                    <span className=" w-full">Items</span>
+                    {vm.data?.data?.items.map((item,index)=>(
+                        <div 
+                        key={index}
+                        className="flex flex-row w-full ">
+                        <span className="w-40 flex-shrink-0">{item.name}</span>
+                        <span className="w-16  flex-shrink-0 text-danger-main">{item.stage > 1 ? 'new' : ''} </span>
+                        <div className="flex w-full ">
+                            {item.deleted_at ? (
+                                <span className="text-neutral-40 w-full text-end line-through">Habis</span>
+                            ) : (
+                                <>
+                                    <span className="w-full text-neutral-40">{item.quantity} x</span>
+                                    <span className="text-neutral-40">{item.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                                </>
+                            )}
+                           
+                        </div>
+                    </div>
+                    )) }
+                </div>
+                    <div className="flex w-full border-b border-neutral-80 py-3">
+                        <span className="w-full">Total</span>
+                        <span className="text-neutral-40">{vm.data?.data.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                    </div>
+                    <div className="flex w-full justify-center py-8">
+                        <span>Thank You For Choosing Us</span>
+                    </div>
+                </div>
+        </div>
       );
 
     if(vm.data?.data){
@@ -67,7 +98,7 @@ export default function Page() {
                 <span className="font-semibold ml-3">Order Detail</span>
                 {vm.data.data.status === 'ended' ? (
                     <button 
-                    onClick={()=>vm.handleDownload(contentRef.current!)}
+                    onClick={()=>handleDownloadPdf()}
                     className="text-primary-hover"><i className="pi pi-download"></i> Receipt
                     </button>
                 ) :(!vm.data.data.delivery ? <button 
@@ -156,6 +187,9 @@ export default function Page() {
                         }
                         {
                             (vm.data.data.status === 'ready' && vm.data.data.delivery ? "Menunggu Konfirmasi Kurir" : "")
+                        }
+                        {
+                            (vm.data.data.status === 'ready'  ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
                         }
                         {
                             (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")

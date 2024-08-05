@@ -200,20 +200,20 @@ console.log(vm.cartResult)
               height={300}
               className="rounded mx-auto"
             /> */}
-            <div className="w-32 h-32 overflow-hidden mx-auto">
+            <div className="w-full h-44 overflow-hidden mx-auto p-2">
                 <Image
-                    src={process.env.NEXT_PUBLIC_BASE_URL + v.image}
-                    alt="lalapan"
+                    src={process.env.NEXT_PUBLIC_EXTERNAL_URL + v.image}
+                    alt={v.name}
                     width={150}
                     height={150}
                     className="object-cover object-center w-full h-full rounded-md"
                 />
             </div>
             <div className="px-3 mt-2 flex flex-col py-3">
-              <span className="font-semibold text-normal text-dark">
+              <span className=" text-normal text-dark">
                 {v.name}
               </span>
-              <span className="font-semibold text-normal text-neutral-500 mt-5">
+              <span className="text-normal text-neutral-500 mt-2">
                 {v.price.toLocaleString()}
               </span>
               <MainButton
