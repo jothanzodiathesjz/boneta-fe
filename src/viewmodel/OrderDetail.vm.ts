@@ -15,6 +15,7 @@ export const OrderDetailViewModel = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [order, setOrder] = useState<DomainOrder | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const handleFileSelect = (file: File) => {
         console.log('Selected file:', file);
@@ -30,12 +31,15 @@ export const OrderDetailViewModel = () => {
     })
 
     const handleUploadImage = async () => {
+        setLoading(true)
         try {
             const data = await http.PostWithFile<DomainOrder>(`/api/payment-wimg/${guest}/${oid}`,selectedFile!)
             
         } catch (error) {
             console.log(error)
         }
+        setLoading(false)
+        mutate()
     } 
    
     const handleDownload = (e:HTMLElement) => {
@@ -73,7 +77,8 @@ export const OrderDetailViewModel = () => {
         setShowModal,
         order,
         setOrder,
-        handleDownload
-
+        handleDownload,
+        loading,
+        setLoading
     }
 }
