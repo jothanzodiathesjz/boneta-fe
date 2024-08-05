@@ -27,7 +27,7 @@ export default function Page() {
           const pdfWidth = pdf.internal.pageSize.getWidth();
           const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
           pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
-          pdf.save('receipt.pdf');
+          pdf.save(vm.data?.data.order_id +'.pdf');
           receiptRef.current.style.display = 'none';
         }
       };
@@ -49,7 +49,7 @@ export default function Page() {
                     </div>
                 <div className="w-full flex flex-col justify-center items-center gap-4 pb-3 bg-white border-b border-neutral-80">
                     <span className=" w-full">Items</span>
-                    {vm.data?.data?.items.map((item,index)=>(
+                    {vm.data?.data?.items.filter((v)=>!v.deleted_at).map((item,index)=>(
                         <div 
                         key={index}
                         className="flex flex-row w-full ">
