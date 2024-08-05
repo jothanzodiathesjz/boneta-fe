@@ -139,10 +139,10 @@ console.log(vm.cartResult)
               className="rounded mx-auto"
              
             /> */}
-            <div className="w-32 h-32 overflow-hidden mx-auto">
-            <Image
-                    src={process.env.NEXT_PUBLIC_BASE_URL + v.image}
-                    alt="lalapan"
+            <div className="w-full h-44 overflow-hidden mx-auto p-2">
+                <Image
+                    src={process.env.NEXT_PUBLIC_EXTERNAL_URL + v.image}
+                    alt={v.name}
                     width={150}
                     height={150}
                     className="object-cover object-center w-full h-full rounded-md"
