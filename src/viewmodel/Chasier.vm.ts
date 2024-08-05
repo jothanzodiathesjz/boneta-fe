@@ -53,7 +53,8 @@ const ChasierViewModel = () => {
             console.log(error)
         }
         mutate()
-            data2.mutate()
+        data2.mutate()
+        data3.mutate()
     }
 
     const handleReject = async () => {
@@ -89,6 +90,9 @@ const ChasierViewModel = () => {
             console.log(error)
         }
         mutate()
+        data2.mutate()
+        data3.mutate()
+        
     }
 
     const handleDeleteItem = async (uuid:string,uuid_item:string) => {

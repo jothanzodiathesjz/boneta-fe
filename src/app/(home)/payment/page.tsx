@@ -3,15 +3,13 @@ import { Button } from "primereact/button";
 import { SelectedButton } from "@/components/button/SelectedButton";
 import React, { useEffect, useState ,useMemo,useCallback} from "react";
 import dynamic from "next/dynamic";
-// import MapComponent from "@/components/Map";
-import TextInput from "@/components/input/TextInput.component";
 import { InputText } from "primereact/inputtext";
 import {useRouter} from "next/navigation";
 import {useCountStore} from "@/store/TriggerStore";
 import { PaymentViewModel } from "@/viewmodel/Payment.vm";
 import { useRouteAnimation } from "@/utils/handleroute";
-import { DomainPaymentMethod } from "@/domain/OrderItem";
 import { LatLngExpression } from 'leaflet';
+import Loader from "@/components/Loader";
 const MapComponent = dynamic(() => import('@/components/Map'), { ssr: true });
 export default function Payment() {
   const store = useCountStore();
@@ -44,6 +42,10 @@ useEffect(() => {
 useEffect(() => {
   
 },[vm.selectedPayment,vm.table])
+
+useEffect(() => {
+
+}, [vm.loading]);
 
   useEffect(() => {
     const isFormComplete =
@@ -204,6 +206,7 @@ useEffect(() => {
       </div>
       {/* order summary end */}
       {/* content end */}
+      {vm.loading && <Loader  />}
     </div>
   );
 }

@@ -29,6 +29,7 @@ export const MainPageViewModel = () => {
     const {data,isError,isLoading} = http.Send<DomainMenu[]>('/api/menu?search='+search);
     const [order, setOrder] = useState<DomainOrder | null>(null);
     const [filtered, setFiltered] = useState<string>("");
+    const [loading, setLoading] = useState(false);
     const cookies = parseCookies()
     const guest = localStorage.getItem('guest') || ''
     const user:DomainUserWithProfile | null = cookies.user ? new DomainUserWithProfile(JSON.parse(cookies.user)) : null
@@ -107,12 +108,11 @@ export const MainPageViewModel = () => {
         }
     },{
         revalidateOnMount: true,
-        refreshInterval: 5000
     })
 
 
     const handleAdjustment =async ()=>{
-        console.log(order)
+        setLoading(true)
         try {
             if(!oid) return
             if(!order) return
@@ -138,6 +138,7 @@ export const MainPageViewModel = () => {
         } catch (error) {
             console.log(error)
         }
+        setLoading(false)
         router.push(`/orders/${oid}`)
     }
 
@@ -173,6 +174,8 @@ export const MainPageViewModel = () => {
         getOrder,
         handleAdjustment,
         filtered,
-        setFiltered
+        setFiltered,
+        setLoading,
+        loading
     }
 }

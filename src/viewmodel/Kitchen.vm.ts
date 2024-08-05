@@ -50,8 +50,9 @@ const kitchenViewModel = () => {
         } catch (error) {
             console.log(error)
         }
-        mutate()
+            mutate()
             data2.mutate()
+            data3.mutate()
     }
 
     const updateSeen = async (uuid:string) => {

@@ -31,9 +31,12 @@ export const PaymentViewModel = () => {
     const [paymentOption, setPaymentOption] = useState<PaymentMethodType[]>(payemntData);
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethodType>(paymentOption[0]);
     const [mapUrl, setMapUrl] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
     const router = useRouter()
 
     const handleCreateOrder = async () => {
+        setLoading(true)
+        let uuid=""
         try {
             const data =  await http.Post<DomainOrder>('/api/create-order',{
                 body: JSON.stringify(new DomainOrder({
@@ -53,12 +56,17 @@ export const PaymentViewModel = () => {
                 }))
             })
             const newData = new DomainOrder(data.data)
+            uuid = newData.uuid!
             localStorage.removeItem('order')
             localStorage.removeItem('table')
             localStorage.removeItem('orderSummary')
-            router.push(`/orders/${newData.uuid}`)
+           
         } catch (error) {
             console.log(error)
+        }
+        finally{
+            router.push(`/orders/${uuid}`)
+            setLoading(false)
         }
     }
 
@@ -87,6 +95,8 @@ export const PaymentViewModel = () => {
         cookies,
         user,
         mapUrl,
-        setMapUrl
+        setMapUrl,
+        loading,
+        setLoading
     }
 }

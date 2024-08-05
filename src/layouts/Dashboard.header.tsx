@@ -6,6 +6,7 @@ import { useAuthStore } from "@/store/AuthStore";
 import { useState,useEffect } from "react";
 import { getCookie,parseCookie } from "@/utils/cookies";
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { deleteCookie } from "@/utils/cookies";
 export default function DashboardHeader({toogle}:any) {
   const {route} = useBackRouteStore((state) => state)
   const authStore = useAuthStore();
@@ -16,6 +17,8 @@ const logout = async () => {
   await authStore.logOut()
   destroyCookie(null, 'user')
   destroyCookie(null, 'accessToken')
+  deleteCookie('user')
+  deleteCookie('accessToken')
   localStorage.removeItem('access_token')
   router.push("/")
 }
@@ -40,8 +43,8 @@ useEffect(() => {
               <button
               onClick={()=>logout()}
               className="absolute right-3 flex text-neutral-50 items-center gap-2">
-                    <span className="material-icons">logout</span>
                     <span>{user?.profile?.firstName ? user.profile.firstName : ''}</span>
+                    <span className="material-icons">logout</span>
               </button>
       </header>
     )

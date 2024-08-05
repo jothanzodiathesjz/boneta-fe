@@ -125,7 +125,7 @@ export default function page() {
       selected={vm.selectedUser}
       updating={vm.updating}
       closeModal={() => (vm.setIsOpen(false),vm.setUpdating(false),vm.setSelectedUser(null),vm.data.mutate())}
-      submit={() => console.log("submit")}
+      submit={() => vm.data.mutate()}
       uuid={uuid}
       />
     </main>

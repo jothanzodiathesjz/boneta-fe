@@ -16,17 +16,15 @@ useEffect(() => {
     vm.data1
 }, [vm.data1])
 
+useEffect(() => {
+
+  }, [vm.submiting])
 
   return (
     <div className='pt-20 flex flex-col  bg-off-white h-screen'>
         <div className="relative p-5 flex justify-center items-center bg-white shadow-sm">
-                    <button
-                        onClick={() => router.back()}
-                        className="absolute left-3 flex items-center font-bold text-neutral-500"
-                    >
-                        <span className="material-icons text-3xl">navigate_before</span>
-                    </button>
-                    <span className="font-bold text-neutral-500">End Payment</span>  
+                    
+                    <span className="font-bold text-neutral-500">Delivery</span>  
                 </div>
 
         <div className='w-full flex flex-col gap-3 p-4' >
@@ -96,10 +94,15 @@ useEffect(() => {
                     </div>
 
                    {vm.data1.data?.data.status === 'ready' && <Button
+                   loading={vm.submiting}
+                   disabled={vm.submiting}
                     label='Antar Pesanan'
                     onClick={()=>vm.handleProcess(vm.data1.data?.data.uuid!,'in-delivery')}
                     />}
                     {vm.data1.data?.data.status === 'in-delivery' &&<Button
+                    loading={vm.submiting}
+                    disabled={vm.submiting}
+                    severity='success'
                     label='Akhiri Pesanan'
                     onClick={()=>vm.handleProcess(vm.data1.data?.data.uuid!,'ended')}
                     />}

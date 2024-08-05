@@ -31,7 +31,6 @@ export default function page() {
         <span className="w-full">
           {rowData.total_price.toLocaleString("id-ID")}
         </span>
-        {rowData.seen ? "" : <span>🔴</span>}
       </div>
     );
   };
@@ -56,6 +55,7 @@ export default function page() {
             <Calendar 
             placeholder="Select Date"
             dateFormat="dd/mm/yy"
+            variant="filled"
             selectionMode="single"
             showIcon value={date} 
             onChange={(e) => (setDate(e.value),vm.setDate(UnixToDateStringReverse(e.value?.getTime()!,"-")))} />
@@ -64,13 +64,13 @@ export default function page() {
             <DataTable
             key={"uuid"}
             className="w-full"
-              value={vm.data?.data.orders}
+              value={vm.data?.data?.orders}
               emptyMessage="No Orders found."
               scrollable
               pt={{
                 column: { bodyCell: { className: "scroller" } },
                 wrapper: {
-                  className: "h-[30vh] overflow-y-scroll scroller",
+                  className: "h-[80vh] overflow-y-scroll scroller",
                 },
               }}
               // selection={vm.selectedOrder}
@@ -108,15 +108,15 @@ export default function page() {
               <span className="font-medium">Order Summary</span>
                     <div className="w-full flex ">
                         <span className="w-44 flex-shrink-0">Total Order</span>
-                        <span className="text-neutral-50">{vm.data?.data.total_orders}</span>
+                        <span className="text-neutral-50">{vm.data?.data?.total_orders}</span>
                     </div>
                     <div className="w-full flex ">
                         <span className="w-44 flex-shrink-0">Total Quantity</span>
-                        <span className="text-neutral-50">{vm.data?.data.total_quantity}</span>
+                        <span className="text-neutral-50">{vm.data?.data?.total_quantity}</span>
                     </div>
                     <div className="w-full flex ">
-                        <span className="w-44 flex-shrink-0">Total Price</span>
-                        <span className="text-neutral-50">{vm.data?.data.total_price.toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
+                        <span className="w-44 flex-shrink-0">Total </span>
+                        <span className="text-neutral-50">{vm.data?.data?.total_price.toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
                     </div>
               </div>
         </div>

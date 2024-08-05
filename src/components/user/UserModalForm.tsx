@@ -17,7 +17,7 @@ type UserModalFormType = {
     visible: boolean;
     updating: boolean;
     selected: DomainUserWithProfile | null;
-    submit: (data: any) => void;
+    submit: () => void;
     closeModal: () => void;
 };
 
@@ -148,21 +148,21 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
         }
     };
 
-    const handleFullNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFullName(e.target.value);
+    // const handleFullNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setFullName(e.target.value);
 
-        if (e.target.value.trim() === '') {
-            setErrors((prevState) => ({
-                ...prevState,
-                fullName: 'Full Name is required',
-            }));
-        } else {
-            setErrors((prevState) => ({
-                ...prevState,
-                fullName: '',
-            }));
-        }
-    };
+    //     if (e.target.value.trim() === '') {
+    //         setErrors((prevState) => ({
+    //             ...prevState,
+    //             fullName: 'Full Name is required',
+    //         }));
+    //     } else {
+    //         setErrors((prevState) => ({
+    //             ...prevState,
+    //             fullName: '',
+    //         }));
+    //     }
+    // };
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -234,27 +234,27 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
             }));
             valid = false;
         }
-        if (profile.address.trim() === '') {
-            setErrors((prevState) => ({
-                ...prevState,
-                address: 'Address is required',
-            }));
-            valid = false;
-        }
-        if (profile.age <= 0) {
-            setErrors((prevState) => ({
-                ...prevState,
-                age: 'Age must be greater than 0',
-            }));
-            valid = false;
-        }
-        if (fullName.trim() === '') {
-            setErrors((prevState) => ({
-                ...prevState,
-                fullName: 'Full Name is required',
-            }));
-            valid = false;
-        }
+        // if (profile.address.trim() === '') {
+        //     setErrors((prevState) => ({
+        //         ...prevState,
+        //         address: 'Address is required',
+        //     }));
+        //     valid = false;
+        // }
+        // if (profile.age <= 0) {
+        //     setErrors((prevState) => ({
+        //         ...prevState,
+        //         age: 'Age must be greater than 0',
+        //     }));
+        //     valid = false;
+        // }
+        // if (fullName.trim() === '') {
+        //     setErrors((prevState) => ({
+        //         ...prevState,
+        //         fullName: 'Full Name is required',
+        //     }));
+        //     valid = false;
+        // }
         if (email.trim() === '') {
             setErrors((prevState) => ({
                 ...prevState,
@@ -278,6 +278,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
             };
             vm.createUser(auth,profile,fullName,roles,email);
             closeModal();
+            submit();
         }
     };
 useEffect(() => {
@@ -366,7 +367,7 @@ useEffect(() => {
                                     />
                                     {errors.lastName && <small className="p-error">{errors.lastName}</small>}
                                 </div>
-                                <div className="w-full">
+                                {/* <div className="w-full">
                                     <label htmlFor="fullName" className="block text-gray-700 font-bold mb-2">
                                         Full Name
                                     </label>
@@ -379,12 +380,12 @@ useEffect(() => {
                                         className="w-full p-2 border rounded"
                                     />
                                     {errors.fullName && <small className="p-error">{errors.fullName}</small>}
-                                </div>
+                                </div> */}
                                
                                 </div>
 
                                 <div className='w-full flex flex-col gap-2'>
-                                <div className="w-full">
+                                {/* <div className="w-full">
                                     <label htmlFor="age" className="block text-gray-700 font-bold mb-2">
                                         Age
                                     </label>
@@ -397,7 +398,7 @@ useEffect(() => {
                                         className="w-full p-0"
                                     />
                                     {errors.age && <small className="p-error">{errors.age}</small>}
-                                </div>
+                                </div> */}
                                 <div className="w-full">
                                     <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
                                         Email
@@ -413,7 +414,7 @@ useEffect(() => {
                                     />
                                     {errors.email && <small className="p-error">{errors.email}</small>}
                                 </div>
-                                <div className="w-full">
+                                {/* <div className="w-full">
                                     <label htmlFor="address" className="block text-gray-700 font-bold mb-2">
                                         Address
                                     </label>
@@ -427,7 +428,7 @@ useEffect(() => {
                                         className="w-full p-2 border rounded"
                                     />
                                     {errors.address && <small className="p-error">{errors.address}</small>}
-                                </div>
+                                </div> */}
                                 
                                 <label htmlFor="" className="block text-gray-700 font-bold mb-2">
                                         roles

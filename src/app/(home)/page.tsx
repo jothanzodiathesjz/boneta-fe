@@ -6,8 +6,9 @@ import TextInput from "@/components/input/TextInput.component";
 import React, {useEffect, useState,useRef } from "react";
 import { CartPopup } from "@/components/CartPopup";
 import {CartResult} from "@/components/CartResult";
+
 import { CategoryViewModel } from "@/viewmodel/Category";
-import { generateRandomString,generateMantulString,getPrefixMantulString } from "@/utils/randomstring";
+import { generateRandomString} from "@/utils/randomstring";
 import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
 import { DomainOrderItem, OrderItemResult } from "@/domain/OrderItem";
@@ -15,6 +16,7 @@ import { CartPopFinal } from "@/components/CartPopFinal";
 import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { getCookie } from "@/utils/cookies";
+import Image from "next/image";
 
 export default function Home() {
   const vm_category = CategoryViewModel()
@@ -191,13 +193,22 @@ console.log(vm.cartResult)
             key={k}
             className="w-full flex flex-col justify-center shadow-xl "
           >
-            <img
+            {/* <img
               src={`${process.env.NEXT_PUBLIC_BASE_URL}${v.image!}`}
               alt="lalapan"
               width={200}
               height={300}
               className="rounded mx-auto"
-            />
+            /> */}
+            <div className="w-48 h-48 overflow-hidden mx-auto">
+                <Image
+                    src={process.env.NEXT_PUBLIC_BASE_URL + v.image}
+                    alt="lalapan"
+                    width={200}
+                    height={200}
+                    className="object-cover object-center w-full h-full rounded-md"
+                />
+            </div>
             <div className="px-3 mt-2 flex flex-col py-3">
               <span className="font-semibold text-normal text-dark">
                 {v.name}

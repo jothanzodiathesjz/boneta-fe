@@ -2,9 +2,9 @@
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { useEffect,useState,useRef } from "react";
+import Loader from "@/components/Loader";
 import FileUpload from "@/components/input/FileUpload";
 import { OrderDetailViewModel } from "@/viewmodel/OrderDetail.vm";
-import OrderMenuModal from "@/components/orders/OrderMenuModal";
 export default function Page() {
     const router = useRouter()
     const vm = OrderDetailViewModel()
@@ -12,6 +12,9 @@ export default function Page() {
     useEffect(() => {
         console.log(vm.data)
     },[vm.data])
+
+    useEffect(() => {
+    },[vm.loading])
 
     const receiptHtml = () => (
         <div></div>
@@ -49,6 +52,7 @@ export default function Page() {
     if(vm.data?.data){
         return (
             <div className=" w-full flex flex-col gap-3 bg-[#FAFAFD] min-h-screen rounded-sm layout-border">
+                {vm.loading && <Loader  />}
                 <div className="p-5"></div>
                 <div className="relative p-5 flex justify-center items-center bg-white shadow-sm">
                     <button

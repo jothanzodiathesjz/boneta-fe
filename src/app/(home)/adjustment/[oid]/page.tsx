@@ -4,6 +4,7 @@ import { SelectedButton } from "@/components/button/SelectedButton";
 import { ProductCard } from "@/components/product/Card.product";
 import TextInput from "@/components/input/TextInput.component";
 import React, {useEffect, useState } from "react";
+import Image from "next/image";
 import { CartPopup } from "@/components/CartPopup";
 import {CartResult} from "@/components/CartResult";
 import { CategoryViewModel } from "@/viewmodel/Category";
@@ -12,7 +13,7 @@ import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
 import { DomainOrderItem, OrderItemResult } from "@/domain/OrderItem";
 import { CartPopFinal } from "@/components/CartPopFinal";
-
+import Loader from "@/components/Loader";
 
 export default function Home() {
   const vm_category = CategoryViewModel()
@@ -79,10 +80,8 @@ console.log(vm.cartResult)
 
   },[vm.data,vm.orderToCart]);
 
-  // useEffect(() => {
-    
-  //   console.log(vm.orderItemList)
-  // },[vm.search])
+  useEffect(() => {
+  },[vm.loading])
   return (
     <main className="flex min-h-screen flex-col gap-3 w-full py-20 ">
       <div className="w-full flex flex-col gap-3 px-5 pb-">
@@ -132,14 +131,23 @@ console.log(vm.cartResult)
             key={k}
             className="w-full flex flex-col justify-center shadow-xl "
           >
-            <img
+            {/* <img
               src={`${process.env.NEXT_PUBLIC_BASE_URL}${v.image!}`}
               alt="lalapan"
               width={200}
               height={300}
               className="rounded mx-auto"
              
-            />
+            /> */}
+            <div className="w-48 h-48 overflow-hidden mx-auto">
+                <Image
+                    src={process.env.NEXT_PUBLIC_BASE_URL + v.image}
+                    alt="lalapan"
+                    width={200}
+                    height={200}
+                    className="object-cover object-center w-full h-full rounded-md"
+                />
+            </div>
             <div className="px-3 mt-2 flex flex-col py-3">
               <span className="font-semibold text-normal text-dark">
                 {v.name}
@@ -178,6 +186,7 @@ console.log(vm.cartResult)
       click={()=>vm.handleAdjustment()}
       onUpdateData={(e)=>(vm.setCartResult(e),vm.setOrderToCart(e.items))}
       />
+      {vm.loading && <Loader/>}
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from "@/services/httpClient";
 import { DomainOrder } from "@/domain/Orders";
 import { getCookie } from "@/utils/cookies";
+import { useState } from "react";
 import { useRouter,useParams } from "next/navigation";
 const cockies = getCookie('accessToken');
 
@@ -8,6 +9,7 @@ const http = new HttpClient();
 
 export const kurirDetailViewModel = () => {
     const { oid } = useParams()
+    const [submiting, setSubmiting] = useState(false)
 
 const data1 = http.Send<DomainOrder>('/api/orderone/'+oid,undefined,{
         headers: {
@@ -19,6 +21,7 @@ const data1 = http.Send<DomainOrder>('/api/orderone/'+oid,undefined,{
     })
 
     const handleProcess = async (uuid:string,status:string) => {
+        setSubmiting(true)
         try {
             const response = await http.Put<DomainOrder>(`/api/order`,{
                 headers: {
@@ -31,12 +34,15 @@ const data1 = http.Send<DomainOrder>('/api/orderone/'+oid,undefined,{
             console.log(error)
         }
         data1.mutate()
+        setSubmiting(false)
     }
 
 
     return {
         data1,
-        handleProcess
+        handleProcess,
+        submiting,
+        setSubmiting
     }
 
 }

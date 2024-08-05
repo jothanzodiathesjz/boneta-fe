@@ -34,7 +34,7 @@ export default function page() {
                 {
                     vm.data1?.data?.data.filter((v)=>v.delivery).map((item, index) => (
                         <div
-                        onClick={() => router.push(`/kurir/${item.uuid}`)}
+                        onClick={() => router.push(`/processing/kurir/${item.uuid}`)}
                             key={index}
                             className="w-full flex flex-row justify-between rounded-xl p-3 items-center border cursor-pointer border-neutral-80 shadow-lg">
                             <div className="flex flex-col gap-1">
@@ -65,7 +65,7 @@ export default function page() {
                 {
                     vm.data2?.data?.data.map((item, index) => (
                         <div
-                        onClick={() => router.push(`/kurir/${item.uuid}`)}
+                        onClick={() => router.push(`/processing/kurir/${item.uuid}`)}
                             key={index}
                             className="w-full flex flex-row justify-between rounded-xl p-3 items-center border cursor-pointer border-neutral-80 shadow-lg">
                             <div className="flex flex-col gap-1">
