@@ -171,10 +171,7 @@ export default function Page() {
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                     <span className="text-center font-medium text-neutral-40">
                         {
-                            (vm.data.data.status === 'waiting' && vm.data.data.payment.value === 'transfer' ? "Menunggu konfirmasi dari kasir" : "")
-                        }
-                        {
-                            (vm.data.data.status === 'ready' && vm.data.data.payment_image ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
+                            (vm.data.data.status === 'waiting' && vm.data.data.payment.value === 'transfer' && !vm.data.data.delivery ? "Menunggu konfirmasi dari kasir" : "")
                         }
                         {
                             (vm.data.data.status === 'process' ? "Pesanan sedang diproses" : "")
@@ -189,7 +186,7 @@ export default function Page() {
                             (vm.data.data.status === 'ready' && vm.data.data.delivery ? "Menunggu Konfirmasi Kurir" : "")
                         }
                         {
-                            (vm.data.data.status === 'ready'  ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
+                            (vm.data.data.status === 'ready' && !vm.data.data.delivery ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
                         }
                         {
                             (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
