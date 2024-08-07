@@ -23,7 +23,8 @@ export default function Login() {
         body: JSON.stringify(vm.auth)
       })
       setCookie(null, 'accessToken', response.data, {
-        maxAge: 30 * 24 * 60 * 60
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
       })
       await auth.fetchUser(response.data)
     } catch (error) {
