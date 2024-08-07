@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, ChangeEvent, FormEvent, useRef } from 'react';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
@@ -7,13 +6,18 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { InputNumber } from 'primereact/inputnumber';
 import { useRouter } from 'next/navigation';
+import { HttpClient } from '@/services/httpClient';
+import { DomainUser } from '@/domain/Users';
+const http = new HttpClient();
 
 export default function RegisterPage() {
     const toast = useRef<Toast>(null);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
         password: '',
         email: '',
+        phone: '',
         profile: {
             firstName: '',
             lastName: '',
@@ -26,6 +30,7 @@ export default function RegisterPage() {
         username: '',
         password: '',
         email: '',
+        phone: '',
         firstName: '',
         lastName: '',
         age: '',
@@ -81,11 +86,22 @@ export default function RegisterPage() {
                 });
             }
         } else {
-            setFormData((prevState) => ({
-                ...prevState,
-                [name]: value
-            }));
-    
+            if(name === 'phone'){
+                setFormData((prevState) => ({
+                    ...prevState,
+                    [name]: value.replace(/[^0-9]/g, '')
+                }));
+            }else if(name === 'username'){
+                setFormData((prevState) => ({
+                    ...prevState,
+                    [name]: value.replace(/\s/g, '')
+                }));
+            }else{
+                setFormData((prevState) => ({
+                    ...prevState,
+                    [name]: value
+                }));
+            }
             if (value.trim() === '') {
                 setErrors((prevState) => ({
                     ...prevState,
@@ -102,31 +118,10 @@ export default function RegisterPage() {
     
     
 
-    const handleNumberChange = (name: string, value: number) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            profile: {
-                ...prevState.profile,
-                [name]: value
-            }
-        }));
-
-        if (value <= 0) {
-            setErrors((prevState) => ({
-                ...prevState,
-                [name]: `${name} must be greater than 0`,
-            }));
-        } else {
-            setErrors((prevState) => ({
-                ...prevState,
-                [name]: '',
-            }));
-        }
-    };
-
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         let valid = true;
+        setLoading(true);
 
         // Validasi sebelum submit
         if (formData.username.trim() === '') {
@@ -143,6 +138,13 @@ export default function RegisterPage() {
             }));
             valid = false;
         }
+        if(formData.password.length < 8){
+            setErrors((prevState) => ({
+                ...prevState,
+                password: 'Password must be at least 8 characters',
+            }))
+            valid = false;
+        }
         if (formData.email.trim() === '') {
             setErrors((prevState) => ({
                 ...prevState,
@@ -156,6 +158,15 @@ export default function RegisterPage() {
             }));
             valid = false;
         }
+
+        if (formData.phone.trim() === '') {
+            setErrors((prevState) => ({
+                ...prevState,
+                phone: 'Phone is required',
+            }));
+            valid = false;
+        }
+
         if (formData.profile.firstName.trim() === '') {
             setErrors((prevState) => ({
                 ...prevState,
@@ -170,47 +181,40 @@ export default function RegisterPage() {
             }));
             valid = false;
         }
-        // if (formData.profile.address.trim() === '') {
-        //     setErrors((prevState) => ({
-        //         ...prevState,
-        //         address: 'Address is required',
-        //     }));
-        //     valid = false;
-        // }
-        // if (formData.profile.age <= 0) {
-        //     setErrors((prevState) => ({
-        //         ...prevState,
-        //         age: 'Age must be greater than 0',
-        //     }));
-        //     valid = false;
-        // }
+        if (formData.profile.address.trim() === '') {
+            setErrors((prevState) => ({
+                ...prevState,
+                address: 'Address is required',
+            }));
+            valid = false;
+        }
 
         if (valid) {
             // Submit data
             console.log('Form Data:', formData);
-            fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/create-user`,{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    roles:["user"]
-                })
-            }).then((response) => response.json()).then((data) => {
-                console.log('Success:', data);
-                if (toast.current) {
-                    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Registration Successful', life: 3000 });
+            try {
+                const response = await http.Post<DomainUser>('/api/create-user', {
+                    body: JSON.stringify({
+                        ...formData,
+                        roles: ['user'],
+                    }),
+                });
+                if(response){
+                    if (toast.current) {
+                        toast.current.show({ severity: 'success', summary: 'Success', detail: 'Registration Successful', life: 3000 });
+                    }
+
                 }
-            }).catch((error) => {
-                console.error('Error:', error);
+            } catch (error) {
+                const errorMessage = (error as Error).message;
                 if (toast.current) {
-                    toast.current.show({ severity: 'error', summary: 'Error', detail: 'Registration Failed', life: 3000 });
+                    toast.current.show({ severity: 'error', summary: 'Error', detail: errorMessage, life: 3000 });
                 }
-            }).finally(() => {
-                router.push('/login');
-            });
+            }
+          
         }
+
+        setLoading(false);
     };
 
     return (
@@ -267,6 +271,21 @@ export default function RegisterPage() {
                         {errors.email && <small className="p-error">{errors.email}</small>}
                     </div>
                     <div className="w-full">
+                        <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
+                            Phone
+                        </label>
+                        <InputText
+                            id="phone"
+                            name="phone"
+                            type="text"
+                            maxLength={12}
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className="w-full p-2 border rounded"
+                        />
+                        {errors.phone && <small className="p-error">{errors.phone}</small>}
+                    </div>
+                    <div className="w-full">
                         <label htmlFor="firstName" className="block text-gray-700 font-bold mb-2">
                             First Name
                         </label>
@@ -292,7 +311,7 @@ export default function RegisterPage() {
                         />
                         {errors.lastName && <small className="p-error">{errors.lastName}</small>}
                     </div>
-                    {/* <div className="w-full">
+                    <div className="w-full">
                         <label htmlFor="address" className="block text-gray-700 font-bold mb-2">
                             Address
                         </label>
@@ -305,7 +324,7 @@ export default function RegisterPage() {
                             className="w-full p-2 border rounded"
                         />
                         {errors.address && <small className="p-error">{errors.address}</small>}
-                    </div> */}
+                    </div>
                     {/* <div className="w-full">
                         <label htmlFor="age" className="block text-gray-700 font-bold mb-2">
                             Age
@@ -319,10 +338,14 @@ export default function RegisterPage() {
                         />
                         {errors.age && <small className="p-error">{errors.age}</small>}
                     </div> */}
-                    <Button type="submit" label="Register" className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+                    <Button 
+                    type="submit" label="Register" 
+                    loading={loading} 
+                    disabled={loading}
+                    className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
                     <div className="w-full flex justify-end gap-3">
                         <span>Already have an account?</span>
-                        <button className="text-blue-600" 
+                        <button type='button' className="text-blue-600" 
                         onClick={() => router.push('/login')}
                         >Login</button>
                     </div>

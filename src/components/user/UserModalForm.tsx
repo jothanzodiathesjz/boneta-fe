@@ -67,8 +67,9 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
         age: '',
         fullName: '',
         email: '',
+        phone: '',
     });
-
+    const [phone, setPhone] = useState('');
     const [roles, setRoles] = useState<string[]>([]);
     const role_options = [
         "admin",
@@ -234,13 +235,13 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
             }));
             valid = false;
         }
-        // if (profile.address.trim() === '') {
-        //     setErrors((prevState) => ({
-        //         ...prevState,
-        //         address: 'Address is required',
-        //     }));
-        //     valid = false;
-        // }
+        if (profile.address.trim() === '') {
+            setErrors((prevState) => ({
+                ...prevState,
+                address: 'Address is required',
+            }));
+            valid = false;
+        }
         // if (profile.age <= 0) {
         //     setErrors((prevState) => ({
         //         ...prevState,
@@ -248,13 +249,13 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
         //     }));
         //     valid = false;
         // }
-        // if (fullName.trim() === '') {
-        //     setErrors((prevState) => ({
-        //         ...prevState,
-        //         fullName: 'Full Name is required',
-        //     }));
-        //     valid = false;
-        // }
+        if (phone.trim() === '') {
+            setErrors((prevState) => ({
+                ...prevState,
+                phone: 'Phone is required',
+            }));
+            valid = false;
+        }
         if (email.trim() === '') {
             setErrors((prevState) => ({
                 ...prevState,
@@ -275,12 +276,14 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
                 profile,
                 fullName,
                 email,
+                phone
             };
-            vm.createUser(auth,profile,fullName,roles,email);
+            vm.createUser(auth,profile,fullName,roles,email,phone);
             closeModal();
             submit();
         }
     };
+    const phoneRegex = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
 useEffect(() => {
     if(updating && selected){
         setAuth({
@@ -289,6 +292,7 @@ useEffect(() => {
         })
         setProfile(selected.profile)
         setEmail(selected.email!)
+        setPhone(selected.phone!)
         setFullName("")
         setRoles(selected.roles)
     }
@@ -414,7 +418,24 @@ useEffect(() => {
                                     />
                                     {errors.email && <small className="p-error">{errors.email}</small>}
                                 </div>
-                                {/* <div className="w-full">
+                                <div className="w-full">
+                                    <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
+                                        Phone
+                                    </label>
+                                    <InputText
+                                        id="phone"
+                                        name="phone"
+                                        placeholder='Masukan phone'
+                                        inputMode='text'
+                                        maxLength={12}
+                                        value={phone}
+                                        keyfilter={/[0-9]/}
+                                        onChange={(v)=>setPhone(v.target.value)}
+                                        className="w-full p-2 border rounded"
+                                    />
+                                    {errors.phone && <small className="p-error">{errors.phone}</small>}
+                                </div>
+                                <div className="w-full">
                                     <label htmlFor="address" className="block text-gray-700 font-bold mb-2">
                                         Address
                                     </label>
@@ -428,7 +449,7 @@ useEffect(() => {
                                         className="w-full p-2 border rounded"
                                     />
                                     {errors.address && <small className="p-error">{errors.address}</small>}
-                                </div> */}
+                                </div>
                                 
                                 <label htmlFor="" className="block text-gray-700 font-bold mb-2">
                                         roles

@@ -101,6 +101,11 @@ export default function Login() {
             onClick={() => router.push('/register')}
             >Register</button>
           </div>
+          <div className="w-full flex justify-end gap-3">
+            <button className="text-blue-600" 
+            onClick={() => router.push('/lupa-password')}
+            >Lupa password ?</button>
+          </div>
         </div>
       </div>
     </div>

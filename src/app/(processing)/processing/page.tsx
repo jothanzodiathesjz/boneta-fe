@@ -3,6 +3,9 @@ import { useRouter } from "next/navigation";
 import { useAnimationStore } from "@/store/AnimateStore";
 import { useEffect } from "react";
 import { useAuthStore } from "@/store/AuthStore";
+import { useState } from "react";
+import { DomainUserWithProfile } from "@/domain/Users";
+import { getCookie,parseCookie } from "@/utils/cookies";
 
 export default function Chasier() {
   const route = [
@@ -10,40 +13,48 @@ export default function Chasier() {
     name: "Chasier",
     path: "/processing/chasier",
     icon: "point_of_sale",
+    roles:['admin','kasir']
   },
   {
     name: "Kitchen",
     path: "/processing/kitchen",
     icon: "kitchen",
+    roles:['admin','kitchen']
   },
   {
     name: "Orders Report",
     path: "/processing/orders",
     icon: "list",
+    roles:['admin','pimpinan']
   },
   {
     name: "Users",
     path: "/processing/users",
     icon: "person",
+    roles:['admin']
   },
   {
     name: "Menus",
     path: "/processing/menus",
-    icon: "menu",
+    icon: "local_dining",
+    roles:['admin']
   },
   {
     name: "Others",
     path: "/processing/others",
     icon: "more",
+    roles:['admin']
   },
   {
     name:"Kurir",
     path:"/processing/kurir",
-    icon:"local_shipping"
+    icon:"local_shipping",
+    roles:['admin','kurir']
   }
 ];
 const authStore = useAuthStore();
 const animationStore = useAnimationStore();
+const [user, setUser] = useState<DomainUserWithProfile | null>(parseCookie(getCookie('user')!))
 const router = useRouter();
 const handleRoute = (route: string,status:boolean) => {
   animationStore.setIsOpen(status)
@@ -62,7 +73,7 @@ useEffect(() => {
     <div className="flex min-h-screen flex-col items-center justify-between pt-20">
       <div className="w-full flex flex-row flex-wrap gap-5 p-5">
         {
-          route.map((item, index) => (
+          route.filter((item) => item.roles.some(role => user?.roles.includes(role))).map((item, index) => (
               <div 
               key={index}
               onClick={() => handleRoute(item.path,false)}

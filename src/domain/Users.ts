@@ -26,6 +26,7 @@ export interface UserInit {
     full_name: string
     email: string
     roles: string[]
+    phone?: string
 }
 
 export class DomainUser{
@@ -34,6 +35,7 @@ export class DomainUser{
     full_name: string
     email: string
     roles: string[]
+    phone?: string
 
     constructor(init:UserInit) {
         this.uuid = init.uuid
@@ -41,6 +43,7 @@ export class DomainUser{
         this.full_name = init.full_name
         this.email = init.email
         this.roles = init.roles
+        this.phone = init.phone
     }
 }
 

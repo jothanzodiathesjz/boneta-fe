@@ -111,7 +111,8 @@ export const userModalViewModel = () => {
         profile:DomainProfile,
         fullName:string,
         roles:string[],
-        email:string
+        email:string,
+        phone:string,
     ) => {
         try {
                 const response = await http.Post<DomainUserWithProfile>('/api/create-user', {
@@ -125,7 +126,8 @@ export const userModalViewModel = () => {
                         profile,
                         roles,
                         fullName,
-                        email
+                        email,
+                        phone
                     })
                 })
             
