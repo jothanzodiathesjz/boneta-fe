@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef ,useState} from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { AuthViewModel, auth } from "@/viewmodel/Auth.vm";
@@ -12,12 +12,11 @@ export default function Login() {
   const msgs = useRef<Messages>(null);
   const auth = useAuthStore();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   function handleLogin() {
     const cookies = parseCookies()
     console.log({ cookies })
-
-    // Set
-
+    setLoading(true)
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`, {
       method: "POST",
       headers: {
@@ -45,7 +44,11 @@ export default function Login() {
           msgs.current.clear();
           msgs.current.show({ id: '1', sticky: true, severity: 'error', summary: 'error', detail: 'Login Failed', closable: true });
         }
-      });
+      }).finally(() => {
+        setLoading(false)
+      })
+
+      
   }
   useEffect(() => {
     if (auth.user) {
@@ -90,6 +93,7 @@ export default function Login() {
           />
           <Button
             label="Login"
+            loading={loading}
             onClick={() => {
               handleLogin()
             }}

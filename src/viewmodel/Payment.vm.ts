@@ -21,11 +21,11 @@ export const PaymentViewModel = () => {
     // const orderSummary = JSON.parse(localStorage.getItem('orderSummary') || '')
     const [guest, setGuest] = useState<string>(guested);
     const [orderItem, setOrderItem] = useState<OrderItemResult>(order); 
-    const [fullName, setFullName] = useState('');
+    const [fullName, setFullName] = useState(user?.profile?.firstName || '');
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [phone, setPhone] = useState(user?.phone || '');
     const [table, setTable] = useState(localStorage.getItem('table') ? JSON.parse(localStorage.getItem('table') || '') : undefined);
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useState(user?.profile?.address || '');
     const [mode, setMode] = useState('dine-in');
     const [disabled, setDisabled] = useState(false);
     const [paymentOption, setPaymentOption] = useState<PaymentMethodType[]>(payemntData);

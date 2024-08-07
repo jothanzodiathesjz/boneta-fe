@@ -278,7 +278,7 @@ export default function RegisterPage() {
                             id="phone"
                             name="phone"
                             type="text"
-                            maxLength={12}
+                            maxLength={13}
                             value={formData.phone}
                             onChange={handleChange}
                             className="w-full p-2 border rounded"

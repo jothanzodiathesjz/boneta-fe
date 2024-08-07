@@ -15,6 +15,7 @@ export default function page() {
     const [isSucces,setIsSucces] = useState(false);
     const toast = useRef<Toast>(null);
     const { oid } = useParams()
+    const router = useRouter();
     const handleSubmit = async ()=>{
         if(!password){
             setValidatePassword(true);
@@ -40,6 +41,9 @@ export default function page() {
             }
         }
         setLoading(false)
+        setTimeout(() => {
+          router.push('/login')
+        }, 500);
     }
 
 
