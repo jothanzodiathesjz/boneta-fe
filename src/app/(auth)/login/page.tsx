@@ -7,49 +7,36 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { Messages } from "primereact/messages";
 import { useAuthStore } from "@/store/AuthStore";
 import { useRouter } from "next/navigation";
+import { HttpClient } from "@/services/httpClient";
+const http = new HttpClient();
 export default function Login() {
   const vm = AuthViewModel()
   const msgs = useRef<Messages>(null);
   const auth = useAuthStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  function handleLogin() {
-    const cookies = parseCookies()
-    console.log({ cookies })
-    setLoading(true)
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(vm.auth),
-    }
-    )
-      .then((res) => {
-        if (res.status !== 200) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json()
-      })
-      .then((data) => {
-        if (data.data) {
-          setCookie(null, 'accessToken', data.data, {
-            maxAge: 30 * 24 * 60 * 60
-          })
-          auth.fetchUser(data.data)
-        }
-      }).catch((err) => {
-        console.log(err)
-        if (msgs.current) {
-          msgs.current.clear();
-          msgs.current.show({ id: '1', sticky: true, severity: 'error', summary: 'error', detail: 'Login Failed', closable: true });
-        }
-      }).finally(() => {
-        setLoading(false)
-      })
 
-      
+  const handleAuth = async ()=>{
+    setLoading(true)
+    try {
+      const response = await http.Post<any>('/api/auth', {
+        body: JSON.stringify(vm.auth)
+      })
+      setCookie(null, 'accessToken', response.data, {
+        maxAge: 30 * 24 * 60 * 60
+      })
+      await auth.fetchUser(response.data)
+    } catch (error) {
+      const errormsg = (error as Error).message
+      if (msgs.current) {
+        msgs.current.clear();
+        msgs.current.show({ id: '1', sticky: true, severity: 'error', summary: 'error', detail: errormsg, closable: true });
+      }
+    } finally {
+      setLoading(false)
+    }
   }
+  
   useEffect(() => {
     if (auth.user) {
       router.push('/processing')
@@ -84,7 +71,7 @@ export default function Login() {
             enterKeyHint="go"
             onKeyUp={(e) => {
               if(e.code === 'Enter') {
-                handleLogin()
+                handleAuth()
               }
             }}
           
@@ -95,7 +82,7 @@ export default function Login() {
             label="Login"
             loading={loading}
             onClick={() => {
-              handleLogin()
+              handleAuth()
             }}
           />
           <Messages ref={msgs} />
