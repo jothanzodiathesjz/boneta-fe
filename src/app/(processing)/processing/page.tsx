@@ -13,19 +13,19 @@ export default function Chasier() {
     name: "Chasier",
     path: "/processing/chasier",
     icon: "point_of_sale",
-    roles:['admin','kasir']
+    roles:['kasir']
   },
   {
     name: "Kitchen",
     path: "/processing/kitchen",
     icon: "kitchen",
-    roles:['admin','kitchen']
+    roles:['kitchen']
   },
   {
     name: "Orders Report",
     path: "/processing/orders",
     icon: "list",
-    roles:['admin','pimpinan']
+    roles:['admin','pimpinan','kasir']
   },
   {
     name: "Users",
@@ -49,7 +49,7 @@ export default function Chasier() {
     name:"Kurir",
     path:"/processing/kurir",
     icon:"local_shipping",
-    roles:['admin','kurir']
+    roles:['kurir']
   }
 ];
 const authStore = useAuthStore();
