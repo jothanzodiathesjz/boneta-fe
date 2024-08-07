@@ -34,7 +34,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
                 const data = await response.json();
                 if (data.data) {
                     set({ user: new DomainUserWithProfile(data.data), isAuthenticated: true });
-                    setCookie(null,'user', JSON.stringify(data.data), {maxAge: 30 * 24 * 60 * 60})
+                    setCookie(null,'user', JSON.stringify(data.data), {maxAge: 30 * 24 * 60 * 60,path:'/'});
                 } else {
                     set({ user: null, isAuthenticated: false });
                 }
