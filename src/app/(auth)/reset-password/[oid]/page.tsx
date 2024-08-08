@@ -42,7 +42,7 @@ export default function page() {
         }
         setLoading(false)
         setTimeout(() => {
-          router.push('/login')
+          window.location.href = '/login'
         }, 500);
     }
 
