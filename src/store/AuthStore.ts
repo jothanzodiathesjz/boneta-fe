@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { DomainUserWithProfile } from '@/domain/Users';
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { deleteCookie } from "@/utils/cookies";
 
 export type AuthStore = {
     user: DomainUserWithProfile | null;
@@ -51,6 +52,9 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         destroyCookie(null, 'user')
         destroyCookie(null, 'accessToken')
         localStorage.removeItem('access_token')
+        deleteCookie('user')
+        deleteCookie('accessToken')
+        window.location.href = '/'
     }
 }));
 

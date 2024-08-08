@@ -17,10 +17,7 @@ const logout = async () => {
   await authStore.logOut()
   destroyCookie(null, 'user')
   destroyCookie(null, 'accessToken')
-  deleteCookie('user')
-  deleteCookie('accessToken')
   localStorage.removeItem('access_token')
-  router.push("/")
 }
 
 useEffect(() => {
@@ -35,9 +32,11 @@ useEffect(() => {
                   <span className="material-icons ">keyboard_arrow_left</span>
               </button>
               <div className="w-full flex justify-center ">
-                  <div className="flex flex-row items-center p-3">
+                  <div onClick={() => router.push("/")} className="flex flex-row items-center p-3 cursor-pointer">
                       <span className="material-icons text-orange-600">restaurant</span>
-                      <span className="text-red-700 font-bold">Boneta</span>
+                      <span
+                      
+                      className="text-red-700 font-bold">Boneta</span>
                   </div>
               </div>
               <button
