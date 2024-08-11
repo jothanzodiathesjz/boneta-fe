@@ -190,7 +190,19 @@ export default function Page() {
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                     <span className="text-center font-medium text-neutral-40">
                         {
-                            (vm.data.data.status === 'waiting' && vm.data.data.payment.value === 'transfer' && !vm.data.data.delivery ? "Menunggu konfirmasi dari kasir" : "")
+                            (
+                                vm.data.data.status === 'waiting' && 
+                                vm.data.data.payment.value === 'transfer' && 
+                                !vm.data.data.delivery  ? "Menunggu konfirmasi dari kasir" : ""
+                            )
+                        }
+                        {
+                            (
+                                vm.data.data.status === 'waiting' && 
+                                vm.data.data.payment.value === 'transfer' && 
+                                vm.data.data.delivery && 
+                                vm.data.data.payment_image  ? "Menunggu konfirmasi dari kasir" : ""
+                            )
                         }
                         {
                             (vm.data.data.status === 'process' ? "Pesanan sedang diproses" : "")
