@@ -8,6 +8,7 @@ import { OrderDetailViewModel } from "@/viewmodel/OrderDetail.vm";
 import { UnixToDateString } from "@/utils/date";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import Image from "next/image";
 export default function Page() {
     const router = useRouter()
     const vm = OrderDetailViewModel()
@@ -142,7 +143,25 @@ export default function Page() {
                         <span className="text-neutral-40">{vm.data.data.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
                 </div>
-               {vm.data.data.payment.value === 'cash' && vm.data.data.status === 'pending' && 
+                {((vm.data.data.payment.value === 'transfer' && 
+                vm.data.data.status === 'ready' && 
+                !vm.data.data.payment_image ) ||
+                (vm.data.data.status === 'waiting' && 
+                    vm.data.data.delivery &&
+                    !vm.data.data.payment_image &&
+                    vm.data.data.payment.value === "transfer")
+                ) && <div className="w-full flex flex-col justify-center items-center gap-3">
+                    <Image
+                    src="/mandiri.png"
+                    alt="mandiri"
+                    width={200}
+                    height={60}
+
+                    />
+                    <span>Bank Mandiri</span>
+                    <span>1700004355503</span>
+                </div>}
+               {vm.data.data.payment.value === 'cash' && vm.data.data.status === 'waiting' && 
                     <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                         <span className="text-center font-medium text-neutral-40">Menunggu Konfirmasi</span>
                     </div>
