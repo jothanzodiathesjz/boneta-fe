@@ -5,6 +5,7 @@ import { Button } from "primereact/button";
 import { HttpClient } from "@/services/httpClient";
 import { Toast } from 'primereact/toast';
 import { useRouter,useParams } from "next/navigation";
+import { Password } from "primereact/password";
 
 const http = new HttpClient();
 export default function page() {
@@ -56,15 +57,29 @@ export default function page() {
         </div>
         <div className="w-full h-full p-5 flex flex-col gap-4">
           <label htmlFor="password">Password</label>
-          <InputText
+          <Password 
+          value={password} 
+          className="w-full"
+          toggleMask
+          id="password"
+          pt={
+            {
+              input: {className: "w-full"},
+            }
+          }
+          inputStyle={{width:'27vw'}}
+          onChange={(e) => (setPassword(e.target.value),console.log(e.target.value))} 
+          invalid={validatePassword}
+          />
+          {/* <InputText
             id="password"
             placeholder="Masukkan Password Baru"
             type="password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            invalid={validatePassword}
-          />
+            
+          /> */}
           {validatePassword && <small className="p-error">{errors}</small>}
           <Button
           severity="danger"
