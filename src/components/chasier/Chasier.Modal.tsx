@@ -14,6 +14,7 @@ type ChasierModalProps = {
     handleProcess: (e:string) => void;
     hanldeReject: () => void;
     handleDeleteItem: (uuid:string,uuid_item:string) => void;
+    handleRejectPayment: () => void
 };
 
 const stylePt = {
@@ -38,7 +39,7 @@ const stylePt = {
     }
 }
 
-export default function ChasierModal({ data, closeModal, handleProcess, hanldeReject, handleDeleteItem }: ChasierModalProps) {
+export default function ChasierModal({ data, closeModal, handleProcess, hanldeReject, handleDeleteItem, handleRejectPayment }: ChasierModalProps) {
     const [visibleBottom, setVisibleBottom] = useState(true);
     const [totalBayar, setTotalBayar] = useState(0);
     const [kembalian, setKembalian] = useState(0);
@@ -174,14 +175,26 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                     {
                     data?.status === 'ready' && 
                     data.payment_image && 
-                    
+                    data.payment_image !== 'rejected' &&
+                    <>
                     <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
                         <span>Bukti Pembayaran</span>
                         <Image 
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
                         alt="Image" width="250" 
                         preview />
-                    </div>}
+                    </div>
+                    <div>
+                    <Button
+                    label="Tolak Bukti Pembayaran"
+                    severity="secondary"
+                    onClick={handleRejectPayment}
+                    className="w-full"
+                    />
+                    </div>
+                    </>
+                    }
+
                     {
                     data?.status === 'waiting' && 
                     data.payment_image && 

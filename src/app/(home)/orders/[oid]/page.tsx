@@ -145,7 +145,8 @@ export default function Page() {
                 </div>
                 {((vm.data.data.payment.value === 'transfer' && 
                 vm.data.data.status === 'ready' && 
-                !vm.data.data.payment_image ) ||
+                (!vm.data.data.payment_image ||
+                vm.data.data.payment_image === 'rejected' )) ||
                 (vm.data.data.status === 'waiting' && 
                     vm.data.data.delivery &&
                     !vm.data.data.payment_image &&
@@ -217,7 +218,20 @@ export default function Page() {
                             (vm.data.data.status === 'ready' && vm.data.data.delivery ? "Menunggu Konfirmasi Kurir" : "")
                         }
                         {
-                            (vm.data.data.status === 'ready' && !vm.data.data.delivery ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
+                            (
+                                vm.data.data.status === 'ready' && 
+                                !vm.data.data.delivery &&
+                                (vm.data.data.payment_image !== 'rejected' )
+                                
+                                ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
+                        }
+                        {
+                            (
+                                vm.data.data.status === 'ready' && 
+                                !vm.data.data.delivery &&
+                                (vm.data.data.payment_image === 'rejected' )
+                                
+                                ? "Bukti Transfer Tidak Valid, Mohon untuk upload ulang" : "")
                         }
                         {
                             (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
@@ -231,10 +245,29 @@ export default function Page() {
 
                 }
                 
+                
                 {
                     vm.data.data.status === 'waiting' && 
                     vm.data.data.delivery &&
                     !vm.data.data.payment_image &&
+                    vm.data.data.payment.value === "transfer" &&
+                    <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
+                        <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>
+                       <FileUpload
+                       allowedFileTypes={['image/png', 'image/jpeg', 'image/jpg']}
+                       onFileSelect={vm.handleFileSelect}
+                       />
+                       <Button
+                       disabled={vm.selectedFile === null}
+                       onClick={vm.handleUploadImage}
+                       label="Upload"
+                       className="w-full"
+                       />
+                </div>
+                }
+                {
+                    vm.data.data.status === 'ready' && 
+                    (vm.data.data.payment_image === "rejected" ) &&
                     vm.data.data.payment.value === "transfer" &&
                     <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
                         <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>

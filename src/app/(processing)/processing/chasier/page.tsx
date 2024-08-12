@@ -152,6 +152,7 @@ useEffect(()=>{
             closeModal={() => vm.setSelectedOrder(null)}
             hanldeReject={vm.handleReject}
             handleDeleteItem={(uuid,uuid_item) => vm.handleDeleteItem(uuid,uuid_item)}
+            handleRejectPayment={()=>vm.rejectPayment()}
             />
         </main>
     );

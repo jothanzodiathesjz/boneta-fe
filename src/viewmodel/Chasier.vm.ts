@@ -111,6 +111,23 @@ const ChasierViewModel = () => {
         mutate()
     }
     
+    const rejectPayment = async () => {
+        try {
+            const response = await http.Put<DomainOrder>(`/api/order/paymentrejected/${selectedOrder?.uuid}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${coockies}`
+                },
+                body: JSON.stringify({uuid: selectedOrder?.uuid,})
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        setSelectedOrder(null)
+        mutate()
+        data2.mutate()
+        data3.mutate()
+    }
 
     return{
         data,
@@ -126,7 +143,8 @@ const ChasierViewModel = () => {
         updateSeen,
         handleReject,
         handleDeleteItem,
-        data3
+        data3,
+        rejectPayment
     }
 }
 
