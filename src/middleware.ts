@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   if (pathname.startsWith('/processing/kitchen') && !userData.roles.includes('kitchen')) {
     return NextResponse.redirect(new URL('/processing/403', request.url));
   }
-  if (pathname.startsWith('/processing/orders') && !(userData.roles.includes('admin') || userData.roles.includes('pimpinan'))) {
+  if (pathname.startsWith('/processing/orders') && !(userData.roles.includes('admin') || userData.roles.includes('pimpinan') || userData.roles.includes('kasir'))) {
     return NextResponse.redirect(new URL('/processing/403', request.url));
   }
   if (pathname.startsWith('/processing/users') && !userData.roles.includes('admin')) {
