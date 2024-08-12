@@ -148,8 +148,15 @@ const exportExcel = () => {
 
 const header = (
   <div className="flex align-items-center justify-content-end gap-2">
-      <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
+      {/* <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" /> */}
+      <Calendar 
+          value={dates} 
+          onChange={(e) => (setDates(e.value),vm.setDates(e.value))} 
+          selectionMode="range" 
+          readOnlyInput 
+          hideOnRangeSelection />
       <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf}  data-pr-tooltip="PDF" />
+
   </div>
 );
   function convertToISOWithoutOffset(dateString: string) {
@@ -189,12 +196,7 @@ const header = (
         <div className="w-full flex flex-col gap-3">
             {/* <span>Order List</span> */}
           <div className="card flex justify-content-center">
-          <Calendar 
-          value={dates} 
-          onChange={(e) => (setDates(e.value),vm.setDates(e.value))} 
-          selectionMode="range" 
-          readOnlyInput 
-          hideOnRangeSelection />
+         
           </div>
           <div className="w-full flex flex-row  gap-3 border-r  border-neutral-60/30">
           <DataTable 
