@@ -16,7 +16,8 @@ import { RowInput } from "jspdf-autotable";
 export default function page() {
   const animationStore = useAnimationStore();
   const vm = OrderDashboardViewModel();
-  const [date, setDate] = useState<Nullable<Date>>(new Date());
+  const [dates, setDates] = useState<Nullable<(Date | null)[]>>([new Date(), new Date()]);
+  const [date,setDate] = useState<Nullable<Date | null>>(null)
   const dt = useRef<DataTable<DomainOrder[]>>(null);
   interface ColumnMeta {
     field: string;
@@ -43,6 +44,7 @@ const exportCSV = (selectionOnly:any) => {
   dt.current?.exportCSV({ selectionOnly });
 };
 
+
 const saveAsExcelFile = (buffer:any, fileName:any) => {
   import('file-saver').then((module) => {
       if (module && module.default) {
@@ -60,36 +62,65 @@ const saveAsExcelFile = (buffer:any, fileName:any) => {
 
 
 const exportPdf = () => {
-  const newData = vm.data?.data.orders.map((v): RowInput => {
-    return [
+  const newData = vm.data?.data.orders.flatMap((v): RowInput[] => {
+    const orderRow = [
       v.order_id,
       v.status,
       v.table,
-      v.total_price
-    ]
-  })
+      "", // Kosongkan kolom untuk item pada baris order
+      v.total_price.toLocaleString(), // Format harga dengan pemisah ribuan
+    ];
+  
+    // Buat baris untuk setiap item dalam order
+    const itemRows = v.items.map(item => [
+      `     ${item.name} (x${item.quantity})`, // Kosongkan kolom order_id
+      "", // Kosongkan kolom status
+      "", // Kosongkan kolom table
+      item.total_price.toLocaleString('id',{
+        currency: 'IDR',
+        style: 'currency',
+      }), // Harga total item
+    ]);
+  
+    return [orderRow, ...itemRows]; // Gabungkan baris order dan item
+  });
+  
   import('jspdf').then((jsPDF) => {
       import('jspdf-autotable').then(() => {
           const doc = new jsPDF.default("portrait");
           // autoTable(doc,{
           //   html:"#dtable",
           // })
+          const title = "Laporan Pesanan"; // Ganti dengan judul yang Anda inginkan
+          doc.setFontSize(18); // Mengatur ukuran font untuk judul
+          doc.text(title, doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+      
+          // Mengatur jarak antara judul dan tabel
+          const startY = 30; // Jarak dari atas halaman setelah judul
         console.log(newData)
-          autoTable(doc,{
-              head: [exportColumns],
-              body: newData,
-              styles: {
-                  minCellHeight: 9,
-                  minCellWidth: 20
-              },
-              didParseCell: (data) => {
-                  if (data.column.dataKey === 'order_id') {
-                      data.cell.styles.halign = 'left';
-                  }
-              }
-          });
+        autoTable(doc, {
+          head: [exportColumns],
+          body: newData,
+          foot: [
+            ["", "", "Totals", `${vm.data?.data?.total_price.toLocaleString('id',{
+              currency: 'IDR',
+              style: 'currency',
+            })}`],
+          ],
+          startY: startY, // Mulai tabel di bawah judul
+          styles: {
+            minCellHeight: 9,
+            minCellWidth: 20,
+            halign: 'center',
+          },
+          didParseCell: (data) => {
+            if (data.column.dataKey === 0) { // Asumsikan 'order_id' berada di kolom pertama
+              data.cell.styles.halign = 'left';
+            }
+          },
+        });
 
-          doc.save(date?.getDate() + "orders.pdf");
+          doc.save(new Date().toISOString() + "orders.pdf");
       });
   });
 };
@@ -146,19 +177,24 @@ const header = (
 
   },[vm.selectedOrder])
 
+  // useEffect(()=>{
+  //   console.log(vm.dates)
+  // },[vm.dates])
+
+
+
   return (
     <main className="min-h-screen pt-20">
       <div className="w-full h-full flex gap-4 px-5">
         <div className="w-full flex flex-col gap-3">
             {/* <span>Order List</span> */}
           <div className="card flex justify-content-center">
-            <Calendar 
-            placeholder="Select Date"
-            dateFormat="dd/mm/yy"
-            variant="filled"
-            selectionMode="single"
-            showIcon value={date} 
-            onChange={(e) => (setDate(e.value),vm.setDate(UnixToDateStringReverse(e.value?.getTime()!,"-")))} />
+          <Calendar 
+          value={dates} 
+          onChange={(e) => (setDates(e.value),vm.setDates(e.value))} 
+          selectionMode="range" 
+          readOnlyInput 
+          hideOnRangeSelection />
           </div>
           <div className="w-full flex flex-row  gap-3 border-r  border-neutral-60/30">
           <DataTable 
