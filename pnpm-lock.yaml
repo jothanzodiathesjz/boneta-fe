@@ -23,6 +23,9 @@ dependencies:
   jspdf:
     specifier: ^2.5.1
     version: 2.5.1
+  jspdf-autotable:
+    specifier: ^3.8.2
+    version: 3.8.2(jspdf@2.5.1)
   leaflet:
     specifier: ^1.9.4
     version: 1.9.4
@@ -796,6 +799,14 @@ packages:
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+    dev: false
+
+  /jspdf-autotable@3.8.2(jspdf@2.5.1):
+    resolution: {integrity: sha512-zW1ix99/mtR4MbIni7IqvrpfHmuTaICl6iv6wqjRN86Nxtwaw/QtOeDbpXqYSzHIJK9JvgtLM283sc5x+ipkJg==}
+    peerDependencies:
+      jspdf: ^2.5.1
+    dependencies:
+      jspdf: 2.5.1
     dev: false
 
   /jspdf@2.5.1:
