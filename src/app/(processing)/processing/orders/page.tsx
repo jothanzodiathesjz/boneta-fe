@@ -11,10 +11,12 @@ import { Nullable } from "primereact/ts-helpers";
 import { UnixToDateStringReverse } from "@/utils/date";
 import OrderDetailModal from "@/components/orders/OrderDetailModal";
 import { Button } from "primereact/button";
+import autoTable from "jspdf-autotable";
+import { RowInput } from "jspdf-autotable";
 export default function page() {
   const animationStore = useAnimationStore();
   const vm = OrderDashboardViewModel();
-  const [date, setDate] = useState<Nullable<Date>>();
+  const [date, setDate] = useState<Nullable<Date>>(new Date());
   const dt = useRef<DataTable<DomainOrder[]>>(null);
   interface ColumnMeta {
     field: string;
@@ -55,14 +57,54 @@ const saveAsExcelFile = (buffer:any, fileName:any) => {
   });
 };
 
+
+
+const exportPdf = () => {
+  const newData = vm.data?.data.orders.map((v): RowInput => {
+    return [
+      v.order_id,
+      v.status,
+      v.table,
+      v.total_price
+    ]
+  })
+  import('jspdf').then((jsPDF) => {
+      import('jspdf-autotable').then(() => {
+          const doc = new jsPDF.default("portrait");
+          // autoTable(doc,{
+          //   html:"#dtable",
+          // })
+        console.log(newData)
+          autoTable(doc,{
+              head: [exportColumns],
+              body: newData,
+              styles: {
+                  minCellHeight: 9,
+                  minCellWidth: 20
+              },
+              didParseCell: (data) => {
+                  if (data.column.dataKey === 'order_id') {
+                      data.cell.styles.halign = 'left';
+                  }
+              }
+          });
+
+          doc.save(date?.getDate() + "orders.pdf");
+      });
+  });
+};
+
 const exportExcel = () => {
   const newData = vm.data?.data.orders.map((v) => {
     return {
-      
+      order_id: v.order_id,
+      status: v.status,
+      table: v.table,
+      total_price: v.total_price
     }
   })
   import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(vm.data?.data.orders ?? []);
+      const worksheet = xlsx.utils.json_to_sheet(newData ?? []);
       const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
       const excelBuffer = xlsx.write(workbook, {
           bookType: 'xlsx',
@@ -75,9 +117,8 @@ const exportExcel = () => {
 
 const header = (
   <div className="flex align-items-center justify-content-end gap-2">
-      <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
       <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
-      <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded  data-pr-tooltip="PDF" />
+      <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf}  data-pr-tooltip="PDF" />
   </div>
 );
   function convertToISOWithoutOffset(dateString: string) {
@@ -121,6 +162,7 @@ const header = (
           </div>
           <div className="w-full flex flex-row  gap-3 border-r  border-neutral-60/30">
           <DataTable 
+          id="dtable"
           key={"uuid"}
           ref={dt} 
           className="w-full"
