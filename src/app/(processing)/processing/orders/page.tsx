@@ -107,6 +107,7 @@ const exportPdf = () => {
               style: 'currency',
             })}`],
           ],
+          showFoot: "lastPage",
           startY: startY, // Mulai tabel di bawah judul
           styles: {
             minCellHeight: 9,
@@ -119,7 +120,7 @@ const exportPdf = () => {
             }
           },
         });
-
+        
           doc.save(new Date().toISOString() + "orders.pdf");
       });
   });
