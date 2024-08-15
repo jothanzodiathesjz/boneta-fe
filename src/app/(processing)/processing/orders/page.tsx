@@ -119,7 +119,7 @@ const exportPdf = (nama:string) => {
       });
 
       const pageHeight = doc.internal.pageSize.getHeight();
-      const finalY = doc.previousAutoTable.finalY || startY;
+      const finalY = startY;
       const footerHeight = 40;
 
       if (finalY + footerHeight > pageHeight) {
