@@ -13,11 +13,15 @@ import OrderDetailModal from "@/components/orders/OrderDetailModal";
 import { Button } from "primereact/button";
 import autoTable from "jspdf-autotable";
 import { RowInput } from "jspdf-autotable";
+import { Dialog } from 'primereact/dialog';
+import { InputText } from "primereact/inputtext";
 export default function page() {
   const animationStore = useAnimationStore();
   const vm = OrderDashboardViewModel();
   const [dates, setDates] = useState<Nullable<(Date | null)[]>>([new Date(), new Date()]);
   const [date,setDate] = useState<Nullable<Date | null>>(null)
+  const [visible, setVisible] = useState(false);
+  const [pengguna,setPengguna] = useState<string>('')
   const dt = useRef<DataTable<DomainOrder[]>>(null);
   interface ColumnMeta {
     field: string;
@@ -61,7 +65,7 @@ const saveAsExcelFile = (buffer:any, fileName:any) => {
 
 
 
-const exportPdf = () => {
+const exportPdf = (nama:string) => {
   const newData = vm.data?.data.orders.flatMap((v): RowInput[] => {
     const orderRow = [
       v.order_id,
@@ -86,45 +90,58 @@ const exportPdf = () => {
   });
   
   import('jspdf').then((jsPDF) => {
-      import('jspdf-autotable').then(() => {
-          const doc = new jsPDF.default("portrait");
-          // autoTable(doc,{
-          //   html:"#dtable",
-          // })
-          const title = "Laporan Pesanan"; // Ganti dengan judul yang Anda inginkan
-          doc.setFontSize(18); // Mengatur ukuran font untuk judul
-          doc.text(title, doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+    import('jspdf-autotable').then(() => {
+      const doc = new jsPDF.default("portrait");
+      const title = "Laporan Pesanan"; // Ganti dengan judul yang Anda inginkan
+      doc.setFontSize(18); // Mengatur ukuran font untuk judul
+      doc.text(title, doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
       
-          // Mengatur jarak antara judul dan tabel
-          const startY = 30; // Jarak dari atas halaman setelah judul
-        console.log(newData)
-        autoTable(doc, {
-          head: [exportColumns],
-          body: newData,
-          foot: [
-            ["", "", "Totals", `${vm.data?.data?.total_price.toLocaleString('id',{
-              currency: 'IDR',
-              style: 'currency',
-            })}`],
-          ],
-          showFoot: "lastPage",
-          startY: startY, // Mulai tabel di bawah judul
-          styles: {
-            minCellHeight: 9,
-            minCellWidth: 20,
-            halign: 'center',
-          },
-          didParseCell: (data) => {
-            if (data.column.dataKey === 0) { // Asumsikan 'order_id' berada di kolom pertama
-              data.cell.styles.halign = 'left';
-            }
-          },
-        });
-        
-          doc.save(new Date().toISOString() + "orders.pdf");
+      // Mengatur jarak antara judul dan tabel
+      const startY = 30; // Jarak dari atas halaman setelah judul
+      console.log(newData);
+          
+      autoTable(doc, {
+        head: [exportColumns],
+        body: newData,
+        foot: [
+          ["", "", "Totals", `${vm.data?.data?.total_price.toLocaleString('id',{
+            currency: 'IDR',
+            style: 'currency',
+          })}`],
+        ],
+        showFoot: "lastPage",
+        startY: startY, // Mulai tabel di bawah judul
+        styles: {
+          minCellHeight: 9,
+          minCellWidth: 20,
+          halign: 'left',
+        },
       });
+
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const finalY = doc.previousAutoTable.finalY || startY;
+      const footerHeight = 40;
+
+      if (finalY + footerHeight > pageHeight) {
+        doc.addPage();
+      }
+
+      // Tambahkan footer di halaman terakhir
+      const pageWidth = doc.internal.pageSize.getWidth();
+      doc.setFontSize(12);
+      doc.text(`Makassar, ${new Date().toLocaleDateString('id',{
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })}`, pageWidth - 50, pageHeight - 40, { align: 'center' });
+      // doc.text('Tanda Tangan Pimpinan', pageWidth - 50, pageHeight - 30, { align: 'center' });
+      doc.text(`(${nama})`, pageWidth - 50, pageHeight - 20, { align: 'center' });
+
+      doc.save(new Date().toISOString() + "orders.pdf");
+    });
   });
 };
+
 
 const exportExcel = () => {
   const newData = vm.data?.data.orders.map((v) => {
@@ -154,9 +171,10 @@ const header = (
           value={dates} 
           onChange={(e) => (setDates(e.value),vm.setDates(e.value))} 
           selectionMode="range" 
+          dateFormat="dd/mm/yy"
           readOnlyInput 
           hideOnRangeSelection />
-      <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf}  data-pr-tooltip="PDF" />
+      <Button type="button" icon="pi pi-file-pdf" severity="warning"  onClick={()=>setVisible(true)}  data-pr-tooltip="PDF" />
 
   </div>
 );
@@ -193,6 +211,26 @@ const header = (
 
   return (
     <main className="min-h-screen pt-20">
+      <Dialog 
+      header="File Information" 
+      visible={visible} 
+       
+      onHide={() => {if (!visible) return; setVisible(false); }}>
+        <div className="w-80 flex-shrink-0 flex flex-col gap-3 px-3">
+          <span>Nama</span>
+        <InputText
+               value={pengguna}
+               placeholder="Masukkan Nama Pengguna"
+               onChange={(e) => setPengguna(e.target.value)}
+               />
+               <Button
+               label="Export"
+               disabled={!pengguna}
+               onClick={()=>(exportPdf(pengguna),setVisible(false))}
+               />
+        </div>
+               
+            </Dialog>
       <div className="w-full h-full flex gap-4 px-5">
         <div className="w-full flex flex-col gap-3">
             {/* <span>Order List</span> */}
