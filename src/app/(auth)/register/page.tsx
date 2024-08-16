@@ -193,7 +193,7 @@ export default function RegisterPage() {
             // Submit data
             console.log('Form Data:', formData);
             try {
-                const response = await http.Post<DomainUser>('/api/create-user', {
+                const response = await http.Post<DomainUser>('/api/register', {
                     body: JSON.stringify({
                         ...formData,
                         roles: ['user'],

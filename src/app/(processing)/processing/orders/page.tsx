@@ -134,7 +134,7 @@ const exportPdf = (nama:string) => {
         month: 'long',
         day: 'numeric',
       })}`, pageWidth - 50, pageHeight - 40, { align: 'center' });
-      // doc.text('Tanda Tangan Pimpinan', pageWidth - 50, pageHeight - 30, { align: 'center' });
+      // doc.text('Tanda Tangan Pimpinan', pageWidth - 50, pageHeight - 30, { align: 'center' }); 
       doc.text(`(${nama})`, pageWidth - 50, pageHeight - 20, { align: 'center' });
 
       doc.save(new Date().toISOString() + "orders.pdf");
@@ -212,7 +212,7 @@ const header = (
   return (
     <main className="min-h-screen pt-20">
       <Dialog 
-      header="File Information" 
+      header="Penanggung Jawab" 
       visible={visible} 
        
       onHide={() => {if (!visible) return; setVisible(false); }}>
@@ -220,7 +220,7 @@ const header = (
           <span>Nama</span>
         <InputText
                value={pengguna}
-               placeholder="Masukkan Nama Pengguna"
+               placeholder="Masukkan Nama"
                onChange={(e) => setPengguna(e.target.value)}
                />
                <Button

@@ -72,8 +72,6 @@ export default function Home() {
   }
 
  
-  const order = localStorage.getItem('order')
-  
   useEffect(() => {
   
     if(vm.isLoading) {
@@ -190,6 +188,7 @@ console.log(vm.cartResult)
                     priority={k === 0 || k === 1 ? true : false}
                     loading={k === 0 || k === 1 ? 'eager' : 'lazy'}
                     width={150}
+                    
                     quality={20}
                     height={150}
                     className="object-cover object-center w-full h-full rounded-md"

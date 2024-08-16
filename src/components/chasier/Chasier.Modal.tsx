@@ -173,7 +173,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                      </>
                     }
                     {
-                    data?.status === 'ready' && 
+                    (data?.status === 'ready' || data?.status === 'waiting') && 
                     data.payment_image && 
                     data.payment_image !== 'rejected' &&
                     <>
@@ -195,7 +195,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                     </>
                     }
 
-                    {
+                    {/* {
                     data?.status === 'waiting' && 
                     data.payment_image && 
                     data.delivery && 
@@ -206,7 +206,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
                         alt="Image" width="250" 
                         preview />
-                    </div>}
+                    </div>} */}
                     {/* { <Button
                     label="Konfirmasi"
                     severity="success"
