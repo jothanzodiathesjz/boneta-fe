@@ -187,8 +187,10 @@ console.log(vm.cartResult)
                 <Image
                     src={process.env.NEXT_PUBLIC_EXTERNAL_URL + v.image}
                     alt={v.name}
+                    priority={k === 0 || k === 1 ? true : false}
                     loading={k === 0 || k === 1 ? 'eager' : 'lazy'}
                     width={150}
+                    quality={50}
                     height={150}
                     className="object-cover object-center w-full h-full rounded-md"
                 />
