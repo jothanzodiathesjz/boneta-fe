@@ -39,7 +39,7 @@ export default function Home() {
 
   useEffect(() => {
     vm.getOrder
-    vm.setOrder(vm.getOrder?.data?.data ?? null)
+    vm.setOrder(vm.getOrder ? (vm.getOrder.data?.data ?? null) : null)
     console.log(vm.order)
   },[vm.getOrder])
 
