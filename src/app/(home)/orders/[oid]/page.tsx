@@ -269,7 +269,8 @@ export default function Page() {
                 </div>
                 }
                 {
-                    (vm.data.data.status === 'ready' || vm.data.data.status === 'waiting') && 
+                    (vm.data.data.status === 'ready' || 
+                        vm.data.data.status === 'waiting') && 
                     (vm.data.data.payment_image === "rejected" ) &&
                     vm.data.data.payment.value === "transfer" &&
                     <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
