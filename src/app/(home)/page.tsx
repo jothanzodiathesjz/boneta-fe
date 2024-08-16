@@ -6,12 +6,11 @@ import TextInput from "@/components/input/TextInput.component";
 import React, {useEffect, useState,useRef } from "react";
 import { CartPopup } from "@/components/CartPopup";
 import {CartResult} from "@/components/CartResult";
-
 import { CategoryViewModel } from "@/viewmodel/Category";
 import { generateRandomString} from "@/utils/randomstring";
 import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
-import { DomainOrderItem, OrderItemResult } from "@/domain/OrderItem";
+import { DomainOrderItem} from "@/domain/OrderItem";
 import { CartPopFinal } from "@/components/CartPopFinal";
 import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
@@ -94,10 +93,6 @@ export default function Home() {
       const order = JSON.parse(localStorage.getItem('order') || '')
       vm.setOrderToCart(order.items)
     }
-    
-  
-
-
   }, []);
 
   useEffect(() => {
@@ -136,11 +131,6 @@ console.log(vm.cartResult)
     }
 
   },[vm.data,vm.orderToCart]);
-
-  // useEffect(() => {
-    
-  //   console.log(vm.orderItemList)
-  // },[vm.search])
   return (
     <main className="flex min-h-screen flex-col gap-3 w-full py-20 ">
       <div className="w-full flex flex-col gap-3 px-5 pb-">
@@ -193,13 +183,6 @@ console.log(vm.cartResult)
             key={k}
             className="w-full flex flex-col justify-center shadow-xl "
           >
-            {/* <img
-              src={`${process.env.NEXT_PUBLIC_BASE_URL}${v.image!}`}
-              alt="lalapan"
-              width={200}
-              height={300}
-              className="rounded mx-auto"
-            /> */}
             <div className="w-full h-44 overflow-hidden mx-auto p-2">
                 <Image
                     src={process.env.NEXT_PUBLIC_EXTERNAL_URL + v.image}

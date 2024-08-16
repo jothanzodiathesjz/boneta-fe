@@ -1,7 +1,6 @@
 import { useState } from "react";
 import  { useAnimationStore } from '@/store/AnimateStore';
 import  { useRouter,useSearchParams } from "next/navigation";
-import { useFetchData } from '@/hooks/useFetchData';
 import { DomainMenu } from '@/domain/Menu';
 import { DomainCategory } from '@/domain/Category';
 import { DomainOrderItem,OrderItemResult } from '@/domain/OrderItem';
@@ -10,7 +9,6 @@ import { DomainOrder } from "@/domain/Orders";
 import {parseCookies} from 'nookies'
 import { DomainUserWithProfile } from "@/domain/Users";
 import { useParams } from "next/navigation";
-import { generateRandomString } from "@/utils/randomstring";
 const http = new HttpClient();
 
 export const MainPageViewModel = () => {
@@ -102,7 +100,7 @@ export const MainPageViewModel = () => {
         setOrderItem(null)       
     }
 
-    const getOrder = http.Send<DomainOrder>(`/api/order/${oid}`,undefined,{
+    const getOrder = oid && http.Send<DomainOrder>(`/api/order/${oid}`,undefined,{
         headers: {
             'Authorization': `Basic ${user ? `user:${user?.uuid}` : `guest:${guest}`  }`
         }
