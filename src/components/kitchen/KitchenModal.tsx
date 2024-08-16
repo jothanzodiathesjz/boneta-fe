@@ -79,6 +79,14 @@ export default function KitchenModal({ data, closeModal, handleProcess ,handleDe
                             <span className="w-32 shrink-0 ">Status</span>
                             <span className="w-full  text-black">: {data?.status}</span>
                         </div>
+                        <div className="flex flex-row w-full">
+                            <span className="w-32 shrink-0 ">Table</span>
+                            <span className="w-full  text-black">: {data?.table}</span>
+                        </div>
+                        <div className="flex flex-row w-full">
+                            <span className="w-32 shrink-0 ">Mode</span>
+                            <span className="w-full  text-black">: {data?.delivery ? 'Delivery' : 'Dine in'}</span>
+                        </div>
                     </div>
                 </div>
                 <div className="w-full flex flex-col px-4">

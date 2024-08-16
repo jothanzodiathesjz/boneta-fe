@@ -1,11 +1,9 @@
 import { Sidebar } from "primereact/sidebar";
 import { useState,useRef } from "react";
 import { DomainOrder } from "@/domain/Orders";
-import { InputNumber } from "primereact/inputnumber";
-import { Button } from "primereact/button";
 import { Image } from 'primereact/image';
 import { Toast } from 'primereact/toast';
-import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
+
 
 
 type OrderDetailModalType = {
@@ -71,6 +69,15 @@ export default function OrderDetailModal({ data, closeModal }: OrderDetailModalT
                             <span className="w-32 shrink-0 ">Status</span>
                             <span className="w-full  text-black">: {data?.status}</span>
                         </div>
+
+                        {data?.payment_image && <div className="flex flex-col gap-4 w-full">
+                            <span className="w-32 shrink-0 ">Bukti Transfer</span>
+                            <Image 
+                            src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
+                            alt="Image" width="250" 
+                            preview />
+                        </div>}
+
                     </div>
                 </div>
                 <div className="w-full flex flex-col px-4">

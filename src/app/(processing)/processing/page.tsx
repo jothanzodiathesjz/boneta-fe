@@ -69,9 +69,11 @@ useEffect(() => {
   console.log(authStore.isAuthenticated,authStore.user)
 },[])
 
+
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-between pt-20">
-      <div className="w-full flex flex-row flex-wrap gap-5 p-5">
+      <div className="w-full flex flex-row justify-center md:justify-start flex-wrap gap-5 p-5">
         {
           route.filter((item) => item.roles.some(role => user?.roles.includes(role))).map((item, index) => (
               <div 

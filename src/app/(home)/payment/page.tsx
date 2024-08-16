@@ -194,7 +194,8 @@ useEffect(() => {
           </span>
         </div>
         <Button
-          // disabled={vm.disabled}
+          disabled={vm.loading}
+          loading={vm.loading}
           onClick={
             () => vm.handleCreateOrder()
             // () => console.log(mapUrl)

@@ -267,7 +267,7 @@ const header = (
                         <span className="text-neutral-50">{vm.data?.data?.total_orders}</span>
                     </div>
                     <div className="w-full flex ">
-                        <span className="w-44 flex-shrink-0">Total Quantity</span>
+                        <span className="w-44 flex-shrink-0">Total Items</span>
                         <span className="text-neutral-50">{vm.data?.data?.total_quantity}</span>
                     </div>
                     <div className="w-full flex ">

@@ -60,14 +60,13 @@ export const PaymentViewModel = () => {
             localStorage.removeItem('order')
             localStorage.removeItem('table')
             localStorage.removeItem('orderSummary')
-           
+            router.push(`/orders/${uuid}`)
+            setLoading(false)
         } catch (error) {
             console.log(error)
         }
-        finally{
-            router.push(`/orders/${uuid}`)
             setLoading(false)
-        }
+        
     }
 
     return{

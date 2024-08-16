@@ -34,6 +34,14 @@ const ChasierViewModel = () => {
     },{
         revalidateOnMount: true
     })
+    const data4 = http.Send<DomainOrder[]>('/api/orders?status=in-delivery',undefined,{
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${coockies}`
+        }
+    },{
+        revalidateOnMount: true
+    })
 
     
 
@@ -144,7 +152,8 @@ const ChasierViewModel = () => {
         handleReject,
         handleDeleteItem,
         data3,
-        rejectPayment
+        rejectPayment,
+        data4
     }
 }
 

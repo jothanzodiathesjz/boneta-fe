@@ -223,12 +223,14 @@ export default function RegisterPage() {
         <span style={{ fontSize: "2.4rem" }} className="material-icons text-orange-600">restaurant</span>
         <span style={{ fontSize: "2.4rem" }} className="text-red-700 font-bold">Boneta</span>
       </div>
-            <div className="w-full md:w-[30vw]  bg-white rounded-md shadow-sm flex flex-col">
+            <div className="w-full md:w-[60vw]  bg-white rounded-md shadow-sm flex flex-col">
             <div className="w-full shadow-sm shadow-slate-200 p-4 flex justify-center">
                 <span style={{ fontSize: "1.2rem" }} className="font-semibold text-4xl text-center">Register</span>
                 </div>
                 <Toast ref={toast} />
                 <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6 p-4">
+                    <div className='w-full flex flex-col md:flex-row gap-3'>
+                    <div className='w-full flex flex-col gap-2'>
                     <div className="w-full">
                         <label htmlFor="username" className="block text-gray-700 font-bold mb-2">
                             Username
@@ -285,6 +287,9 @@ export default function RegisterPage() {
                         />
                         {errors.phone && <small className="p-error">{errors.phone}</small>}
                     </div>
+                    </div>
+
+                    <div className='w-full flex flex-col gap-2'>
                     <div className="w-full">
                         <label htmlFor="firstName" className="block text-gray-700 font-bold mb-2">
                             First Name
@@ -324,6 +329,8 @@ export default function RegisterPage() {
                             className="w-full p-2 border rounded"
                         />
                         {errors.address && <small className="p-error">{errors.address}</small>}
+                    </div>
+                    </div>
                     </div>
                     {/* <div className="w-full">
                         <label htmlFor="age" className="block text-gray-700 font-bold mb-2">

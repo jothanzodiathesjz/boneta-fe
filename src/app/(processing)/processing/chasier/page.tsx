@@ -120,9 +120,9 @@ useEffect(()=>{
                     </DataTable>
                 </div>
                 <div className="w-full h-full p-3  border-r border-neutral-60/30">
-                <span>On Delivery</span>
+                <span>In Delivery</span>
                     <DataTable 
-                    value={vm.data2.data?.data} 
+                    value={vm.data4.data?.data} 
                     scrollable
                     pt={
                         {
