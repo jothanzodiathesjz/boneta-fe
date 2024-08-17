@@ -38,17 +38,17 @@ export default function Page() {
 
     const receiptHtml = () => (
         <div ref={receiptRef} style={{display:'none',position:'relative',zIndex:'-999'}}>
-            <div className="w-full flex flex-col bg-white gap-3 p-5">
+            <div className="w-full h-full flex flex-col bg-white gap-3 p-5">
                     <div className="flex w-full justify-center border-b border-neutral-80 py-2">
                         <span className="font-bold">{vm.data?.data.order_id}</span>
                     </div>
-                    <div className="flex flex-col w-full justify-center border-b gap-2 border-neutral-80 py-2">
+                    <div className="flex flex-col w-full justify-center border-b border-dotted gap-2 border-neutral-80 py-2">
                         <span>RM Boneta</span>
                         <span>Alamat: Jl Perintis Kemerdekaan</span>
                         <span>Date: {UnixToDateString(vm.data?.data.created_at ? vm.data?.data.created_at : 0)}</span>
                         <span className="text-danger-pressed">Mode: {vm.data?.data.delivery ? 'Delivery' : 'Dine In'}</span>
                     </div>
-                <div className="w-full flex flex-col justify-center items-center gap-4 pb-3 bg-white border-b border-neutral-80">
+                <div className="w-full h-full flex flex-col justify-center items-center gap-4 pb-3 bg-white border-b border-dotted border-neutral-80">
                     <span className=" w-full">Items</span>
                     {vm.data?.data?.items.filter((v)=>!v.deleted_at).map((item,index)=>(
                         <div 
@@ -70,7 +70,7 @@ export default function Page() {
                     </div>
                     )) }
                 </div>
-                    <div className="flex w-full border-b border-neutral-80 py-3">
+                    <div className="flex w-full border-b border-neutral-80 border-dotted py-3">
                         <span className="w-full">Total</span>
                         <span className="text-neutral-40">{vm.data?.data.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
