@@ -24,8 +24,20 @@ export default function RootLayout({
   
   return (
     <html lang="en">
+      <head
+      dangerouslySetInnerHTML={{ __html: `
+        <!-- ********* Supported By Jothan Zodiathes Programmer Handal CWF ********
+             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
+             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
+             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
+             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
+             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
+             ********** Supported By Jothan Zodiathes Programmer Handal CWF ******** -->
+      ` }}
+      />
         <PrimeReactProvider>
             <body className={inter.className}>
+              
               <main className="w-full flex justify-center overflow-x-hidden">
                 {children}
               </main>
