@@ -24,17 +24,6 @@ export default function RootLayout({
   
   return (
     <html lang="en">
-      <head
-      dangerouslySetInnerHTML={{ __html: `
-        <!-- ********* Supported By Jothan Zodiathes Programmer Handal CWF ********
-             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
-             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
-             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
-             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
-             ********** Supported By Jothan Zodiathes Programmer Handal CWF ********
-             ********** Supported By Jothan Zodiathes Programmer Handal CWF ******** -->
-      ` }}
-      />
         <PrimeReactProvider>
             <body className={inter.className}>
               
