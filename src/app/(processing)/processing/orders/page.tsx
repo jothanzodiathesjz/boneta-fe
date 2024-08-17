@@ -98,23 +98,42 @@ const exportPdf = (nama:string) => {
       
       // Mengatur jarak antara judul dan tabel
       const startY = 30; // Jarak dari atas halaman setelah judul
-      console.log(newData);
-          
+      console.log(newData); 
+      const footer = [
+        ["", "", "Totals", `${vm.data?.data?.total_price.toLocaleString('id', {
+          currency: 'IDR',
+          style: 'currency',
+        })}`],
+        ["", "", "", ""], // Kosongkan baris sebelum tanda tangan
+        ["", "", "", `Makassar, ${new Date().toLocaleString('id', { year: 'numeric', month: 'long', day: 'numeric' })}`],
+        ["", "", "", "Penanggung Jawab"],
+        ["", "", "", ""], // Kosongkan baris sebelum tanda tangan
+        ["", "", "", ""], // Kosongkan baris sebelum tanda tangan
+        ["", "", "", `(${nama})`],
+      ];
+
       autoTable(doc, {
         head: [exportColumns],
         body: newData,
-        foot: [
-          ["", "", "Totals", `${vm.data?.data?.total_price.toLocaleString('id',{
-            currency: 'IDR',
-            style: 'currency',
-          })}`],
-        ],
+        foot: footer,
         showFoot: "lastPage",
-        startY: startY, // Mulai tabel di bawah judul
+        startY: startY,
         styles: {
           minCellHeight: 9,
           minCellWidth: 20,
-          halign: 'left',
+          halign: 'center',
+        },
+        footStyles: {
+          fillColor: [255, 255, 255], // Default: Putih
+          textColor: [0, 0, 0],
+          fontStyle: 'normal',
+        },
+        didDrawCell: function (data) {
+          // Ganti warna latar belakang "Totals"
+          if (data.section === 'foot' && data.row.index === 0) {
+            data.cell.styles.fillColor = [0, 102, 204]; // Biru
+            data.cell.styles.textColor = [255, 255, 255]; // Teks putih
+          }
         },
       });
 
@@ -125,17 +144,6 @@ const exportPdf = (nama:string) => {
       if (finalY + footerHeight > pageHeight) {
         doc.addPage();
       }
-
-      // Tambahkan footer di halaman terakhir
-      const pageWidth = doc.internal.pageSize.getWidth();
-      doc.setFontSize(12);
-      doc.text(`Makassar, ${new Date().toLocaleDateString('id',{
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })}`, pageWidth - 50, pageHeight - 40, { align: 'center' });
-      // doc.text('Tanda Tangan Pimpinan', pageWidth - 50, pageHeight - 30, { align: 'center' }); 
-      doc.text(`(${nama})`, pageWidth - 50, pageHeight - 20, { align: 'center' });
 
       doc.save(new Date().toISOString() + "orders.pdf");
     });
