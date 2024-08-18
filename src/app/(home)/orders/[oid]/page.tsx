@@ -37,7 +37,7 @@ export default function Page() {
     },[vm.loading])
 
     const receiptHtml = () => (
-        <div ref={receiptRef} style={{display:'none',position:'relative',zIndex:'-999'}} className="h-min-[100vh]">
+        <div ref={receiptRef} style={{display:'none',position:'absolute',zIndex:'-999'}} className="h-min-[100vh]">
             <div className="w-full h-full flex flex-col bg-white gap-3 p-5">
                     <div className="flex w-full justify-center py-2">
                         <span className="font-bold">{vm.data?.data.order_id}</span>
@@ -207,6 +207,13 @@ export default function Page() {
                                 vm.data.data.payment.value === 'transfer' && 
                                 vm.data.data.delivery && 
                                 vm.data.data.payment_image  ? "Menunggu konfirmasi dari kasir" : ""
+                            )
+                        }
+                        {
+                            (
+                                vm.data.data.status === 'waiting' && 
+                                vm.data.data.payment.value === 'cod' && 
+                                vm.data.data.delivery ? "Menunggu konfirmasi dari kasir" : ""
                             )
                         }
                         {
