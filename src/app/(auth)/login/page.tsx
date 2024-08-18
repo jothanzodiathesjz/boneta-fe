@@ -31,7 +31,7 @@ export default function Login() {
       const errormsg = (error as Error).message
       if (msgs.current) {
         msgs.current.clear();
-        msgs.current.show({ id: '1', sticky: true, severity: 'error', summary: 'error', detail: errormsg === 'user not found' ? errormsg : 'Username or Password Invalid' , closable: true });
+        msgs.current.show({ id: '1', sticky: true, severity: 'error', summary: 'error', detail:  'Username atau Password Salah' , closable: true });
       }
     } finally {
       setLoading(false)
