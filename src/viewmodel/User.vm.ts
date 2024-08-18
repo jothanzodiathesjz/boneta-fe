@@ -91,6 +91,8 @@ export const UsersViewModel = () => {
 export const userModalViewModel = () => {
     const [uuid,setUuid] = useState("")
     const [updating,setUpdating] = useState(false)
+    const[errorMessage,setErrorMessage] = useState<string | null>("")
+    const[successMessage,setSuccessMessage] = useState<string | null>("")
    
     const getUser = async (uuid:string) => {
         try {
@@ -130,8 +132,11 @@ export const userModalViewModel = () => {
                         phone
                     })
                 })
+                setSuccessMessage(response.message)
             
         } catch (error) {
+            const errorM = (error as Error).message
+            setErrorMessage(errorM)
             console.log(error)
         }
         setUpdating(false)
@@ -143,6 +148,12 @@ export const userModalViewModel = () => {
         setUuid,
         createUser,
         getUser,
+        errorMessage,
+        setErrorMessage,
+        updating,
+        setUpdating,
+        successMessage,
+        setSuccessMessage
     }
 
     
