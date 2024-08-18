@@ -247,9 +247,9 @@ export default function Page() {
                                 
                                 ? "Bukti Transfer Tidak Valid, Mohon untuk upload ulang" : "")
                         }
-                        {
+                        {/* {
                             (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
-                        }
+                        } */}
                         {
                             (vm.data.data.status === 'in-delivery'  ? "Pesanan dalam perjalanan" : "")
                         }
