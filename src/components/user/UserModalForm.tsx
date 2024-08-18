@@ -17,6 +17,8 @@ type UserModalFormType = {
     visible: boolean;
     updating: boolean;
     selected: DomainUserWithProfile | null;
+    errorMessage: (error: string) => void;
+    successMessage: (success: string) => void;
     submit: () => void;
     closeModal: () => void;
 };
@@ -43,7 +45,7 @@ const stylePt = {
     },
 };
 
-export default function UserModalForm({ uuid, closeModal, visible, submit, updating,selected }: UserModalFormType) {
+export default function UserModalForm({ uuid, closeModal, visible, submit, updating,selected,errorMessage,successMessage }: UserModalFormType) {
     const toast = useRef<Toast>(null);
     const vm = userModalViewModel();
     const [auth, setAuth] = useState<DomainAuth>({
@@ -297,6 +299,18 @@ useEffect(() => {
         setRoles(selected.roles)
     }
 },[updating,uuid])
+
+useEffect(() => {
+    if(vm.errorMessage){
+        console.log(vm.errorMessage)
+        errorMessage(vm.errorMessage)
+    }
+},[vm.errorMessage])
+useEffect(() => {
+    if(vm.successMessage){
+        successMessage(vm.successMessage)
+    }
+},[vm.successMessage])
 
     return (
         <Sidebar

@@ -127,6 +127,8 @@ export default function page() {
       closeModal={() => (vm.setIsOpen(false),vm.setUpdating(false),vm.setSelectedUser(null),vm.data.mutate())}
       submit={() => vm.data.mutate()}
       uuid={uuid}
+      errorMessage={(s)=>toast.current?.show({ severity: 'error', summary: 'Error Message', detail: s, life: 3000 })}
+      successMessage={(s)=>toast.current?.show({ severity: 'success', summary: 'Success Message', detail: s, life: 3000 })}
       />
     </main>
   );
