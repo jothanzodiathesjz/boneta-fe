@@ -59,12 +59,18 @@ export const CartPopFinal: React.FC<CartPopFinalProps> = ({ visible, onVisibleCh
         <Sidebar
             visible={visible}
             position="bottom"
+            pt={{
+                content:{
+                    className:'pb-0'
+                }
+            }}
             header='Pesanan Saya'
             className='md:w-[500px] w-full rounded-t-xl h-[70vh] flex flex-col pb-0'
             onHide={onVisibleChange}>
+            
             {localData &&
-            <div className='flex flex-col gap-3 p-3 justify-between h-full'>
-                <div className='flex flex-col gap-4 h-full'>
+            <div className='flex flex-col gap-3 justify-between  h-[70vh]'>
+                <div className='flex flex-col gap-4 pb-6'>
                     {localData.items.map((v) => (
                         <div 
                         key={v.uuid}
@@ -92,8 +98,8 @@ export const CartPopFinal: React.FC<CartPopFinalProps> = ({ visible, onVisibleCh
                         </div>
                     ))}
                   
-            </div>
-                    <div className='flex flex-col gap-2'>
+                </div>
+                    <div className='sticky bottom-0 w-full bg-white left-0  flex flex-col gap-2'>
                         <div className='w-full p-2 border rounded-xl flex flex-row justify-between items-ends border-neutral-70'>
                             <span>{localData.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                             <div className='flex flex-col gap-2'>
