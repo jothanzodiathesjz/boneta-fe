@@ -148,7 +148,7 @@ export default function Page() {
                     </div>
                 </div>
                 {((vm.data.data.payment.value === 'transfer' && 
-                vm.data.data.status === 'ready' && 
+                vm.data.data.status === 'served' && 
                 (!vm.data.data.payment_image ||
                 vm.data.data.payment_image === 'rejected' )) ||
                 (vm.data.data.status === 'waiting' && 
@@ -172,13 +172,13 @@ export default function Page() {
                     </div>
                 }
                 {(vm.data.data.payment.value === 'transfer' && 
-                vm.data.data.status === 'ready' && 
+                vm.data.data.status === 'served' && 
                 !vm.data.data.payment_image ) 
                 
                 ?
 
                 <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
-                        <span className="text-center font-medium text-neutral-40">Silahkan Mengupload Bukti Pembayaran</span>
+                        <span className="text-center font-medium text-neutral-40">Pesanan Telah Siap, Silahkan Mengupload Bukti Pembayaran</span>
                        <FileUpload
                        allowedFileTypes={['image/png', 'image/jpeg', 'image/jpg']}
                        onFileSelect={vm.handleFileSelect}
@@ -203,10 +203,17 @@ export default function Page() {
                         }
                         {
                             (
+                                vm.data.data.status === 'served' &&
+                                vm.data.data.payment_image !== 'rejected'
+                                ? "Selamat Menikmati, Konfirmasi Ke kasir Untuk menyelesaikan pesanan" : ""
+                            )
+                        }
+                        {
+                            (
                                 vm.data.data.status === 'waiting' && 
                                 vm.data.data.payment.value === 'transfer' && 
                                 vm.data.data.delivery && 
-                                vm.data.data.payment_image  ? "Menunggu konfirmasi dari kasir" : ""
+                                vm.data.data.payment_image !== 'rejected'  ? "Menunggu konfirmasi dari kasir" : ""
                             )
                         }
                         {
@@ -237,12 +244,14 @@ export default function Page() {
                                 !vm.data.data.delivery &&
                                 (vm.data.data.payment_image !== 'rejected' )
                                 
-                                ? "Konfirmasi Kekasir Untuk  Menyelesaikan Pesanan" : "")
+                                ? "Pesanan Telah Siap, menunggu konfirmasi pelayan" : "")
                         }
                         {
                             (
-                                vm.data.data.status === 'ready' && 
-                                !vm.data.data.delivery &&
+                                (
+                                    vm.data.data.status === 'waiting' ||
+                                    vm.data.data.status === 'served'
+                                )  &&
                                 (vm.data.data.payment_image === 'rejected' )
                                 
                                 ? "Bukti Transfer Tidak Valid, Mohon untuk upload ulang" : "")
@@ -280,7 +289,7 @@ export default function Page() {
                 </div>
                 }
                 {
-                    (vm.data.data.status === 'ready' || 
+                    (vm.data.data.status === 'served' || 
                         vm.data.data.status === 'waiting') && 
                     (vm.data.data.payment_image === "rejected" ) &&
                     vm.data.data.payment.value === "transfer" &&

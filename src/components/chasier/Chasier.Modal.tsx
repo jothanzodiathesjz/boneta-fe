@@ -154,7 +154,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                         <span>Total Price</span>
                         <span>{data?.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
-                    {data?.status === 'ready' && 
+                    {data?.status === 'served' && 
                     data?.payment.value === 'cash' && 
                     <><div className="w-full flex flex-col mt-3 gap-2">
                         <span>Masukkan Nominal Diterima</span>
@@ -173,7 +173,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                      </>
                     }
                     {
-                    (data?.status === 'ready' || data?.status === 'waiting') && 
+                    (data?.status === 'served' || data?.status === 'waiting') && 
                     data.payment_image && 
                     data.payment_image !== 'rejected' &&
                     <>
@@ -219,7 +219,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                     onClick={()=>(handleProcess("accepted"),setTotalBayar(0),setKembalian(0))}
                     className="w-full"
                     />}
-                    {data?.status === 'ready'  && <Button
+                    {data?.status === 'served'  && <Button
                     label="Selesai"
                     severity="success"
                     onClick={()=>(handleProcess('ended'),setTotalBayar(0),setKembalian(0))}

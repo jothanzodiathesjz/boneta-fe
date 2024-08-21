@@ -17,6 +17,7 @@ export async function middleware(request: NextRequest) {
     if (!userData.roles.includes('admin') &&
         !userData.roles.includes('kurir') &&
         !userData.roles.includes('kasir') &&
+        !userData.roles.includes('pelayan') &&
         !userData.roles.includes('kitchen') &&
         !userData.roles.includes('pimpinan')) {
       return NextResponse.redirect(new URL('/', request.url));

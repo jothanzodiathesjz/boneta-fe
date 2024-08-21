@@ -26,7 +26,7 @@ const ChasierViewModel = () => {
     },{
         revalidateOnMount: true
     })
-    const data3 = http.Send<DomainOrder[]>('/api/orders?status=ready',undefined,{
+    const data3 = http.Send<DomainOrder[]>('/api/orders?status=served',undefined,{
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${coockies}`

@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { HttpClient } from "@/services/httpClient";
-import { DomainOrder } from "@/domain/Orders";
+import { DomainOrder, DomainOrderSummarry } from "@/domain/Orders";
 import { getCookie } from "@/utils/cookies";
+import { UnixToDateStringReverse } from "@/utils/date";
+import { Nullable } from "primereact/ts-helpers";
 const coockies = getCookie('accessToken');
 
 const http = new HttpClient();
 const kitchenViewModel = () => {
     const [selectedOrder, setSelectedOrder] = useState<DomainOrder | null>(null);
-
+    const [dates, setDates] = useState<Nullable<(Date | null)[]>>([new Date(), new Date()]);
     const {data,isError,isLoading,mutate} = http.Send<DomainOrder[]>('/api/orders?status=waiting',undefined,{
         headers: {
             "Content-Type": "application/json",
@@ -34,6 +36,14 @@ const kitchenViewModel = () => {
     },{
         revalidateOnMount: true
     })
+    const data4 = http.Send<DomainOrderSummarry>(`/api/orders-summary/?sDate=${UnixToDateStringReverse(dates![0] ? dates![0].getTime() : new Date().getTime(),'-')}&eDate=${UnixToDateStringReverse(dates![1] ? dates![1].getTime() : new Date().getTime(),'-')}`,undefined,{
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${coockies}`
+        }
+    },{
+        revalidateOnMount: true
+    })
 
     const handleProcess = async (status:string) => {
         try {
@@ -53,6 +63,7 @@ const kitchenViewModel = () => {
             mutate()
             data2.mutate()
             data3.mutate()
+            data4.mutate()
     }
 
     const updateSeen = async (uuid:string) => {
@@ -99,7 +110,8 @@ const kitchenViewModel = () => {
         setOrders,
         updateSeen,
         data3,
-        handleDeleteItem
+        handleDeleteItem,
+        data4
     }
 }
 

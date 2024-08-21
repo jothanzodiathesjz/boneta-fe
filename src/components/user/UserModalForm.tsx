@@ -77,6 +77,7 @@ export default function UserModalForm({ uuid, closeModal, visible, submit, updat
         "admin",
         "user",
         "kurir",
+        "pelayan",
         "kasir",
         "pimpinan",
         "kitchen",

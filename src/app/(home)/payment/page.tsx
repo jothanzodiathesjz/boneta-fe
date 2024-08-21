@@ -94,7 +94,7 @@ useEffect(() => {
       <div className="w-full pb-44 flex bg-white flex-col gap-3 px-5 pt-5">
         {/* items */}
         <div className="w-full flex flex-col gap-2">
-        <span>Nama Lengkap</span>
+        <span>Nama Pemesan</span>
         <div className="p-inputgroup flex-1">
                 <span className="p-inputgroup-addon">
                     <i className="pi pi-user"></i>
