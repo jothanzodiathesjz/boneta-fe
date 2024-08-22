@@ -1,10 +1,9 @@
 "use client"
-import { useState,useRef,useEffect } from "react";
-import { InputText } from "primereact/inputtext";
+import { useState,useRef} from "react";
 import { Button } from "primereact/button";
 import { HttpClient } from "@/services/httpClient";
 import { Toast } from 'primereact/toast';
-import { useRouter,useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Password } from "primereact/password";
 
 const http = new HttpClient();
@@ -16,7 +15,6 @@ export default function page() {
     const [isSucces,setIsSucces] = useState(false);
     const toast = useRef<Toast>(null);
     const { oid } = useParams()
-    const router = useRouter();
     const handleSubmit = async ()=>{
         if(!password){
             setValidatePassword(true);
@@ -46,8 +44,6 @@ export default function page() {
           window.location.href = '/login'
         }, 500);
     }
-
-
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-slate-200 px-5">
         <Toast ref={toast} />
@@ -71,15 +67,6 @@ export default function page() {
           onChange={(e) => (setPassword(e.target.value),console.log(e.target.value))} 
           invalid={validatePassword}
           />
-          {/* <InputText
-            id="password"
-            placeholder="Masukkan Password Baru"
-            type="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            
-          /> */}
           {validatePassword && <small className="p-error">{errors}</small>}
           <Button
           severity="danger"

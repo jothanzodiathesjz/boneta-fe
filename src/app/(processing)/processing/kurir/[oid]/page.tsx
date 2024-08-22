@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import { kurirDetailViewModel } from "@/viewmodel/KurirDetail.vm";
 import { useBackRouteStore } from "@/store/BackRouteStore";
-import { UnixToDateString } from "@/utils/date";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 export default function page() {
