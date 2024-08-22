@@ -22,7 +22,7 @@ const onRowSelect = async (event: DataTableSelectEvent) => {
 const bodyTambahan = (rowData: DomainOrder) => {
     return(
         <div className='flex flex-row gap-3'>
-            <span>{rowData.total_price}</span>
+            <span>{(rowData.total_price * 1.1).toLocaleString('id-ID')}</span>
             {rowData.seen ? '' : <span>🔴</span>}
         </div>
     )
@@ -88,7 +88,7 @@ useEffect(()=>{
                         <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
                         <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
                         <Column field="table" header="Table"  headerClassName='bg-primary-surface'sortable></Column>
-                        <Column field="total_price" header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column body={bodyTambahan} header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
                        
                     </DataTable>
                 </div>
@@ -115,7 +115,7 @@ useEffect(()=>{
                         <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
                         <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
                         <Column field="table" header="Table" headerClassName='bg-primary-surface' sortable></Column>
-                        <Column field="total_price" header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column body={bodyTambahan} header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
                        
                     </DataTable>
                 </div>
@@ -140,7 +140,7 @@ useEffect(()=>{
                         <Column field="order_id" header="Order Id" headerClassName='bg-primary-surface' sortable></Column>
                         <Column field="status" header="Status" headerClassName='bg-primary-surface' sortable></Column>
                         <Column field="table" header="Table" headerClassName='bg-primary-surface' sortable></Column>
-                        <Column field="total_price" header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
+                        <Column body={bodyTambahan} header="Total Price" headerClassName='bg-primary-surface' sortable></Column>
                        
                     </DataTable>
                 </div>

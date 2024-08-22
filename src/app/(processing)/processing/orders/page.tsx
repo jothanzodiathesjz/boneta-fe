@@ -22,7 +22,7 @@ export default function page() {
   const [date,setDate] = useState<Nullable<Date | null>>(null)
   const [visible, setVisible] = useState(false);
   const [pengguna,setPengguna] = useState<string>('')
-  const dt = useRef<DataTable<DomainOrder[]>>(null);
+  const dt = useRef<DataTable<any[]>>(null);
   interface ColumnMeta {
     field: string;
     header: string;
@@ -72,7 +72,7 @@ const exportPdf = (nama:string) => {
       v.status,
       v.table,
       "", // Kosongkan kolom untuk item pada baris order
-      v.total_price.toLocaleString(), // Format harga dengan pemisah ribuan
+      (v.total_price * 1.1).toLocaleString(), // Format harga dengan pemisah ribuan
     ];
   
     // Buat baris untuk setiap item dalam order
@@ -80,7 +80,7 @@ const exportPdf = (nama:string) => {
       `     ${item.name} (x${item.quantity})`, // Kosongkan kolom order_id
       "", // Kosongkan kolom status
       "", // Kosongkan kolom table
-      item.total_price.toLocaleString('id',{
+      (item.total_price * 1.1).toLocaleString('id',{
         currency: 'IDR',
         style: 'currency',
       }), // Harga total item
@@ -100,7 +100,7 @@ const exportPdf = (nama:string) => {
       const startY = 30; // Jarak dari atas halaman setelah judul
       console.log(newData); 
       const footer = [
-        ["", "", "Totals", `${vm.data?.data?.total_price.toLocaleString('id', {
+        ["", "", "Totals", `${((vm.data?.data?.total_price ?? 0) * 1.1).toLocaleString('id', {
           currency: 'IDR',
           style: 'currency',
         })}`],
@@ -257,7 +257,9 @@ const header = (
               className: "h-[80vh] overflow-y-scroll scroller",
             },
           }}
-          value={vm.data?.data?.orders} 
+          value={vm.data?.data?.orders.map((v)=>{
+            return {...v,total_price:(v.total_price * 1.1).toLocaleString("id-ID")}
+          })} 
           header={header} 
           onRowSelect={onRowSelect}
               selectionMode={"single"}
@@ -280,7 +282,7 @@ const header = (
                     </div>
                     <div className="w-full flex ">
                         <span className="w-44 flex-shrink-0">Total </span>
-                        <span className="text-neutral-50">{vm.data?.data?.total_price.toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
+                        <span className="text-neutral-50">{((vm.data?.data?.total_price ?? 0) * 1.1).toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
                     </div>
               </div>
         </div>

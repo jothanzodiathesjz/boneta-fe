@@ -74,9 +74,14 @@ useEffect(() => {
                     )) }
                 </div>
                     <div className="flex w-full">
+                        <span className="w-44 flex-shrink-0">PPN</span>
+                        <span className="w-full text-neutral-40">10%</span>
+                        <span className="text-neutral-40">{((vm.data1?.data?.data.total_price || 0) * (10 / 100)).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                    </div>
+                    <div className="flex w-full">
                         <span className="w-44 flex-shrink-0">Total</span>
                         <span className="w-full text-neutral-40">{vm.data1?.data?.data.quantity}</span>
-                        <span className="text-neutral-40">{vm.data1?.data?.data.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                        <span className="text-neutral-40">{((vm.data1?.data?.data.total_price || 0) * 1.1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
 
                    {vm.data1.data?.data.status === 'ready' && <Button

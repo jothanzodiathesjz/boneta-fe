@@ -150,9 +150,14 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                         <span>Quantity</span>
                         <span>{data?.quantity}</span>
                     </div>
+                    <div className="w-full flex flex-row justify-between">
+                        <span>PPN</span>
+                        <span>10%</span>
+                        <span>{((data?.total_price ?? 0) * (10 / 100)).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                    </div>
                     <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
                         <span>Total Price</span>
-                        <span>{data?.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                        <span>{((data?.total_price ?? 0)  * 1.1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                     </div>
                     {data?.status === 'served' && 
                     data?.payment.value === 'cash' && 
@@ -160,7 +165,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                         <span>Masukkan Nominal Diterima</span>
                         <InputNumber
                         value={totalBayar}
-                        onChange={(e) => (setTotalBayar(e.value!), setKembalian(e.value! - data?.total_price!))}
+                        onChange={(e) => (setTotalBayar(e.value!), setKembalian(e.value! - (data?.total_price * 1.1)!))}
                         />
                     </div>
                     <div className="w-full flex flex-col mt-2 gap-2">

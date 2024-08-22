@@ -97,7 +97,7 @@ export default function KitchenModal({ data, closeModal, handleProcess ,handleDe
                             <span className="w-32 flex-shrink-0 font-semibold">Price</span>
                             <span className="w-28 flex-shrink-0 font-semibold text-center">Quantity</span>
                         </div>
-                        <div className="w-full flex flex-col gap-3 overflow-auto h-[50vh]">
+                        <div className="w-full flex flex-col gap-3 overflow-auto h-[45vh]">
                         {data?.items.filter((item) => !item.deleted_at).map((item) => 
                         <div 
                         key={item.uuid}
@@ -124,8 +124,13 @@ export default function KitchenModal({ data, closeModal, handleProcess ,handleDe
                             <span>{data?.quantity}</span>
                          </div>
                          <div className="w-full flex justify-between flex-row">
+                            <span>PPN</span>
+                            <span>10%</span>
+                            <span>{((data?.total_price || 0) * (10 / 100)).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                         </div>
+                         <div className="w-full flex justify-between flex-row">
                             <span>Total Price</span>
-                            <span>{data?.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
+                            <span>{((data?.total_price || 0) * 1.1).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                          </div>
                         {(data?.status === 'accepted' || data?.status === 'waiting') && <Button
                         label="Konfirmasi"

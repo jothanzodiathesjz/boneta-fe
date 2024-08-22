@@ -168,13 +168,13 @@ console.log(vm.cartResult)
       </div>
       {/* product card end */}
       </div>
-      <CartPopup
+      {/* <CartPopup
       data={vm.orderItem!}
       onVisibleChange={()=>vm.setOrderItem(null)}
       visible={vm.orderItem && vm.orderItem?.quantity > 0  ? true : false}
       onUpdateData={(data) => vm.handleUpdateItem(data)}
       onSubmit={(e)=>[vm.hanldeItemTocart(e)]}
-      />
+      /> */}
       {(vm.cartResult?.items && vm.orderToCart) && <CartResult
       data={vm.cartResult}
       click={()=>setCartVisible(true)}

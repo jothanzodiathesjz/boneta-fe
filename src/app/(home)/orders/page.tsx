@@ -45,7 +45,7 @@ export default function Orders() {
                                 <span>{item.order_id}</span>
                                 <span className="text-neutral-40">
                                     {
-                                        item.total_price
+                                        (item.total_price * 1.1)
                                             .toLocaleString('id-ID',
                                                 {
                                                     style: 'currency',

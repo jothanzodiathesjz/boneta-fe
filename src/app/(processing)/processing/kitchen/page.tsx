@@ -23,7 +23,7 @@ export default function page() {
     return (
       <div className="flex flex-row gap-3">
         <span className="w-full">
-          {rowData.total_price.toLocaleString("id-ID")}
+          {(rowData.total_price * 1.1).toLocaleString("id-ID")}
         </span>
         {rowData.seen ? "" : <span>🔴</span>}
       </div>
@@ -33,7 +33,7 @@ export default function page() {
     return (
       <div className="flex flex-row gap-3">
         <span className="w-full">
-          {rowData.total_price.toLocaleString("id-ID")}
+        {(rowData.total_price * 1.1).toLocaleString("id-ID")}
         </span>
       </div>
     );
@@ -198,21 +198,21 @@ export default function page() {
             <Column
               field="order_id"
               header="Order Id"
-              className="text-red-800"
+              className="text-red-700"
               headerClassName="bg-primary-surface"
               sortable
             ></Column>
             <Column
               field="status"
               header="Status"
-              className="text-red-800"
+              className="text-red-700"
               headerClassName="bg-primary-surface"
               sortable
             ></Column>
             <Column
               field="table"
               header="Table"
-              className="text-red-800"
+              className="text-red-700"
               headerClassName="bg-primary-surface"
               sortable
             ></Column>
@@ -220,7 +220,7 @@ export default function page() {
               field="total_price"
               body={bodyTambahanEnded}
               header="Total Price"
-              className="text-red-800"
+              className="text-red-700"
               headerClassName="bg-primary-surface"
               sortable
             ></Column>
