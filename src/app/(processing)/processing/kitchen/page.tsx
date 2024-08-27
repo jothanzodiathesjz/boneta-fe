@@ -53,7 +53,7 @@ export default function page() {
       <div className="w-full h-full flex">
         <div className="w-full flex flex-col">
           <div className="w-full flex flex-col  p-3 gap-3 border-r  border-neutral-60/30">
-            <span>Order On menunggu</span>
+            <span>Menunggu Konfirmasi Kasir</span>
             <DataTable
               value={vm.orders}
               scrollable
@@ -69,7 +69,7 @@ export default function page() {
             >
               <Column
                 field="order_id"
-                header="Order Id"
+                header="ID Pesanan"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
@@ -81,21 +81,21 @@ export default function page() {
               ></Column>
               <Column
                 field="table"
-                header="Table"
+                header="Meja"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
               <Column
                 field="total_price"
                 body={bodyTambahan}
-                header="Total Price"
+                header="Total Harga"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
             </DataTable>
           </div>
           <div className="w-full flex flex-col  p-3 gap-3 border-r  border-neutral-60/30">
-            <span>diterima By Chasier</span>
+            <span>diterima Oleh Kasir</span>
             <DataTable
               value={vm.data3.data?.data}
               scrollable
@@ -111,7 +111,7 @@ export default function page() {
             >
               <Column
                 field="order_id"
-                header="Order Id"
+                header="ID Pesanan"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
@@ -123,14 +123,14 @@ export default function page() {
               ></Column>
               <Column
                 field="table"
-                header="Table"
+                header="Meja"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
               <Column
                 field="total_price"
                 body={bodyTambahan}
-                header="Total Price"
+                header="Total Harga"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
@@ -138,7 +138,7 @@ export default function page() {
           </div>
         </div>
         <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r  border-neutral-60/30">
-          <span>Order List</span>
+          <span>Sedang Diproses</span>
           <DataTable
             value={vm.data2.data?.data}
             scrollable
@@ -154,7 +154,7 @@ export default function page() {
           >
             <Column
               field="order_id"
-              header="Order Id"
+              header="ID Pesanan"
               headerClassName="bg-primary-surface"
               sortable
             ></Column>
@@ -166,21 +166,21 @@ export default function page() {
             ></Column>
             <Column
               field="table"
-              header="Table"
+              header="Meja"
               headerClassName="bg-primary-surface"
               sortable
             ></Column>
             <Column
               field="total_price"
               body={bodyTambahan}
-              header="Total Price"
+              header="Total Harga"
               headerClassName="bg-primary-surface"
               sortable
             ></Column>
           </DataTable>
         </div>
         <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r  border-neutral-60/30">
-          <span>Order selesai</span>
+          <span>Pesanan selesai</span>
           <DataTable
             value={vm.data4.data?.data?.orders}
             scrollable
@@ -196,7 +196,7 @@ export default function page() {
           >
             <Column
               field="order_id"
-              header="Order Id"
+              header="ID Pesanan"
               className="text-red-700"
               headerClassName="bg-primary-surface"
               sortable
@@ -210,7 +210,7 @@ export default function page() {
             ></Column>
             <Column
               field="table"
-              header="Table"
+              header="Meja"
               className="text-red-700"
               headerClassName="bg-primary-surface"
               sortable
@@ -218,7 +218,7 @@ export default function page() {
             <Column
               field="total_price"
               body={bodyTambahanselesai}
-              header="Total Price"
+              header="Total Harga"
               className="text-red-700"
               headerClassName="bg-primary-surface"
               sortable

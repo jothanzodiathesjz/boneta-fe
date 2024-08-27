@@ -43,7 +43,7 @@ useEffect(()=>{
       <main className="min-h-screen pt-20">
         <div className="w-full h-full grid grid-cols-3">
           <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r  border-neutral-60/30">
-            <span>Order List</span>
+            <span>Daftar Pesanan</span>
             <DataTable
               value={vm.orders}
               scrollable
@@ -86,7 +86,7 @@ useEffect(()=>{
             </DataTable>
           </div>
           <div className="w-full h-full p-3  border-r border-neutral-60/30">
-            <span>On Process</span>
+            <span>Sedang Diproses</span>
             <DataTable
               value={vm.data2.data?.data}
               scrollable
@@ -129,7 +129,7 @@ useEffect(()=>{
           </div>
           <div className="w-full flex flex-col">
             <div className="w-full h-full p-3  border-r border-neutral-60/30">
-              <span>On selesai</span>
+              <span>Siap Diselesikan</span>
               <DataTable
                 value={vm.data3.data?.data}
                 scrollable
@@ -171,7 +171,7 @@ useEffect(()=>{
               </DataTable>
             </div>
             <div className="w-full h-full p-3  border-r border-neutral-60/30">
-              <span>In Delivery</span>
+              <span>Sedang Diantar</span>
               <DataTable
                 value={vm.data4.data?.data}
                 scrollable

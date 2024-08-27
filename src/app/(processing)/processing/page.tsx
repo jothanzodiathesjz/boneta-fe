@@ -10,37 +10,37 @@ import { getCookie, parseCookie } from "@/utils/cookies";
 export default function Chasier() {
   const route = [
     {
-      name: "Chasier",
+      name: "kasir",
       path: "/processing/chasier",
       icon: "point_of_sale",
       roles: ["kasir"],
     },
     {
-      name: "Kitchen",
+      name: "Dapur",
       path: "/processing/kitchen",
       icon: "kitchen",
       roles: ["kitchen"],
     },
     {
-      name: "Orders Report",
+      name: "Laporan Pesanan",
       path: "/processing/orders",
       icon: "list",
       roles: ["admin", "pimpinan", "kasir"],
     },
     {
-      name: "Users",
+      name: "Pengguna",
       path: "/processing/users",
       icon: "person",
       roles: ["admin"],
     },
     {
-      name: "Menus",
+      name: "Menu",
       path: "/processing/menus",
       icon: "local_dining",
       roles: ["admin"],
     },
     {
-      name: "Others",
+      name: "Lainnya",
       path: "/processing/others",
       icon: "more",
       roles: ["admin"],

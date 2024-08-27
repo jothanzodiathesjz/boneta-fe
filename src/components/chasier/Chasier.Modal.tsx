@@ -74,7 +74,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
         pt={stylePt}
         className="h-screen bg-[#FAFAFD]"
         visible={data ? true : false}
-        header="Order Detail"
+        header="Detail pesanan"
         position="bottom"
         onHide={closeModal}
       >
@@ -82,13 +82,13 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
           <Toast ref={toast} />
           <div className="w-full flex flex-col ">
             <div className="w-full flex flex-col gap-4 bg-white p-4 rounded-md shadow-md">
-              <span className="font-semibold">Order Information</span>
+              <span className="font-semibold">Informasi Pesanan </span>
               <div className="flex flex-row w-full">
-                <span className="w-32 flex-shrink-0 ">OrderID</span>
+                <span className="w-32 flex-shrink-0 ">ID Pesanan</span>
                 <span className="w-full  text-black">: {data?.order_id}</span>
               </div>
               <div className="flex flex-row w-full">
-                <span className="w-32 flex-shrink-0 ">Name</span>
+                <span className="w-32 flex-shrink-0 ">Nama</span>
                 <span className="w-full  text-black">
                   : {data?.customer.name}
                 </span>
@@ -100,7 +100,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                 </span>
               </div>
               <div className="flex flex-row w-full">
-                <span className="w-32 flex-shrink-0 ">Phone</span>
+                <span className="w-32 flex-shrink-0 ">No Telepon</span>
                 <span className="w-full  text-black">
                   : {data?.customer.phone}
                 </span>
@@ -124,18 +124,18 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                 </span>
               </div>
               <div className="flex flex-row w-full">
-                <span className="w-32 flex-shrink-0 ">Table</span>
+                <span className="w-32 flex-shrink-0 ">Meja</span>
                 <span className="w-full  text-black">: {data?.table}</span>
               </div>
             </div>
             <div className="w-full flex flex-col gap-4 mt-5 bg-white p-4 rounded-md shadow-md">
-              <span className="font-semibold">Payment Information</span>
+              <span className="font-semibold">Informasi Pembayaran</span>
               <div className="flex flex-row w-full">
-                <span className="w-32 shrink-0 ">OrderID</span>
+                <span className="w-32 shrink-0 ">ID Pesanan</span>
                 <span className="w-full  text-black">: {data?.order_id}</span>
               </div>
               <div className="flex flex-row w-full">
-                <span className="w-32 shrink-0 ">Payment Method</span>
+                <span className="w-32 shrink-0 ">Metode Pembayaran</span>
                 <span className="w-full  text-black">
                   : {data?.payment.name}
                 </span>
@@ -144,12 +144,12 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
           </div>
           <div className="w-full flex flex-col px-4">
             <div className="w-full flex flex-col gap-3  border-neutral-80 bg-white p-2 rounded-md shadow-md">
-              <span className="font-semibold">Order Item</span>
+              <span className="font-semibold">Item Pesanan</span>
               <div className="w-full flex flex-row items-center  border-b border-neutral-80 rounded-md p-3">
-                <span className="w-44 flex-shrink-0 font-semibold">Name</span>
-                <span className="w-32 flex-shrink-0 font-semibold">Price</span>
+                <span className="w-44 flex-shrink-0 font-semibold">Nama</span>
+                <span className="w-32 flex-shrink-0 font-semibold">Harga</span>
                 <span className="w-28 flex-shrink-0 font-semibold text-center">
-                  Quantity
+                  Jumlah
                 </span>
               </div>
               <div className="w-full flex flex-col gap-3 overflow-auto h-[60vh]">
@@ -198,9 +198,9 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
           </div>
           <div className="w-full flex flex-col px-4">
             <div className="w-full flex flex-col gap-3  border-neutral-80 bg-white p-2 rounded-md shadow-md">
-              <span className="font-semibold">Order Summary</span>
+              <span className="font-semibold">Ringkasan Pesanan</span>
               <div className="w-full flex flex-row justify-between">
-                <span>Quantity</span>
+                <span>Jumlah</span>
                 <span>{data?.quantity}</span>
               </div>
               <div className="w-full flex flex-row justify-between">
@@ -214,7 +214,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                 </span>
               </div>
               <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
-                <span>Total Price</span>
+                <span>Total Harga</span>
                 <span>
                   {((data?.total_price ?? 0) * 1.1).toLocaleString("id-ID", {
                     style: "currency",
