@@ -8,7 +8,7 @@ const http = new HttpClient();
 export const KurirIndexViewModel = () => {
 
 
-    const data1 = http.Send<DomainOrder[]>('/api/orders?status=ditolak', undefined, {
+    const data1 = http.Send<DomainOrder[]>('/api/orders?status=siap', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${cockies}`

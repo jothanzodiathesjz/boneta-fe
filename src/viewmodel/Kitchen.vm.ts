@@ -20,7 +20,7 @@ const kitchenViewModel = () => {
         refreshInterval: 5000
     })
     const [orders, setOrders] = useState<DomainOrder[]>(data?.data ?? []);
-    const data2 = http.Send<DomainOrder[]>('/api/orders?status=process',undefined,{
+    const data2 = http.Send<DomainOrder[]>('/api/orders?status=proses', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${coockies}`

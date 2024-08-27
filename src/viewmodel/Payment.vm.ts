@@ -39,7 +39,7 @@ export const PaymentViewModel = () => {
         setLoading(true)
         let uuid=""
         try {
-            const data = await http.Post<DomainOrder>('/api/apasihloe', {
+            const data = await http.Post<DomainOrder>('/api/create-order', {
                 body: JSON.stringify(new DomainOrder({
                     uuid_user: user?.uuid ?? '',
                     order_id:'',

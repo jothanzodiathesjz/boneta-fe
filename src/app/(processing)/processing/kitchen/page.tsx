@@ -49,7 +49,10 @@ export default function page() {
   useEffect(() => {}, [vm.selectedOrder]);
 
   return (
-    <main className="min-h-screen pt-20">
+    <main className="min-h-screen pt-20 flex flex-col">
+      <span className="font-medium text-lg text-dark  w-full shadow-sm">
+        DAPUR
+      </span>
       <div className="w-full h-full flex">
         <div className="w-full flex flex-col">
           <div className="w-full flex flex-col  p-3 gap-3 border-r  border-neutral-60/30">
