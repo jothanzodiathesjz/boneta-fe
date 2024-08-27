@@ -21,45 +21,53 @@ export const PaymentViewModel = () => {
     // const orderSummary = JSON.parse(localStorage.getItem('orderSummary') || '')
     const [guest, setGuest] = useState<string>(guested);
     const [orderItem, setOrderItem] = useState<OrderItemResult>(order); 
-    const [fullName, setFullName] = useState('');
+    const [fullName, setFullName] = useState(user?.profile?.firstName || '');
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [phone, setPhone] = useState(user?.phone || '');
     const [table, setTable] = useState(localStorage.getItem('table') ? JSON.parse(localStorage.getItem('table') || '') : undefined);
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useState(user?.profile?.address || '');
     const [mode, setMode] = useState('dine-in');
     const [disabled, setDisabled] = useState(false);
     const [paymentOption, setPaymentOption] = useState<PaymentMethodType[]>(payemntData);
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethodType>(paymentOption[0]);
     const [mapUrl, setMapUrl] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [created_at, setCreated_at] = useState<number>(new Date().getTime());
     const router = useRouter()
 
     const handleCreateOrder = async () => {
+        setLoading(true)
+        let uuid=""
         try {
-            const data =  await http.Post<DomainOrder>('/api/create-order',{
+            const data = await http.Post<DomainOrder>('/api/apasihloe', {
                 body: JSON.stringify(new DomainOrder({
                     uuid_user: user?.uuid ?? '',
                     order_id:'',
                     guest: guest,
                     items: orderItem?.items || [],
                     customer: new DomainCustomer({name:fullName,email,phone,address,uuid:generateRandomString(20)}),
-                    status: 'pending',
+                    status: 'menunggu',
                     table: table ?? 'delivery',
                     total_price: orderItem?.total_price || 0,
                     quantity: orderItem?.quantity || 0,
                     payment: selectedPayment || paymentOption[0],
                     delivery:!table,
                     customer_location: mapUrl ?? undefined,
-                    created_at: new Date().getTime()
+                    created_at: created_at
                 }))
             })
             const newData = new DomainOrder(data.data)
+            uuid = newData.uuid!
             localStorage.removeItem('order')
             localStorage.removeItem('table')
             localStorage.removeItem('orderSummary')
-            router.push(`/orders/${newData.uuid}`)
+            router.push(`/orders/${uuid}`)
+            setLoading(false)
         } catch (error) {
             console.log(error)
         }
+            setLoading(false)
+        
     }
 
     return{
@@ -87,6 +95,10 @@ export const PaymentViewModel = () => {
         cookies,
         user,
         mapUrl,
-        setMapUrl
+        setMapUrl,
+        loading,
+        setLoading,
+        created_at,
+        setCreated_at
     }
 }

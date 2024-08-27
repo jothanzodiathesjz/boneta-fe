@@ -30,19 +30,23 @@ export class HttpClient {
     }    
 
 
-    async Post<T>(endpoint: string, options?: FetchOptions): Promise<Response<T>> {
-      const response = await fetch(`${this.base_url}${endpoint}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${this.token}`,
+      async Post<T>(endpoint: string, options?: FetchOptions): Promise<Response<T>> {
+        const response = await fetch(`${this.base_url}${endpoint}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${this.token}`,
 
-        },
-        ...options
-      });
-      const data = await response.json();
-      return data;
-    }
+          },
+          ...options
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || 'Something went wrong');
+        }
+    
+        return data;
+      }
     
     async PostWithFile<T>(endpoint: string, file: File, options?: FetchOptions): Promise<Response<T>> {
       const formData = new FormData();
@@ -92,6 +96,19 @@ export class HttpClient {
         console.error(error);
         throw error;
       }
+    }
+    
+    
+    async Get<T>(endpoint: string, options?: FetchOptions): Promise<Response<T>> {
+      const response = await fetch(`${this.base_url}${endpoint}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${this.token}`,
+        },
+        ...options
+      });
+      const data = await response.json();
+      return data;
     }
     
     

@@ -1,21 +1,30 @@
 import { DomainMenu, MenuItemInit } from "./Menu";
 
 export interface OrderIteminit extends MenuItemInit{
+    uuid_item?: string
     quantity: number
     total_price: number
     stage:number
+    status:string,
+    deleted_at?: number
 }
 
 export class DomainOrderItem extends DomainMenu {
+    uuid_item?: string;
     quantity: number
     total_price: number
     stage:number
+    status:string;
+    deleted_at?: number
 
     constructor(data: OrderIteminit) {
         super(data)
+        this.uuid_item = data.uuid_item
         this.quantity = data.quantity
         this.total_price = data.total_price
         this.stage = data.stage
+        this.status = data.status
+        this.deleted_at = data.deleted_at
     }
 }
 

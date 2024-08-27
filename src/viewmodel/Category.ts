@@ -1,11 +1,10 @@
-import { useState,useRef } from "react";
-import { DomainMenu } from "@/domain/Menu";
+import { useState, useRef } from "react";
 import { DomainCategory } from "@/domain/Category";
 import { HttpClient } from "@/services/httpClient";
 import { Toast } from 'primereact/toast';
 import { confirmDialog } from 'primereact/confirmdialog';
 const http = new HttpClient();
-export const CategoryViewModel  = () => {
+export const CategoryViewModel = () => {
     const [category, setCategory] = useState<DomainCategory[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<DomainCategory | null>();
     const toast = useRef<Toast>(null);
@@ -22,15 +21,15 @@ export const CategoryViewModel  = () => {
     const [generateLoading, setGenerateLoading] = useState(false)
     const [showQr, setShowQr] = useState(false)
     const showError = () => {
-        toast.current?.show({severity:'error', summary: 'Error', detail:'Terjadi Kesalahan', life: 3000});
+        toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Terjadi Kesalahan', life: 3000 });
     }
 
     const showSuccess = () => {
-        toast.current?.show({severity:'success', summary: 'Success', detail:'Data Telah Tersimpan', life: 3000});
+        toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Data Telah Tersimpan', life: 3000 });
     }
     const handleCreateCategory = async () => {
         try {
-            const data =await  http.Post<DomainCategory>("/api/create-category", {
+            const data = await http.Post<DomainCategory>("/api/create-category", {
                 body: JSON.stringify(categoryForm),
             })
             showSuccess()
@@ -40,17 +39,6 @@ export const CategoryViewModel  = () => {
         }
         setShowCategoryForm(false)
     }
-
-    // const confirm1 = () => {
-    //     confirmDialog({
-    //         message: 'Are you sure you want to proceed?',
-    //         header: 'Confirmation',
-    //         icon: 'pi pi-exclamation-triangle',
-    //         defaultFocus: 'accept',
-    //         accep,
-    //         reject
-    //     });
-    // };
 
     const handleGenerate = () => {
         if (meja === "") {
@@ -62,13 +50,11 @@ export const CategoryViewModel  = () => {
             setShowQr(true);
             setGenerateLoading(false)
         }, 500)
-
-        // setShowQr(true);
     }
 
-    const accepted = async () => {
+    const diterima = async () => {
         try {
-            if(!tbd)throw new Error("Data Tidak Valid")
+            if (!tbd) throw new Error("Data Tidak Valid")
             const data = await http.Delete<DomainCategory>(`/api/category/${tbd?.uuid}`)
             toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: `${tbd?.name} has been deleted`, life: 3000 });
         } catch (error) {
@@ -79,13 +65,13 @@ export const CategoryViewModel  = () => {
     }
 
     const reject = () => {
-        toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        toast.current?.show({ severity: 'warn', summary: 'ditolak', detail: 'You have ditolak', life: 3000 });
     }
     const confirm2 = (tbd: DomainCategory) => {
         setTbd(tbd)
         const accept = async () => {
             try {
-                if(!tbd)throw new Error("Data Tidak Valid")
+                if (!tbd) throw new Error("Data Tidak Valid")
                 const data = await http.Delete<DomainCategory>(`/api/category/${tbd?.uuid}`)
                 toast.current?.show({ severity: 'info', summary: 'Confirmed', detail: `${tbd?.name} has been deleted`, life: 3000 });
             } catch (error) {

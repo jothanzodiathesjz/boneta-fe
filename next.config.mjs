@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-    images: {
-        domains: ['localhost:8000'],
-      },
+  images: {
+    domains: ['boneta-be-production.up.railway.app'],
+  },
 };
 
 export default nextConfig;

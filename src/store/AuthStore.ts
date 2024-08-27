@@ -1,13 +1,16 @@
 import { create } from 'zustand';
 import { DomainUserWithProfile } from '@/domain/Users';
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
+import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { deleteCookie } from "@/utils/cookies";
 
 export type AuthStore = {
     user: DomainUserWithProfile | null;
     isAuthenticated: boolean;
     setUser: (user: DomainUserWithProfile | null) => void;
     fetchUser: (token: string) => Promise<void>;
+    logOut: () => Promise<void>;
 }
+
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
     user: null,
@@ -32,7 +35,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
                 const data = await response.json();
                 if (data.data) {
                     set({ user: new DomainUserWithProfile(data.data), isAuthenticated: true });
-                    setCookie(null,'user', JSON.stringify(data.data), {maxAge: 30 * 24 * 60 * 60})
+                    setCookie(null,'user', JSON.stringify(data.data), {maxAge: 30 * 24 * 60 * 60,path:'/'});
                 } else {
                     set({ user: null, isAuthenticated: false });
                 }
@@ -44,6 +47,15 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
             set({ user: null, isAuthenticated: false });
         }
     },
+    logOut: async () => {
+        set({ user: null, isAuthenticated: false });
+        destroyCookie(null, 'user')
+        destroyCookie(null, 'accessToken')
+        localStorage.removeItem('access_token')
+        deleteCookie('user')
+        deleteCookie('accessToken')
+        window.location.href = '/'
+    }
 }));
 
 // Usage example (in a component):

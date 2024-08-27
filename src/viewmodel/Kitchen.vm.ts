@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { HttpClient } from "@/services/httpClient";
-import { DomainOrder } from "@/domain/Orders";
+import { DomainOrder, DomainOrderSummarry } from "@/domain/Orders";
 import { getCookie } from "@/utils/cookies";
-const cockies = getCookie('accessToken');
+import { UnixToDateStringReverse } from "@/utils/date";
+import { Nullable } from "primereact/ts-helpers";
+const coockies = getCookie('accessToken');
 
 const http = new HttpClient();
 const kitchenViewModel = () => {
     const [selectedOrder, setSelectedOrder] = useState<DomainOrder | null>(null);
-
-    const {data,isError,isLoading,mutate} = http.Send<DomainOrder[]>('/api/orders?status=process',undefined,{
+    const [dates, setDates] = useState<Nullable<(Date | null)[]>>([new Date(), new Date()]);
+    const { data, isError, isLoading, mutate } = http.Send<DomainOrder[]>('/api/orders?status=menunggu', undefined, {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${cockies}`
+            "Authorization": `Bearer ${coockies}`
         }
     },{
         revalidateOnMount: true,
@@ -21,7 +23,23 @@ const kitchenViewModel = () => {
     const data2 = http.Send<DomainOrder[]>('/api/orders?status=process',undefined,{
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${cockies}`
+            "Authorization": `Bearer ${coockies}`
+        }
+    },{
+        revalidateOnMount: true
+    })
+    const data3 = http.Send<DomainOrder[]>('/api/orders?status=diterima', undefined, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${coockies}`
+        }
+    },{
+        revalidateOnMount: true
+    })
+    const data4 = http.Send<DomainOrderSummarry>(`/api/orders-summary/?sDate=${UnixToDateStringReverse(dates![0] ? dates![0].getTime() : new Date().getTime(),'-')}&eDate=${UnixToDateStringReverse(dates![1] ? dates![1].getTime() : new Date().getTime(),'-')}`,undefined,{
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${coockies}`
         }
     },{
         revalidateOnMount: true
@@ -32,9 +50,9 @@ const kitchenViewModel = () => {
             const response = await http.Put<DomainOrder>(`/api/order`,{
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cockies}`
+                    "Authorization": `Bearer ${coockies}`
                 },
-                body: JSON.stringify({uuid: selectedOrder?.uuid, status: selectedOrder?.delivery ? 'in-delivery' : status})
+                body: JSON.stringify({uuid: selectedOrder?.uuid, status: status})
             })
             setSelectedOrder(null)
             mutate()
@@ -42,8 +60,10 @@ const kitchenViewModel = () => {
         } catch (error) {
             console.log(error)
         }
-        mutate()
+            mutate()
             data2.mutate()
+            data3.mutate()
+            data4.mutate()
     }
 
     const updateSeen = async (uuid:string) => {
@@ -51,7 +71,7 @@ const kitchenViewModel = () => {
             const response = await http.Put<DomainOrder>(`/api/order-seen`,{
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${cockies}`
+                    "Authorization": `Bearer ${coockies}`
                 },
                 body: JSON.stringify({uuid: uuid, seen: true})
             })
@@ -61,7 +81,21 @@ const kitchenViewModel = () => {
         }
         mutate()
     }
-    
+    const handleDeleteItem = async (uuid:string,uuid_item:string) => {
+        setSelectedOrder(null)
+        try {
+            const response = await http.Delete<DomainOrder>(`/api/order-item/${uuid}/${uuid_item}`,{
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${coockies}`
+                }
+            })
+          setSelectedOrder(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+        mutate()
+    }
 
     return{
         data,
@@ -74,7 +108,10 @@ const kitchenViewModel = () => {
         handleProcess,
         orders,
         setOrders,
-        updateSeen
+        updateSeen,
+        data3,
+        handleDeleteItem,
+        data4
     }
 }
 

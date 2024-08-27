@@ -40,7 +40,7 @@ const MenuViewModel = () => {
        const {data,isError} = httpClient.Send<DomainMenu[]>('/api/menu',undefined,undefined)
        return {data,isError}
     }
-    const {data,isError,isLoading,mutate} = httpClient.Send<DomainMenu[]>('/api/menu',undefined,undefined,{
+    const {data,isError,isLoading,mutate} = httpClient.Send<DomainMenu[]>('/api/menus',undefined,undefined,{
         revalidateOnMount: true,
     })
     const handleSendData = async () => {

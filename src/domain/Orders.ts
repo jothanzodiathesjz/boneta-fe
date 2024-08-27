@@ -15,8 +15,10 @@ export interface OrderInit {
     payment: DomainPaymentMethod
     payment_image?: string
     seen?: boolean
-    delivery?: boolean
-    customer_location?: string
+    delivery?: boolean;
+    adjustment?: boolean
+    customer_location?: string;
+    delivery_by?: string
     created_at?: number
     deleted_at?: number
 }
@@ -35,8 +37,10 @@ export class DomainOrder {
     payment: DomainPaymentMethod
     payment_image?: string
     seen?: boolean
-    delivery?: boolean
-    customer_location?: string
+    delivery?: boolean;
+    adjustment?: boolean
+    customer_location?: string;
+    delivery_by?: string
     created_at?: number
     deleted_at?: number
 
@@ -54,9 +58,35 @@ export class DomainOrder {
         this.payment = data.payment
         this.payment_image = data.payment_image
         this.seen = data.seen
-        this.delivery = data.delivery
+        this.delivery = data.delivery;
+        this.adjustment = data.adjustment
         this.customer_location = data.customer_location
+        this.delivery_by = data.delivery_by
         this.created_at = data.created_at
         this.deleted_at = data.deleted_at
+    }
+}
+
+export interface OrderSummary {
+    date:number;
+    orders:DomainOrder[];
+    total_orders:number;
+    total_price:number;
+    total_quantity:number;
+}
+
+export class DomainOrderSummarry{
+    date:number;
+    orders:DomainOrder[];
+    total_orders:number;
+    total_price:number;
+    total_quantity:number;
+
+    constructor(data:OrderSummary){
+        this.date = data.date
+        this.orders = data.orders
+        this.total_orders = data.total_orders
+        this.total_price = data.total_price
+        this.total_quantity = data.total_quantity
     }
 }

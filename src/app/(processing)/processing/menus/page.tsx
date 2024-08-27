@@ -166,8 +166,8 @@ useEffect(() => {
               }}
               name="image" 
               url={'/api/upload'} 
-              multiple 
               accept="image/*" 
+              onClear={() => vm.setFile(null)}
               onSelect={(e) => handleFileChange(e.files)}
               maxFileSize={1000000} 
               emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} 
