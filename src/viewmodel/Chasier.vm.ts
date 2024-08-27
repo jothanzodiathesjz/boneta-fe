@@ -8,7 +8,7 @@ const http = new HttpClient();
 const ChasierViewModel = () => {
     const [selectedOrder, setSelectedOrder] = useState<DomainOrder | null>(null);
 
-    const {data,isError,isLoading,mutate} = http.Send<DomainOrder[]>('/api/orders?status=waiting',undefined,{
+    const { data, isError, isLoading, mutate } = http.Send<DomainOrder[]>('/api/orders?status=menunggu', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${coockies}`
@@ -26,7 +26,7 @@ const ChasierViewModel = () => {
     },{
         revalidateOnMount: true
     })
-    const data3 = http.Send<DomainOrder[]>('/api/orders?status=served',undefined,{
+    const data3 = http.Send<DomainOrder[]>('/api/orders?status=disajikan', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${coockies}`
@@ -34,7 +34,7 @@ const ChasierViewModel = () => {
     },{
         revalidateOnMount: true
     })
-    const data4 = http.Send<DomainOrder[]>('/api/orders?status=in-delivery',undefined,{
+    const data4 = http.Send<DomainOrder[]>('/api/orders?status=diantarkan', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${coockies}`
@@ -121,7 +121,7 @@ const ChasierViewModel = () => {
     
     const rejectPayment = async () => {
         try {
-            const response = await http.Put<DomainOrder>(`/api/order/paymentrejected/${selectedOrder?.uuid}`,{
+            const response = await http.Put<DomainOrder>(`/api/order/paymentditolak/${selectedOrder?.uuid}`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${coockies}`

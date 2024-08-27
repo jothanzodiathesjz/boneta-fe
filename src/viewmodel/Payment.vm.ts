@@ -32,27 +32,28 @@ export const PaymentViewModel = () => {
     const [selectedPayment, setSelectedPayment] = useState<PaymentMethodType>(paymentOption[0]);
     const [mapUrl, setMapUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [created_at, setCreated_at] = useState<number>(new Date().getTime());
     const router = useRouter()
 
     const handleCreateOrder = async () => {
         setLoading(true)
         let uuid=""
         try {
-            const data =  await http.Post<DomainOrder>('/api/create-order',{
+            const data = await http.Post<DomainOrder>('/api/apasihloe', {
                 body: JSON.stringify(new DomainOrder({
                     uuid_user: user?.uuid ?? '',
                     order_id:'',
                     guest: guest,
                     items: orderItem?.items || [],
                     customer: new DomainCustomer({name:fullName,email,phone,address,uuid:generateRandomString(20)}),
-                    status: 'waiting',
+                    status: 'menunggu',
                     table: table ?? 'delivery',
                     total_price: orderItem?.total_price || 0,
                     quantity: orderItem?.quantity || 0,
                     payment: selectedPayment || paymentOption[0],
                     delivery:!table,
                     customer_location: mapUrl ?? undefined,
-                    created_at: new Date().getTime()
+                    created_at: created_at
                 }))
             })
             const newData = new DomainOrder(data.data)
@@ -96,6 +97,8 @@ export const PaymentViewModel = () => {
         mapUrl,
         setMapUrl,
         loading,
-        setLoading
+        setLoading,
+        created_at,
+        setCreated_at
     }
 }

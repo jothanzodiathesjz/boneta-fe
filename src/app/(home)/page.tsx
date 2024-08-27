@@ -40,7 +40,12 @@ export default function Home() {
   }, [token, vm.cartResult, routeAnimation]);
 
   const reject = useCallback(() => {
-    toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+    toast.current?.show({
+      severity: "warn",
+      summary: "ditolak",
+      detail: "You have ditolak",
+      life: 3000,
+    });
   }, []);
 
   const confirm = useCallback(() => {

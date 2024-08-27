@@ -10,7 +10,7 @@ const http = new HttpClient();
 const kitchenViewModel = () => {
     const [selectedOrder, setSelectedOrder] = useState<DomainOrder | null>(null);
     const [dates, setDates] = useState<Nullable<(Date | null)[]>>([new Date(), new Date()]);
-    const {data,isError,isLoading,mutate} = http.Send<DomainOrder[]>('/api/orders?status=waiting',undefined,{
+    const { data, isError, isLoading, mutate } = http.Send<DomainOrder[]>('/api/orders?status=menunggu', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${coockies}`
@@ -28,7 +28,7 @@ const kitchenViewModel = () => {
     },{
         revalidateOnMount: true
     })
-    const data3 = http.Send<DomainOrder[]>('/api/orders?status=accepted',undefined,{
+    const data3 = http.Send<DomainOrder[]>('/api/orders?status=diterima', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${coockies}`

@@ -52,7 +52,7 @@ export const CategoryViewModel = () => {
         }, 500)
     }
 
-    const accepted = async () => {
+    const diterima = async () => {
         try {
             if (!tbd) throw new Error("Data Tidak Valid")
             const data = await http.Delete<DomainCategory>(`/api/category/${tbd?.uuid}`)
@@ -65,7 +65,7 @@ export const CategoryViewModel = () => {
     }
 
     const reject = () => {
-        toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        toast.current?.show({ severity: 'warn', summary: 'ditolak', detail: 'You have ditolak', life: 3000 });
     }
     const confirm2 = (tbd: DomainCategory) => {
         setTbd(tbd)

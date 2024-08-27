@@ -3,6 +3,7 @@ import { Button } from "primereact/button";
 import { SelectedButton } from "@/components/button/SelectedButton";
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
+import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { useRouter } from "next/navigation";
 import { useCountStore } from "@/store/TriggerStore";
@@ -89,6 +90,12 @@ export default function Payment() {
       </div>
       <span className="ms-5 ">Customer Information</span>
       <div className="w-full pb-44 flex bg-white flex-col gap-3 px-5 pt-5">
+        <Calendar
+        value={new Date(vm.created_at)}
+        selectionMode="single" 
+        dateFormat="dd/mm/yy"
+        onChange={(e) => vm.setCreated_at(e.value?.getTime() || 0)}
+        />
         {/* items */}
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex justify-between">

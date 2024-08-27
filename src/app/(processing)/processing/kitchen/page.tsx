@@ -29,16 +29,15 @@ export default function page() {
       </div>
     );
   };
-  const bodyTambahanEnded = (rowData: DomainOrder) => {
+  const bodyTambahanselesai = (rowData: DomainOrder) => {
     return (
       <div className="flex flex-row gap-3">
         <span className="w-full">
-        {(rowData.total_price * 1.1).toLocaleString("id-ID")}
+          {(rowData.total_price * 1.1).toLocaleString("id-ID")}
         </span>
       </div>
     );
   };
-
 
   useEffect(() => {
     return animationStore.setIsOpen(true);
@@ -54,7 +53,7 @@ export default function page() {
       <div className="w-full h-full flex">
         <div className="w-full flex flex-col">
           <div className="w-full flex flex-col  p-3 gap-3 border-r  border-neutral-60/30">
-            <span>Order On Waiting</span>
+            <span>Order On menunggu</span>
             <DataTable
               value={vm.orders}
               scrollable
@@ -96,7 +95,7 @@ export default function page() {
             </DataTable>
           </div>
           <div className="w-full flex flex-col  p-3 gap-3 border-r  border-neutral-60/30">
-            <span>Accepted By Chasier</span>
+            <span>diterima By Chasier</span>
             <DataTable
               value={vm.data3.data?.data}
               scrollable
@@ -181,7 +180,7 @@ export default function page() {
           </DataTable>
         </div>
         <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r  border-neutral-60/30">
-          <span>Order Ended</span>
+          <span>Order selesai</span>
           <DataTable
             value={vm.data4.data?.data?.orders}
             scrollable
@@ -218,7 +217,7 @@ export default function page() {
             ></Column>
             <Column
               field="total_price"
-              body={bodyTambahanEnded}
+              body={bodyTambahanselesai}
               header="Total Price"
               className="text-red-700"
               headerClassName="bg-primary-surface"

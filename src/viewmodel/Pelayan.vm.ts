@@ -8,7 +8,7 @@ const http = new HttpClient();
 export const PelayanIndexViewModel = () => {
 
 
-const data1 = http.Send<DomainOrder[]>('/api/orders?status=ready',undefined,{
+    const data1 = http.Send<DomainOrder[]>('/api/orders?status=ditolak', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${cockies}`
@@ -16,7 +16,7 @@ const data1 = http.Send<DomainOrder[]>('/api/orders?status=ready',undefined,{
     },{
         revalidateOnMount: true
     })
-const data2 = http.Send<DomainOrder[]>('/api/orders?status=in-delivery',undefined,{
+    const data2 = http.Send<DomainOrder[]>('/api/orders?status=diantarkan', undefined, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${cockies}`

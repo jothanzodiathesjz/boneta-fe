@@ -99,10 +99,10 @@ export default function page() {
           <span className="w-44 flex-shrink-0">PPN</span>
           <span className="w-full text-neutral-40">10%</span>
           <span className="text-neutral-40">
-            {((vm.data1?.data?.data.total_price || 0) * (10 / 100)).toLocaleString(
-              "id-ID",
-              { style: "currency", currency: "IDR" }
-            )}
+            {(
+              (vm.data1?.data?.data.total_price || 0) *
+              (10 / 100)
+            ).toLocaleString("id-ID", { style: "currency", currency: "IDR" })}
           </span>
         </div>
         <div className="flex w-full">
@@ -118,23 +118,25 @@ export default function page() {
           </span>
         </div>
 
-        {vm.data1.data?.data.status === "ready" && (
+        {vm.data1.data?.data.status === "ditolak" && (
           <Button
             loading={vm.submiting}
             disabled={vm.submiting}
             label="Antar Pesanan"
             onClick={() =>
-              vm.handleProcess(vm.data1.data?.data.uuid!, "in-delivery")
+              vm.handleProcess(vm.data1.data?.data.uuid!, "diantarkan")
             }
           />
         )}
-        {vm.data1.data?.data.status === "in-delivery" && (
+        {vm.data1.data?.data.status === "diantarkan" && (
           <Button
             loading={vm.submiting}
             disabled={vm.submiting}
             severity="success"
             label="Akhiri Pesanan"
-            onClick={() => vm.handleProcess(vm.data1.data?.data.uuid!, "ended")}
+            onClick={() =>
+              vm.handleProcess(vm.data1.data?.data.uuid!, "selesai")
+            }
           />
         )}
       </div>

@@ -134,7 +134,7 @@ export default function Page() {
         </div>
         <div className="w-full flex flex-row justify-between">
           <span className="font-semibold ml-3">Order Detail</span>
-          {vm.data.data.status === "ended" ? (
+          {vm.data.data.status === "selesai" ? (
             <button
               onClick={() => handleDownloadPdf()}
               className="text-primary-hover"
@@ -191,10 +191,12 @@ export default function Page() {
           <div className="flex w-full">
             <span className="w-44 flex-shrink-0">PPN</span>
             <span className="w-full text-neutral-40">10%</span>
-            <span className="text-neutral-40">{(vm.data.data.total_price * (10/100)).toLocaleString("id-ID", {
-  style: "currency",
-  currency: "IDR",
-})}</span>
+            <span className="text-neutral-40">
+              {(vm.data.data.total_price * (10 / 100)).toLocaleString("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              })}
+            </span>
           </div>
           <div className="flex w-full">
             <span className="w-44 flex-shrink-0">Total</span>
@@ -203,17 +205,17 @@ export default function Page() {
             </span>
             <span className="text-neutral-40">
               {(vm.data.data.total_price * 1.1).toLocaleString("id-ID", {
-  style: "currency",
-  currency: "IDR",
-})}
+                style: "currency",
+                currency: "IDR",
+              })}
             </span>
           </div>
         </div>
         {((vm.data.data.payment.value === "transfer" &&
-          vm.data.data.status === "served" &&
+          vm.data.data.status === "disajikan" &&
           (!vm.data.data.payment_image ||
-            vm.data.data.payment_image === "rejected")) ||
-          (vm.data.data.status === "waiting" &&
+            vm.data.data.payment_image === "ditolak")) ||
+          (vm.data.data.status === "menunggu" &&
             vm.data.data.delivery &&
             !vm.data.data.payment_image &&
             vm.data.data.payment.value === "transfer")) && (
@@ -224,7 +226,7 @@ export default function Page() {
           </div>
         )}
         {vm.data.data.payment.value === "cash" &&
-          vm.data.data.status === "waiting" && (
+          vm.data.data.status === "menunggu" && (
             <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
               <span className="text-center font-medium text-neutral-40">
                 Menunggu Konfirmasi
@@ -232,7 +234,7 @@ export default function Page() {
             </div>
           )}
         {vm.data.data.payment.value === "transfer" &&
-        vm.data.data.status === "served" &&
+        vm.data.data.status === "disajikan" &&
         !vm.data.data.payment_image ? (
           <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
             <span className="text-center font-medium text-neutral-40">
@@ -252,62 +254,62 @@ export default function Page() {
         ) : (
           <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
             <span className="text-center font-medium text-neutral-40">
-              {vm.data.data.status === "waiting" &&
+              {vm.data.data.status === "menunggu" &&
               vm.data.data.payment.value === "transfer" &&
               !vm.data.data.delivery
                 ? "Menunggu konfirmasi dari kasir"
                 : ""}
-              {vm.data.data.status === "served" &&
-              vm.data.data.payment_image !== "rejected"
+              {vm.data.data.status === "disajikan" &&
+              vm.data.data.payment_image !== "ditolak"
                 ? "Selamat Menikmati, Konfirmasi Ke kasir Untuk menyelesaikan pembayaran"
                 : ""}
-              {vm.data.data.status === "waiting" &&
+              {vm.data.data.status === "menunggu" &&
               vm.data.data.payment.value === "transfer" &&
               vm.data.data.delivery &&
-              vm.data.data.payment_image !== "rejected"
+              vm.data.data.payment_image !== "ditolak"
                 ? "Menunggu konfirmasi dari kasir"
                 : ""}
-              {vm.data.data.status === "waiting" &&
+              {vm.data.data.status === "menunggu" &&
               vm.data.data.payment.value === "cod" &&
               vm.data.data.delivery
                 ? "Menunggu konfirmasi dari kasir"
                 : ""}
-              {vm.data.data.status === "accepted"
+              {vm.data.data.status === "diterima"
                 ? "Menunggu Konfirmasi Dapur"
                 : ""}
-              {vm.data.data.status === "process"
+              {vm.data.data.status === "diproses"
                 ? "Pesanan sedang diproses"
                 : ""}
-              {vm.data.data.status === "ended"
+              {vm.data.data.status === "selesai"
                 ? "Terimakasih telah melakukan pemesanan"
                 : ""}
-              {vm.data.data.status === "rejected"
+              {vm.data.data.status === "ditolak"
                 ? "Pesanan ditolak, Silahakan pesan kembali"
                 : ""}
-              {vm.data.data.status === "ready" && vm.data.data.delivery
+              {vm.data.data.status === "ditolak" && vm.data.data.delivery
                 ? "Menunggu Konfirmasi Kurir"
                 : ""}
-              {vm.data.data.status === "ready" &&
+              {vm.data.data.status === "ditolak" &&
               !vm.data.data.delivery &&
-              vm.data.data.payment_image !== "rejected"
+              vm.data.data.payment_image !== "ditolak"
                 ? "Pesanan Telah Siap, menunggu konfirmasi pelayan"
                 : ""}
-              {(vm.data.data.status === "waiting" ||
-                vm.data.data.status === "served") &&
-              vm.data.data.payment_image === "rejected"
+              {(vm.data.data.status === "menunggu" ||
+                vm.data.data.status === "disajikan") &&
+              vm.data.data.payment_image === "ditolak"
                 ? "Bukti Transfer Tidak Valid, Mohon untuk upload ulang"
                 : ""}
               {/* {
-                            (vm.data.data.status === 'process' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
+                            (vm.data.data.status === 'diproses' && vm.data.data.payment.value === 'cod' ? "Pesanan Telah Di Proses" : "")
                         } */}
-              {vm.data.data.status === "in-delivery"
+              {vm.data.data.status === "diantarkan"
                 ? "Pesanan dalam perjalanan"
                 : ""}
             </span>
           </div>
         )}
 
-        {vm.data.data.status === "waiting" &&
+        {vm.data.data.status === "menunggu" &&
           vm.data.data.delivery &&
           !vm.data.data.payment_image &&
           vm.data.data.payment.value === "transfer" && (
@@ -327,9 +329,9 @@ export default function Page() {
               />
             </div>
           )}
-        {(vm.data.data.status === "served" ||
-          vm.data.data.status === "waiting") &&
-          vm.data.data.payment_image === "rejected" &&
+        {(vm.data.data.status === "disajikan" ||
+          vm.data.data.status === "menunggu") &&
+          vm.data.data.payment_image === "ditolak" &&
           vm.data.data.payment.value === "transfer" && (
             <div className="w-full p-5 flex flex-col justify-center items-center gap-3">
               <span className="text-center font-medium text-neutral-40">

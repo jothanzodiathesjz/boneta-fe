@@ -218,121 +218,174 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-slate-200 px-5 py-20">
-            <div className="flex flex-row items-center p-4">
-        <span style={{ fontSize: "2.4rem" }} className="material-icons text-orange-600">restaurant</span>
-        <span style={{ fontSize: "2.4rem" }} className="text-red-700 font-bold">Boneta</span>
-      </div>
-            <div className="w-full md:w-[60vw]  bg-white rounded-md shadow-sm flex flex-col">
-            <div className="w-full shadow-sm shadow-slate-200 p-4 flex justify-center">
-                <span style={{ fontSize: "1.2rem" }} className="font-semibold text-4xl text-center">Register</span>
+      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-slate-200 px-5 py-20">
+        <div className="flex flex-row items-center p-4">
+          <span
+            style={{ fontSize: "2.4rem" }}
+            className="material-icons text-orange-600"
+          >
+            restaurant
+          </span>
+          <span
+            style={{ fontSize: "2.4rem" }}
+            className="text-red-700 font-bold"
+          >
+            Boneta
+          </span>
+        </div>
+        <div className="w-full md:w-[60vw]  bg-white rounded-md shadow-sm flex flex-col">
+          <div className="w-full shadow-sm shadow-slate-200 p-4 flex justify-center">
+            <span
+              style={{ fontSize: "1.2rem" }}
+              className="font-semibold text-4xl text-center"
+            >
+              Register
+            </span>
+          </div>
+          <Toast ref={toast} />
+          <form
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-6 p-4"
+          >
+            <div className="w-full flex flex-col md:flex-row gap-3">
+              <div className="w-full flex flex-col gap-2">
+                <div className="w-full">
+                  <label
+                    htmlFor="username"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Username
+                  </label>
+                  <InputText
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.username && (
+                    <small className="p-error">{errors.username}</small>
+                  )}
                 </div>
-                <Toast ref={toast} />
-                <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6 p-4">
-                    <div className='w-full flex flex-col md:flex-row gap-3'>
-                    <div className='w-full flex flex-col gap-2'>
-                    <div className="w-full">
-                        <label htmlFor="username" className="block text-gray-700 font-bold mb-2">
-                            Username
-                        </label>
-                        <InputText
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.username && <small className="p-error">{errors.username}</small>}
-                    </div>
-                    <div className="w-full">
-                        <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                            Password
-                        </label>
-                        <InputText
-                            id="password"
-                            name="password"
-                            type="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.password && <small className="p-error">{errors.password}</small>}
-                    </div>
-                    <div className="w-full">
-                        <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                            Email
-                        </label>
-                        <InputText
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.email && <small className="p-error">{errors.email}</small>}
-                    </div>
-                    <div className="w-full">
-                        <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
-                            Phone
-                        </label>
-                        <InputText
-                            id="phone"
-                            name="phone"
-                            type="text"
-                            maxLength={13}
-                            value={formData.phone}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.phone && <small className="p-error">{errors.phone}</small>}
-                    </div>
-                    </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="password"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Password
+                  </label>
+                  <InputText
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.password && (
+                    <small className="p-error">{errors.password}</small>
+                  )}
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="email"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Email
+                  </label>
+                  <InputText
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.email && (
+                    <small className="p-error">{errors.email}</small>
+                  )}
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="phone"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Phone
+                  </label>
+                  <InputText
+                    id="phone"
+                    name="phone"
+                    type="text"
+                    maxLength={13}
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.phone && (
+                    <small className="p-error">{errors.phone}</small>
+                  )}
+                </div>
+              </div>
 
-                    <div className='w-full flex flex-col gap-2'>
-                    <div className="w-full">
-                        <label htmlFor="firstName" className="block text-gray-700 font-bold mb-2">
-                            First Name
-                        </label>
-                        <InputText
-                            id="firstName"
-                            name="profile.firstName"
-                            value={formData.profile.firstName}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.firstName && <small className="p-error">{errors.firstName}</small>}
-                    </div>
-                    <div className="w-full">
-                        <label htmlFor="lastName" className="block text-gray-700 font-bold mb-2">
-                            Last Name
-                        </label>
-                        <InputText
-                            id="lastName"
-                            name="profile.lastName"
-                            value={formData.profile.lastName}
-                            onChange={handleChange}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.lastName && <small className="p-error">{errors.lastName}</small>}
-                    </div>
-                    <div className="w-full">
-                        <label htmlFor="address" className="block text-gray-700 font-bold mb-2">
-                            Address
-                        </label>
-                        <InputTextarea
-                            id="address"
-                            name="profile.address"
-                            value={formData.profile.address}
-                            onChange={handleChange}
-                            rows={3}
-                            className="w-full p-2 border rounded"
-                        />
-                        {errors.address && <small className="p-error">{errors.address}</small>}
-                    </div>
-                    </div>
-                    </div>
-                    {/* <div className="w-full">
+              <div className="w-full flex flex-col gap-2">
+                <div className="w-full">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    First Name
+                  </label>
+                  <InputText
+                    id="firstName"
+                    name="profile.firstName"
+                    value={formData.profile.firstName}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.firstName && (
+                    <small className="p-error">{errors.firstName}</small>
+                  )}
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Last Name
+                  </label>
+                  <InputText
+                    id="lastName"
+                    name="profile.lastName"
+                    value={formData.profile.lastName}
+                    onChange={handleChange}
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.lastName && (
+                    <small className="p-error">{errors.lastName}</small>
+                  )}
+                </div>
+                <div className="w-full">
+                  <label
+                    htmlFor="address"
+                    className="block text-gray-700 font-bold mb-2"
+                  >
+                    Address
+                  </label>
+                  <InputTextarea
+                    id="address"
+                    name="profile.address"
+                    value={formData.profile.address}
+                    onChange={handleChange}
+                    rows={3}
+                    className="w-full p-2 border rounded"
+                  />
+                  {errors.address && (
+                    <small className="p-error">{errors.address}</small>
+                  )}
+                </div>
+              </div>
+            </div>
+            {/* <div className="w-full">
                         <label htmlFor="age" className="block text-gray-700 font-bold mb-2">
                             Age
                         </label>
@@ -345,19 +398,25 @@ export default function RegisterPage() {
                         />
                         {errors.age && <small className="p-error">{errors.age}</small>}
                     </div> */}
-                    <Button 
-                    type="submit" label="Register" 
-                    loading={loading} 
-                    disabled={loading}
-                    className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
-                    <div className="w-full flex justify-end gap-3">
-                        <span>Already have an account?</span>
-                        <button type='button' className="text-blue-600" 
-                        onClick={() => router.push('/login')}
-                        >Login</button>
-                    </div>
-                </form>
+            <Button
+              type="submit"
+              label="Register"
+              loading={loading}
+              disabled={loading}
+              className="w-full p-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            />
+            <div className="w-full flex justify-end gap-3">
+              <span>Alditolak have an account?</span>
+              <button
+                type="button"
+                className="text-blue-600"
+                onClick={() => router.push("/login")}
+              >
+                Login
+              </button>
             </div>
+          </form>
         </div>
+      </div>
     );
 }
