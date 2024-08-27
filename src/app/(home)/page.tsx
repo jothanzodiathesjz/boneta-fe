@@ -26,17 +26,17 @@ export default function Home() {
   const routeAnimation = useRouteAnimation();
   const [cartVisible, setCartVisible] = useState(false);
   const vm = MainPageViewModel();
-  const token = getCookie('accessToken');
+  const token = getCookie("accessToken");
   const toast = useRef<Toast>(null);
 
   const accept = useCallback(() => {
     if (!token) {
-      routeAnimation.handleRoute('/login');
+      routeAnimation.handleRoute("/login");
       return;
     }
-    localStorage.setItem('order', JSON.stringify(vm.cartResult));
-    localStorage.setItem('delivery', 'yes');
-    routeAnimation.handleRoute('/payment');
+    localStorage.setItem("order", JSON.stringify(vm.cartResult));
+    localStorage.setItem("delivery", "yes");
+    routeAnimation.handleRoute("/payment");
   }, [token, vm.cartResult, routeAnimation]);
 
   const reject = useCallback(() => {
@@ -50,55 +50,57 @@ export default function Home() {
 
   const confirm = useCallback(() => {
     confirmDialog({
-      message: 'Apakah anda ingin melakukan pemesanan delivery?',
-      header: 'Delivery Confirmation',
-      icon: 'pi pi-info-circle',
+      message: "Apakah anda ingin melakukan pemesanan delivery?",
+      header: "Delivery Confirmation",
+      icon: "pi pi-info-circle",
       draggable: false,
       position: "bottom",
-      className: 'md:w-[500px] w-full flex-shrink-0',
+      className: "md:w-[500px] w-full flex-shrink-0",
       accept,
-      reject
+      reject,
     });
   }, [accept, reject]);
 
   const handleProsesOrder = useCallback(() => {
-    if (vm.query.get('mode') === 'dine-in' && vm.query.get('table') !== null) {
-      localStorage.setItem('order', JSON.stringify(vm.cartResult));
-      routeAnimation.handleRoute('/payment');
+    if (vm.query.get("mode") === "dine-in" && vm.query.get("table") !== null) {
+      localStorage.setItem("order", JSON.stringify(vm.cartResult));
+      routeAnimation.handleRoute("/payment");
       return;
     }
-    if (localStorage.getItem('delivery')) {
+    if (localStorage.getItem("delivery")) {
       if (!token) {
-        routeAnimation.handleRoute('/login');
+        routeAnimation.handleRoute("/login");
         return;
       }
-      localStorage.setItem('order', JSON.stringify(vm.cartResult));
-      localStorage.setItem('delivery', 'yes');
-      routeAnimation.handleRoute('/payment');
+      localStorage.setItem("order", JSON.stringify(vm.cartResult));
+      localStorage.setItem("delivery", "yes");
+      routeAnimation.handleRoute("/payment");
       return;
     }
     confirm();
   }, [vm.query, vm.cartResult, confirm, routeAnimation, token]);
+
+  // useeffect section
 
   useEffect(() => {
     if (vm.isLoading) {
       vm.animationStore.setIsOpen(true);
     }
 
-    const mode = vm.query.get('mode');
-    const table = vm.query.get('table');
-    
-    if (mode === 'dine-in' && table) {
-      if (!localStorage.getItem('guest')) {
-        localStorage.setItem('guest', generateRandomString(50));
+    const mode = vm.query.get("mode");
+    const table = vm.query.get("table");
+
+    if (mode === "dine-in" && table) {
+      if (!localStorage.getItem("guest")) {
+        localStorage.setItem("guest", generateRandomString(50));
       }
-      localStorage.setItem('table', table);
-      localStorage.removeItem('delivery');
+      localStorage.setItem("table", table);
+      localStorage.removeItem("delivery");
     } else {
-      localStorage.removeItem('table');
+      localStorage.removeItem("table");
     }
 
-    const savedOrder = localStorage.getItem('order');
+    const savedOrder = localStorage.getItem("order");
     if (savedOrder) {
       const order = JSON.parse(savedOrder);
       vm.setOrderToCart(order.items);
@@ -106,20 +108,25 @@ export default function Home() {
   }, [vm.isLoading, vm.query, vm.setOrderToCart]);
 
   useEffect(() => {
-    vm.setOrderItemList(vm.data?.data.map((v) => new DomainOrderItem({
-      ...v,
-      quantity: 0,
-      total_price: 0,
-      stage: 1,
-      status: 'proses',
-      uuid_item: generateRandomString(40)
-    })) || []);
+    vm.setOrderItemList(
+      vm.data?.data.map(
+        (v) =>
+          new DomainOrderItem({
+            ...v,
+            quantity: 0,
+            total_price: 0,
+            stage: 1,
+            status: "proses",
+            uuid_item: generateRandomString(40),
+          })
+      ) || []
+    );
 
     if (vm.orderToCart.length > 0) {
       const cartResult = {
         items: vm.orderToCart,
         quantity: vm.orderToCart.reduce((a, b) => a + b.quantity, 0),
-        total_price: vm.orderToCart.reduce((a, b) => a + b.total_price, 0)
+        total_price: vm.orderToCart.reduce((a, b) => a + b.total_price, 0),
       };
       vm.setCartResult(cartResult);
     } else {
@@ -128,7 +135,11 @@ export default function Home() {
   }, [vm.data, vm.orderToCart]);
 
   const filteredOrderItemList = useMemo(() => {
-    return vm.orderItemList.filter((v) => v.category?.name.toLowerCase().includes(vm.selectedButton?.name.toLowerCase() ?? ''));
+    return vm.orderItemList.filter((v) =>
+      v.category?.name
+        .toLowerCase()
+        .includes(vm.selectedButton?.name.toLowerCase() ?? "")
+    );
   }, [vm.orderItemList, vm.selectedButton]);
 
   return (
@@ -136,7 +147,9 @@ export default function Home() {
       <div className="w-full flex flex-col gap-3 px-5">
         <div className="w-full text-xl flex flex-col gap-1 font-bold text-black mb-3">
           <span>Choose</span>
-          <span>Your Favorite<span className="text-red-800"> Food</span></span>
+          <span>
+            Your Favorite<span className="text-red-800"> Food</span>
+          </span>
         </div>
         <ConfirmDialog />
         <TextInput
@@ -151,7 +164,10 @@ export default function Home() {
         <span>Kategori</span>
         <div className="w-full flex flex-row gap-2 overflow-x-auto scrollbar-hide p-2">
           <SelectedButton
-            onEvent={() => { vm.setAllMenu(true); vm.setSelectedButton(null); }}
+            onEvent={() => {
+              vm.setAllMenu(true);
+              vm.setSelectedButton(null);
+            }}
             selected={vm.AllMenu}
           >
             <span>Semua</span>
@@ -159,7 +175,10 @@ export default function Home() {
           {vm_category.data?.data.map((v) => (
             <SelectedButton
               key={v.uuid}
-              onEvent={() => { vm.setSelectedButton(v); vm.setAllMenu(false); }}
+              onEvent={() => {
+                vm.setSelectedButton(v);
+                vm.setAllMenu(false);
+              }}
               selected={vm.selectedButton === v}
             >
               <span>{v.name}</span>
@@ -176,8 +195,8 @@ export default function Home() {
                 <Image
                   src={process.env.NEXT_PUBLIC_EXTERNAL_URL + v.image}
                   alt={v.name}
-                  priority={k < 2}  // Prioritize the first two images
-                  loading={k < 2 ? 'eager' : 'lazy'}
+                  priority={k < 2} // Prioritize the first two images
+                  loading={k < 2 ? "eager" : "lazy"}
                   width={150}
                   quality={20}
                   height={150}
@@ -186,7 +205,9 @@ export default function Home() {
               </div>
               <div className="px-3 mt-2 flex flex-col py-3">
                 <span className="text-normal text-dark">{v.name}</span>
-                <span className="text-normal text-neutral-500 mt-2">{v.price.toLocaleString()}</span>
+                <span className="text-normal text-neutral-500 mt-2">
+                  {v.price.toLocaleString()}
+                </span>
                 <MainButton
                   variant="secondary"
                   className="mt-2 border border-dark"
@@ -199,17 +220,17 @@ export default function Home() {
         </div>
       </div>
       {vm.cartResult?.items && vm.orderToCart && (
-        <CartResult
-          data={vm.cartResult}
-          click={() => setCartVisible(true)}
-        />
+        <CartResult data={vm.cartResult} click={() => setCartVisible(true)} />
       )}
       <DynamicCartPopFinal
         data={vm.cartResult!}
         visible={cartVisible}
         onVisibleChange={() => setCartVisible(false)}
         click={handleProsesOrder}
-        onUpdateData={(e) => { vm.setCartResult(e); vm.setOrderToCart(e.items); }}
+        onUpdateData={(e) => {
+          vm.setCartResult(e);
+          vm.setOrderToCart(e.items);
+        }}
       />
     </main>
   );
