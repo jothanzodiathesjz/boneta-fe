@@ -13,7 +13,7 @@ export default function page() {
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const items = [
-    { label: "ditolak", icon: "pi pi-bars" },
+    { label: "Pesanan", icon: "pi pi-bars" },
     { label: "In Delivery", icon: "pi pi-send" },
   ];
 

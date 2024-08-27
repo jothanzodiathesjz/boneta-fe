@@ -277,7 +277,7 @@ export default function Page() {
               {vm.data.data.status === "diterima"
                 ? "Menunggu Konfirmasi Dapur"
                 : ""}
-              {vm.data.data.status === "diproses"
+              {vm.data.data.status === "proses"
                 ? "Pesanan sedang diproses"
                 : ""}
               {vm.data.data.status === "selesai"
@@ -286,10 +286,10 @@ export default function Page() {
               {vm.data.data.status === "ditolak"
                 ? "Pesanan ditolak, Silahakan pesan kembali"
                 : ""}
-              {vm.data.data.status === "ditolak" && vm.data.data.delivery
+              {vm.data.data.status === "siap" && vm.data.data.delivery
                 ? "Menunggu Konfirmasi Kurir"
                 : ""}
-              {vm.data.data.status === "ditolak" &&
+              {vm.data.data.status === "siap" &&
               !vm.data.data.delivery &&
               vm.data.data.payment_image !== "ditolak"
                 ? "Pesanan Telah Siap, menunggu konfirmasi pelayan"

@@ -3,12 +3,10 @@ import { Button } from "primereact/button";
 import { SelectedButton } from "@/components/button/SelectedButton";
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
-import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { useRouter } from "next/navigation";
 import { useCountStore } from "@/store/TriggerStore";
 import { PaymentViewModel } from "@/viewmodel/Payment.vm";
-import { useRouteAnimation } from "@/utils/handleroute";
 import { LatLngExpression } from "leaflet";
 import Loader from "@/components/Loader";
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: true });
@@ -17,7 +15,6 @@ export default function Payment() {
 
   const router = useRouter();
   const vm = PaymentViewModel();
-  const routeAnimation = useRouteAnimation();
   const [coords, setCoords] = useState<LatLngExpression | null>(null);
 
   const handleCoordsChange = useCallback((newCoords: LatLngExpression) => {
@@ -58,7 +55,7 @@ export default function Payment() {
         >
           <span className="material-icons text-3xl">navigate_before</span>
         </button>
-        <span className="font-bold text-neutral-500">Payment</span>
+        <span className="font-bold text-neutral-500">Metode Pembayaran</span>
       </div>
       <div className="w-full flex flex-row justify-between px-5">
         <span className="text-neutral-40">Mode</span>
@@ -67,7 +64,7 @@ export default function Payment() {
         </span>
       </div>
       {/* content start */}
-      <span className="ms-5 ">Payment Method</span>
+      <span className="ms-5 ">Metode Pembayaran</span>
       <div className="w-full pb-5 flex bg-white flex-col gap-3 px-5 pt-5">
         {/* items */}
         {vm.paymentOption
@@ -88,19 +85,19 @@ export default function Payment() {
             </SelectedButton>
           ))}
       </div>
-      <span className="ms-5 ">Customer Information</span>
+      <span className="ms-5 ">Informasi Pemesan</span>
       <div className="w-full pb-44 flex bg-white flex-col gap-3 px-5 pt-5">
-        <Calendar
+        {/* <Calendar
         value={new Date(vm.created_at)}
         selectionMode="single" 
         dateFormat="dd/mm/yy"
         onChange={(e) => vm.setCreated_at(e.value?.getTime() || 0)}
-        />
+        /> */}
         {/* items */}
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex justify-between">
-          <span>Nama Pemesan</span> 
-          <small className="text-red-700">** Wajib Diisi</small>
+            <span>Nama Pemesan</span>
+            <small className="text-red-700">** Wajib Diisi</small>
           </div>
           <div className="p-inputgroup flex-1">
             <span className="p-inputgroup-addon">
@@ -113,7 +110,6 @@ export default function Payment() {
               required={true}
             />
           </div>
-            
         </div>
 
         {/* items */}
@@ -190,7 +186,7 @@ export default function Payment() {
       </div>
       {/* order summary */}
       <div className="md:w-[500px] w-full flex flex-col gap-2 bottom-0 fixed border-[1px] rounded-md bg-white p-5 shadow-lg z-30">
-        <span className="font-bold text-center">Order Summary</span>
+        <span className="font-bold text-center">Ringkasan Pesanan</span>
         <div className="flex flex-row justify-between items-center">
           <span className="text-sm font-semibold text-neutral-500">
             Total + PPN

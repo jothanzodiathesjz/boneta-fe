@@ -183,13 +183,13 @@ export default function KitchenModal({ data, closeModal, handleProcess ,handleDe
                   data?.status === "menunggu") && (
                   <Button
                     label="Konfirmasi"
-                    onClick={() => handleProcess("process")}
+                    onClick={() => handleProcess("proses")}
                   />
                 )}
-                {data?.status === "process" && (
+                {data?.status === "proses" && (
                   <Button
                     label="Selesai"
-                    onClick={() => handleProcess("ditolak")}
+                    onClick={() => handleProcess("siap")}
                   />
                 )}
               </div>

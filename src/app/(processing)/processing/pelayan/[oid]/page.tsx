@@ -104,7 +104,7 @@ useEffect(() => {
           </span>
         </div>
 
-        {vm.data1.data?.data.status === "ditolak" && (
+        {vm.data1.data?.data.status === "siap" && (
           <Button
             loading={vm.submiting}
             disabled={vm.submiting}

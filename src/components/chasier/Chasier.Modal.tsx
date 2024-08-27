@@ -60,7 +60,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
       toast?.current?.show({
         severity: "warn",
         summary: "ditolak",
-        detail: "You have ditolak",
+        detail: "ditolak",
         life: 3000,
       });
     };
@@ -82,7 +82,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
           <Toast ref={toast} />
           <div className="w-full flex flex-col ">
             <div className="w-full flex flex-col gap-4 bg-white p-4 rounded-md shadow-md">
-              <span className="font-semibold">Informasi Pesanan </span>
+              <span className="font-semibold">Informasi Pesanan</span>
               <div className="flex flex-row w-full">
                 <span className="w-32 flex-shrink-0 ">ID Pesanan</span>
                 <span className="w-full  text-black">: {data?.order_id}</span>
@@ -100,7 +100,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                 </span>
               </div>
               <div className="flex flex-row w-full">
-                <span className="w-32 flex-shrink-0 ">No Telepon</span>
+                <span className="w-32 flex-shrink-0 ">Telepon</span>
                 <span className="w-full  text-black">
                   : {data?.customer.phone}
                 </span>
@@ -124,7 +124,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                 </span>
               </div>
               <div className="flex flex-row w-full">
-                <span className="w-32 flex-shrink-0 ">Meja</span>
+                <span className="w-32 flex-shrink-0 ">meja</span>
                 <span className="w-full  text-black">: {data?.table}</span>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
             <div className="w-full flex flex-col gap-3  border-neutral-80 bg-white p-2 rounded-md shadow-md">
               <span className="font-semibold">Ringkasan Pesanan</span>
               <div className="w-full flex flex-row justify-between">
-                <span>Jumlah</span>
+                <span>Kuantitas</span>
                 <span>{data?.quantity}</span>
               </div>
               <div className="w-full flex flex-row justify-between">
@@ -265,50 +265,61 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
                   </>
                 )}
 
-              {/* {
-                    data?.status === 'menunggu' && 
-                    data.payment_image && 
-                    data.delivery && 
-                    
-                    <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
-                        <span>Bukti Pembayaran</span>
-                        <Image 
-                        src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`} 
-                        alt="Image" width="250" 
-                        preview />
-                    </div>} */}
+              {/* {data?.status === "menunggu" &&
+                data.payment_image &&
+                data.delivery && (
+                  <div className="w-full flex flex-row justify-between border-b border-neutral-80 pb-4">
+                    <span>Bukti Pembayaran</span>
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}/${data?.payment_image}`}
+                      alt="Image"
+                      width="250"
+                      preview
+                    />
+                  </div>
+                )} */}
               {/* { <Button
                     label="Konfirmasi"
                     severity="success"
                     onClick={(e)=>(handleProcess(),setTotalBayar(0),setKembalian(0))}
                     className="w-full"
                     />} */}
-              {/* {data?.status === 'menunggu' && <Button
-                    label="Konfirmasi"
-                    severity="success"
-                    onClick={()=>(handleProcess("diterima"),setTotalBayar(0),setKembalian(0))}
-                    className="w-full"
-                    />}
-                    {data?.status === 'disajikan'  && <Button
-                    label="Selesai"
-                    severity="success"
-                    onClick={()=>(handleProcess('selesai'),setTotalBayar(0),setKembalian(0))}
-                    className="w-full"
-                    />}
-                   {data?.status === 'menunggu' && <Button
-                    label="Reject"
-                    severity="warning"
-                    onClick={hanldeReject}
-                    className="w-full"
-                    />} */}
-              <Button
+              {data?.status === "menunggu" && (
+                <Button
+                  label="Konfirmasi"
+                  severity="success"
+                  onClick={() => (
+                    handleProcess("diterima"), setTotalBayar(0), setKembalian(0)
+                  )}
+                  className="w-full"
+                />
+              )}
+              {data?.status === "disajikan" && (
+                <Button
+                  label="Selesai"
+                  severity="success"
+                  onClick={() => (
+                    handleProcess("selesai"), setTotalBayar(0), setKembalian(0)
+                  )}
+                  className="w-full"
+                />
+              )}
+              {data?.status === "menunggu" && (
+                <Button
+                  label="Tolak"
+                  severity="warning"
+                  onClick={hanldeReject}
+                  className="w-full"
+                />
+              )}
+              {/* <Button
                 label="selesaikan"
                 severity="success"
                 onClick={(e) => (
                   handleProcess("selesai"), setTotalBayar(0), setKembalian(0)
                 )}
                 className="w-full"
-              />
+              /> */}
             </div>
           </div>
         </div>
