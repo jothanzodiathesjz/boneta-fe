@@ -108,6 +108,7 @@ export default function OrderDetailModal({ data, closeModal }: OrderDetailModalT
                          <div className="w-full flex justify-between flex-row">
                             <span>PPN</span>
                             <span>10%</span>
+                            <span>{((data?.total_price || 0) * (10 / 100)).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                          </div>
                          <div className="w-full flex justify-between flex-row">
                             <span>Total Price</span>

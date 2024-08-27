@@ -258,7 +258,7 @@ const header = (
             },
           }}
           value={vm.data?.data?.orders.map((v)=>{
-            return {...v,total_price:(v.total_price * 1.1).toLocaleString("id-ID")}
+            return {...v,total_price:v.total_price}
           })} 
           header={header} 
           onRowSelect={onRowSelect}
@@ -281,7 +281,15 @@ const header = (
                         <span className="text-neutral-50">{vm.data?.data?.total_quantity}</span>
                     </div>
                     <div className="w-full flex ">
-                        <span className="w-44 flex-shrink-0">Total </span>
+                        <span className="w-44 flex-shrink-0">Total PPN</span>
+                        <span className="text-neutral-50">{((vm.data?.data?.total_price ?? 0) * 0.1).toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
+                    </div>
+                    <div className="w-full flex ">
+                        <span className="w-44 flex-shrink-0">Total Prices</span>
+                        <span className="text-neutral-50">{(vm.data?.data?.total_price ?? 0).toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
+                    </div>
+                    <div className="w-full flex ">
+                        <span className="w-44 flex-shrink-0">Totals </span>
                         <span className="text-neutral-50">{((vm.data?.data?.total_price ?? 0) * 1.1).toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
                     </div>
               </div>
