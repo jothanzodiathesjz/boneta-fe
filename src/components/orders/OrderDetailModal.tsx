@@ -48,7 +48,7 @@ export default function OrderDetailModal({ data, closeModal }: OrderDetailModalT
             pt={stylePt}
             className="h-screen bg-[#FAFAFD]"
             visible={data ? true : false}
-            header="Order Detail"
+            header="Detail Pesanan"
             position="bottom"
             onHide={closeModal}
         >
@@ -56,13 +56,13 @@ export default function OrderDetailModal({ data, closeModal }: OrderDetailModalT
             <div className="w-full flex  flex-row">
                 <div className="w-[40vw] shrink-0 flex flex-col ">
                     <div className="w-full flex flex-col gap-4  bg-white p-4 rounded-md shadow-md">
-                        <span className="font-semibold">Payment Information</span>
+                        <span className="font-semibold">Informasi Pembayaran</span>
                         <div className="flex flex-row w-full">
-                            <span className="w-32 shrink-0 ">OrderID</span>
+                            <span className="w-32 shrink-0 ">ID Pesanan</span>
                             <span className="w-full  text-black">: {data?.order_id}</span>
                         </div>
                         <div className="flex flex-row w-full">
-                            <span className="w-32 shrink-0 ">Payment Method</span>
+                            <span className="w-32 shrink-0 ">Metode Pembayaran</span>
                             <span className="w-full  text-black">: {data?.payment.name}</span>
                         </div>
                         <div className="flex flex-row w-full">
@@ -82,11 +82,11 @@ export default function OrderDetailModal({ data, closeModal }: OrderDetailModalT
                 </div>
                 <div className="w-full flex flex-col px-4">
                     <div className="w-full flex flex-col gap-3  border-neutral-80 bg-white p-2 rounded-md shadow-md">
-                        <span className="font-semibold">Order Item</span>
+                        <span className="font-semibold">Item Pesanan</span>
                         <div className="w-full flex flex-row items-center  border-b border-neutral-80 rounded-md p-3">
-                            <span className="w-44 flex-shrink-0 font-semibold">Name</span>
-                            <span className="w-32 flex-shrink-0 font-semibold">Price</span>
-                            <span className="w-28 flex-shrink-0 font-semibold text-center">Quantity</span>
+                            <span className="w-44 flex-shrink-0 font-semibold">Nama</span>
+                            <span className="w-32 flex-shrink-0 font-semibold">Harga</span>
+                            <span className="w-28 flex-shrink-0 font-semibold text-center">Jumlah</span>
                         </div>
                         <div className="w-full flex flex-col gap-3 overflow-auto h-[50vh]">
                         {data?.items.filter((item) => !item.deleted_at).map((item) => 
@@ -111,7 +111,7 @@ export default function OrderDetailModal({ data, closeModal }: OrderDetailModalT
                             <span>{((data?.total_price || 0) * (10 / 100)).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                          </div>
                          <div className="w-full flex justify-between flex-row">
-                            <span>Total Price</span>
+                            <span>Total Harga</span>
                             <span>{data?.total_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                          </div>
                        

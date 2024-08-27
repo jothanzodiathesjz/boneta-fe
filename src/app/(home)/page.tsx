@@ -142,19 +142,19 @@ export default function Home() {
         <TextInput
           icon="search"
           id="search"
-          label="Search"
+          label="Cari"
           debounce={300}
-          placeholder="Search"
+          placeholder="Cari"
           value={vm.search}
           onChange={(e) => vm.setSearch(e.target.value)}
         />
-        <span>Categories</span>
+        <span>Kategori</span>
         <div className="w-full flex flex-row gap-2 overflow-x-auto scrollbar-hide p-2">
           <SelectedButton
             onEvent={() => { vm.setAllMenu(true); vm.setSelectedButton(null); }}
             selected={vm.AllMenu}
           >
-            <span>All</span>
+            <span>Semua</span>
           </SelectedButton>
           {vm_category.data?.data.map((v) => (
             <SelectedButton

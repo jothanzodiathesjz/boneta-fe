@@ -115,7 +115,7 @@ const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
                 <span className="material-icons  text-neutral-500">
                   list_alt
                 </span>
-                <span className="text-neutral-500 font-semibold">Orders</span>
+                <span className="text-neutral-500 font-semibold">Pesanan</span>
               </button>
               {/* <button className="w-full flex items-center justify-start px-7 gap-4 border-[1px] shadow-lg p-3 rounded-md">
                 <span className="material-icons  text-neutral-500">
@@ -133,7 +133,7 @@ const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
                   <span className="material-icons text-neutral-500">
                     logout
                   </span>
-                  <span className="text-neutral-500 font-bold">Logout</span>
+                  <span className="text-neutral-500 font-bold">Keluar</span>
                 </button>
               )}
               {!token && (

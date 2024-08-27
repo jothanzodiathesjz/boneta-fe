@@ -318,7 +318,7 @@ useEffect(() => {
             pt={stylePt}
             className="h-screen bg-[#FAFAFD]"
             visible={visible}
-            header="User Form"
+            header="Formulir Pengguna"
             position="bottom"
             onHide={()=>(closeModal(),clearForm())}
         >
@@ -331,7 +331,7 @@ useEffect(() => {
                                 <div className='w-full flex flex-col gap-2'>
                                 <div className="w-full">
                                     <label htmlFor="username" className="block text-gray-700 font-bold mb-2">
-                                        Username
+                                        Nama Pengguna
                                     </label>
                                     <InputText
                                         id="username"
@@ -360,7 +360,7 @@ useEffect(() => {
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="firstName" className="block text-gray-700 font-bold mb-2">
-                                        First Name
+                                       Nama Depan
                                     </label>
                                     <InputText
                                         id="firstName"
@@ -374,7 +374,7 @@ useEffect(() => {
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="lastName" className="block text-gray-700 font-bold mb-2">
-                                        Last Name
+                                        Nama Belakang
                                     </label>
                                     <InputText
                                         id="lastName"
@@ -435,7 +435,7 @@ useEffect(() => {
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
-                                        Phone
+                                        No Telepon
                                     </label>
                                     <InputText
                                         id="phone"
@@ -452,7 +452,7 @@ useEffect(() => {
                                 </div>
                                 <div className="w-full">
                                     <label htmlFor="address" className="block text-gray-700 font-bold mb-2">
-                                        Address
+                                        Alamat
                                     </label>
                                     <InputTextarea
                                         id="address"
@@ -467,7 +467,7 @@ useEffect(() => {
                                 </div>
                                 
                                 <label htmlFor="" className="block text-gray-700 font-bold mb-2">
-                                        roles
+                                        Peran
                                     </label>
                                 <div className="card flex flex-row justify-content-center gap-3">
                                     {role_options.map((role,index) => 

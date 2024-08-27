@@ -112,17 +112,17 @@ useEffect(() => {
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                     {vm.tbd && (
                         <span>
-                            Are you sure you want to delete <b>{vm.tbd.name}</b>?
+                            Apakah Anda yakin ingin menghapus? <b>{vm.tbd.name}</b>?
                         </span>
                     )}
                 </div>
             </Dialog>
       <div className="flex flex-row gap-2 w-full">
         <div className="w-[40vw] flex-shrink-0 h-full p-3 gap-3 flex flex-col border-r border-neutral-60/30">
-          <span className="font-semibold text-lg mb-2">Form Tambah Menu</span>
+          <span className="font-semibold text-lg mb-2">Formulir Tambah Menu</span>
           <div className="grid grid-cols-2 gap-4">
             <div className="w-full flex flex-col gap-2">
-              <span className="text-neutral-600">Item Name</span>
+              <span className="text-neutral-600">Nama Item</span>
               <InputText 
               placeholder="Masukkan nama menu"
               value={vm.menuForm.name}
@@ -130,7 +130,7 @@ useEffect(() => {
               />
             </div>
             <div className="w-full flex flex-col gap-2">
-              <span className="text-neutral-600">Price</span>
+              <span className="text-neutral-600">Harga</span>
               <InputNumber 
               placeholder="Masukkan harga menu"
               value={vm.menuForm.price}
@@ -140,7 +140,7 @@ useEffect(() => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="w-full flex flex-col gap-2">
-              <span className="text-neutral-600">Category</span>
+              <span className="text-neutral-600">Kategori</span>
               <Dropdown 
               dataKey="uuid"
               value={vmCategory.selectedCategory} 
@@ -151,13 +151,13 @@ useEffect(() => {
                 />
             </div>
             <div className="w-full flex flex-col gap-2">
-            <span className="text-neutral-600">Availibilty</span>
+            <span className="text-neutral-600">Tersedia</span>
             <InputSwitch className="mt-3"   checked={vm.menuForm.availability} onChange={(e) =>vm.setMenuForm({...vm.menuForm,availability:e.value}) } />
           </div>
           </div>
           
           <div className="w-full flex flex-col gap-2">
-              <span className="text-neutral-600">Image</span>
+              <span className="text-neutral-600">Gambar</span>
               <FileUpload 
               id="image"
               mode="advanced"
@@ -170,7 +170,7 @@ useEffect(() => {
               onClear={() => vm.setFile(null)}
               onSelect={(e) => handleFileChange(e.files)}
               maxFileSize={1000000} 
-              emptyTemplate={<p className="m-0">Drag and drop files to here to upload.</p>} 
+              emptyTemplate={<p className="m-0">Unggah Gambar Di Sini</p>} 
               />
             </div>
             <div className="w-full flex flex-row justify-end gap-2">
@@ -208,28 +208,28 @@ useEffect(() => {
               headerClassName="bg-primary-surface"
               field="name"
               style={{ minWidth: "12rem" }}
-              header="Name"
+              header="Nama"
               sortable
             ></Column>
             <Column
               headerClassName="bg-primary-surface"
               field="category.name"
               className="w-full"
-              header="Name"
+              header="Nama"
               sortable
             ></Column>
             <Column
             headerClassName="bg-primary-surface"
               field="price"
               className="w-full"
-              header="Price"
+              header="Harga"
               sortable
             ></Column>
             <Column
             headerClassName="bg-primary-surface"
               field="availability"
               className="w-full"
-              header="Availability"
+              header="Tersedia "
               sortable
             ></Column>
             <Column
@@ -237,7 +237,7 @@ useEffect(() => {
               field="image"
               className="w-full"
               body={imageBodyTemplate}
-              header="Image"
+              header="Gambar"
               sortable
             ></Column>
             <Column headerClassName="bg-primary-surface" body={actionBodyTemplate} exportable={false}></Column>

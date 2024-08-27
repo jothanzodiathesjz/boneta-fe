@@ -85,14 +85,14 @@ export default function page() {
             >
               <Column
                 field="username"
-                header="Username"
+                header="Nama Pengguna"
                 headerClassName="bg-primary-surface py-2 px-4 font-normal "
                 sortable
               ></Column>
               <Column
                 field=""
                 body={bodyTambahan1}
-                header="Full Name"
+                header="Nama Lengkap"
                 headerClassName="bg-primary-surface py-2 px-4 font-normal"
                 sortable
               ></Column>
@@ -105,7 +105,7 @@ export default function page() {
               <Column
                 field=""
                 body={bodyTambahan2}
-                header="Roles"
+                header="Peran"
                 headerClassName="bg-primary-surface p-2 font-normal"
                 sortable
               ></Column>

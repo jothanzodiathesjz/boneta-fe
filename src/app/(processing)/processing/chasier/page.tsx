@@ -40,7 +40,10 @@ useEffect(()=>{
 
 
     return (
-      <main className="min-h-screen pt-20">
+      <main className="min-h-screen pt-20 flex flex-col">
+         <span className="font-medium text-lg text-dark text-center  w-full shadow-sm">
+        KASIR
+      </span>
         <div className="w-full h-full grid grid-cols-3">
           <div className="w-full flex flex-col h-[85vh] p-3 gap-3 border-r  border-neutral-60/30">
             <span>Daftar Pesanan</span>
@@ -60,7 +63,7 @@ useEffect(()=>{
             >
               <Column
                 field="order_id"
-                header="Order Id"
+                header="ID Pesanan"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
@@ -72,14 +75,14 @@ useEffect(()=>{
               ></Column>
               <Column
                 field="table"
-                header="Table"
+                header="Meja"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
               <Column
                 field="total_price"
                 body={bodyTambahan}
-                header="Total Price"
+                header="Total Harga"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
@@ -103,7 +106,7 @@ useEffect(()=>{
             >
               <Column
                 field="order_id"
-                header="Order Id"
+                header="ID Pesanan"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
@@ -115,13 +118,13 @@ useEffect(()=>{
               ></Column>
               <Column
                 field="table"
-                header="Table"
+                header="Meja"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
               <Column
                 body={bodyTambahan}
-                header="Total Price"
+                header="Total Harga"
                 headerClassName="bg-primary-surface"
                 sortable
               ></Column>
@@ -146,7 +149,7 @@ useEffect(()=>{
               >
                 <Column
                   field="order_id"
-                  header="Order Id"
+                  header="ID Pesanan"
                   headerClassName="bg-primary-surface"
                   sortable
                 ></Column>
@@ -158,13 +161,13 @@ useEffect(()=>{
                 ></Column>
                 <Column
                   field="table"
-                  header="Table"
+                  header="Meja"
                   headerClassName="bg-primary-surface"
                   sortable
                 ></Column>
                 <Column
                   body={bodyTambahan}
-                  header="Total Price"
+                  header="Total Harga"
                   headerClassName="bg-primary-surface"
                   sortable
                 ></Column>
@@ -188,7 +191,7 @@ useEffect(()=>{
               >
                 <Column
                   field="order_id"
-                  header="Order Id"
+                  header="ID Pesanan"
                   headerClassName="bg-primary-surface"
                   sortable
                 ></Column>
@@ -200,13 +203,13 @@ useEffect(()=>{
                 ></Column>
                 <Column
                   field="table"
-                  header="Table"
+                  header="Meja"
                   headerClassName="bg-primary-surface"
                   sortable
                 ></Column>
                 <Column
                   body={bodyTambahan}
-                  header="Total Price"
+                  header="Total Harga"
                   headerClassName="bg-primary-surface"
                   sortable
                 ></Column>

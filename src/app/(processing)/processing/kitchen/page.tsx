@@ -50,7 +50,7 @@ export default function page() {
 
   return (
     <main className="min-h-screen pt-20 flex flex-col">
-      <span className="font-medium text-lg text-dark  w-full shadow-sm">
+      <span className="font-medium text-lg text-dark text-center w-full shadow-sm">
         DAPUR
       </span>
       <div className="w-full h-full flex">
@@ -69,6 +69,7 @@ export default function page() {
               selection={vm.selectedOrder}
               onRowSelect={onRowSelect}
               selectionMode={"single"}
+              
             >
               <Column
                 field="order_id"

@@ -53,7 +53,7 @@ export default function Others() {
             <Toast ref={vm_category.toast} />
             <div className='w-full grid grid-cols-2 gap-4 h-full'>
                 <div className="w-full flex flex-col gap-2 p-5 border-r border-neutral-70 h-[80vh]">
-                    <span className='font-semibold'>Category</span>
+                    <span className='font-semibold'>Kategori</span>
                     <div className='w-full flex flex-row items-center justify-end'>
                     
                         <Button
@@ -67,7 +67,7 @@ export default function Others() {
                     </DataTable>
                 </div>
                 <div className="w-full flex flex-col gap-2 p-5">
-                    <span className='font-semibold'>Generate Qr Code</span>
+                    <span className='font-semibold'>Hasilkan Kode QR</span>
                     <div className='w-full flex flex-col gap-3'>
                         <span>Nama Meja</span>
                         <div className='w-full flex flex-row gap-4'>
@@ -118,13 +118,13 @@ export default function Others() {
             </div>
             <Dialog
                 draggable={false}
-                header="Form Category"
+                header="Formulir Kategory"
                 visible={vm_category.showCategoryForm}
                 onHide={() => vm_category.setShowCategoryForm(false)}
                 className='w-1/3'
             >
                 <div className='w-full flex flex-col gap-3'>
-                    <span>Category Name</span>
+                    <span>Nama Kategori </span>
                     <TextInput
                         id='name'
                         value={vm_category.categoryForm.name}

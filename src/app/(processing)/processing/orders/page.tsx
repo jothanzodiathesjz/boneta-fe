@@ -36,10 +36,10 @@ export default function page() {
   };
 
   const cols : ColumnMeta[]= [
-    { field: 'order_id', header: 'Order Id' },
+    { field: 'order_id', header: 'ID Pesanan' },
     { field: 'status', header: 'Status' },
-    { field: 'table', header: 'Table' },
-    { field: 'total_price', header: 'Total Price' }
+    { field: 'table', header: 'Meja' },
+    { field: 'total_price', header: 'Total Harga' }
 ];
 
 
@@ -271,9 +271,9 @@ const header = (
             </DataTable>
             <div className="w-[40vw] flex flex-col p-5 bg-white shadow-md">
               <div className="w-full flex flex-col gap-4">
-              <span className="font-medium">Order Summary</span>
+              <span className="font-medium">Ringkasan Pesanan</span>
                     <div className="w-full flex ">
-                        <span className="w-44 flex-shrink-0">Total Order</span>
+                        <span className="w-44 flex-shrink-0">Total Pesanan</span>
                         <span className="text-neutral-50">{vm.data?.data?.total_orders}</span>
                     </div>
                     <div className="w-full flex ">
@@ -285,11 +285,11 @@ const header = (
                         <span className="text-neutral-50">{((vm.data?.data?.total_price ?? 0) * 0.1).toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
                     </div>
                     <div className="w-full flex ">
-                        <span className="w-44 flex-shrink-0">Total Prices</span>
+                        <span className="w-44 flex-shrink-0">Total Harga</span>
                         <span className="text-neutral-50">{(vm.data?.data?.total_price ?? 0).toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
                     </div>
                     <div className="w-full flex ">
-                        <span className="w-44 flex-shrink-0">Totals </span>
+                        <span className="w-44 flex-shrink-0">Total </span>
                         <span className="text-neutral-50">{((vm.data?.data?.total_price ?? 0) * 1.1).toLocaleString("id-ID",{style:"currency",currency:"IDR"})}</span>
                     </div>
               </div>
