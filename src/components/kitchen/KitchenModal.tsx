@@ -59,7 +59,7 @@ export default function KitchenModal({ data, closeModal, handleProcess ,handleDe
       toast?.current?.show({
         severity: "warn",
         summary: "ditolak",
-        detail: "You have ditolak",
+        detail: "ditolak",
         life: 3000,
       });
     };

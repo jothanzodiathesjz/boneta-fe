@@ -49,8 +49,8 @@ export default function ChasierModal({ data, closeModal, handleProcess, hanldeRe
     const accept = () => {
       toast?.current?.show({
         severity: "info",
-        summary: "Confirmed",
-        detail: "You have diterima",
+        summary: "telah dikonfirmasi",
+        detail: "diterima",
         life: 3000,
       });
       handleDeleteItem(data?.uuid!, selectedUuid!);
