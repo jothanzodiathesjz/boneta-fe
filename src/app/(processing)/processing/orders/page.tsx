@@ -297,6 +297,7 @@ export default function page() {
                   if (user?.roles.includes("kitchen")) {
                     return v.field !== "total_price";
                   }
+                  return v;
                 })
                 .map((col, index) => (
                   <Column key={index} field={col.field} header={col.header} />
