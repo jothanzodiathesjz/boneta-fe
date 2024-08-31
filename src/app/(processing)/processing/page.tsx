@@ -25,7 +25,7 @@ export default function Chasier() {
       name: "Laporan Pesanan",
       path: "/processing/orders",
       icon: "list",
-      roles: ["admin", "pimpinan", "kasir"],
+      roles: ["admin", "pimpinan", "kasir", "kitchen"],
     },
     {
       name: "Pengguna",
