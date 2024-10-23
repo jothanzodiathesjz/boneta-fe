@@ -16,7 +16,7 @@ export const orders: Order[] = [
     quantity: 1,
     price: 1500,
     orderDate: "2024-06-01",
-    status: "Shipped"
+    status: "Shipped",
   },
   {
     orderId: 2,
@@ -25,7 +25,7 @@ export const orders: Order[] = [
     quantity: 2,
     price: 800,
     orderDate: "2024-06-02",
-    status: "Processing"
+    status: "Processing",
   },
   {
     orderId: 3,
@@ -34,7 +34,7 @@ export const orders: Order[] = [
     quantity: 3,
     price: 300,
     orderDate: "2024-06-03",
-    status: "Delivered"
+    status: "Delivered",
   },
   {
     orderId: 4,
@@ -43,7 +43,7 @@ export const orders: Order[] = [
     quantity: 2,
     price: 200,
     orderDate: "2024-06-04",
-    status: "Cancelled"
+    status: "Cancelled",
   },
   {
     orderId: 5,
@@ -52,7 +52,7 @@ export const orders: Order[] = [
     quantity: 4,
     price: 100,
     orderDate: "2024-06-05",
-    status: "Shipped"
+    status: "Shipped",
   },
   {
     orderId: 6,
@@ -61,7 +61,7 @@ export const orders: Order[] = [
     quantity: 1,
     price: 700,
     orderDate: "2024-06-06",
-    status: "Processing"
+    status: "Processing",
   },
   {
     orderId: 7,
@@ -70,7 +70,7 @@ export const orders: Order[] = [
     quantity: 2,
     price: 300,
     orderDate: "2024-06-07",
-    status: "Delivered"
+    status: "Delivered",
   },
   {
     orderId: 8,
@@ -79,7 +79,7 @@ export const orders: Order[] = [
     quantity: 3,
     price: 50,
     orderDate: "2024-06-08",
-    status: "Cancelled"
+    status: "Cancelled",
   },
   {
     orderId: 9,
@@ -88,7 +88,6 @@ export const orders: Order[] = [
     quantity: 5,
     price: 30,
     orderDate: "2024-06-09",
-    status: "Shipped"
-  }
+    status: "Shipped",
+  },
 ];
-  

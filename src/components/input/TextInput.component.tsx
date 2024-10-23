@@ -28,7 +28,10 @@ export default function TextInput({
     if (debounce) {
       const handler = setTimeout(() => {
         if (debouncedValue !== value) {
-          onChange && onChange({ target: { value: debouncedValue } } as React.ChangeEvent<HTMLInputElement>);
+          onChange &&
+            onChange({
+              target: { value: debouncedValue },
+            } as React.ChangeEvent<HTMLInputElement>);
         }
       }, debounce); // Use debounce delay
 
@@ -36,7 +39,10 @@ export default function TextInput({
         clearTimeout(handler);
       };
     } else {
-      onChange && onChange({ target: { value: debouncedValue } } as React.ChangeEvent<HTMLInputElement>);
+      onChange &&
+        onChange({
+          target: { value: debouncedValue },
+        } as React.ChangeEvent<HTMLInputElement>);
     }
   }, [debouncedValue, value, onChange, debounce]);
 
@@ -45,7 +51,13 @@ export default function TextInput({
   };
 
   return (
-    <div className={'flex flex-row bg-white items-center px-3 py-2 rounded-xl shadow-md' + (focused ? ' border-2 border-primary' : '') + (disabled ? '  bg-[#FAFAFA]' : '')}>
+    <div
+      className={
+        "flex flex-row bg-white items-center px-3 py-2 rounded-xl shadow-md" +
+        (focused ? " border-2 border-primary" : "") +
+        (disabled ? "  bg-[#FAFAFA]" : "")
+      }
+    >
       {icon && <span className="material-icons text-[#747272]">{icon}</span>}
       <input
         type={type}

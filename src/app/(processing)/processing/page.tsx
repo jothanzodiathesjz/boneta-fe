@@ -61,7 +61,7 @@ export default function Chasier() {
   const authStore = useAuthStore();
   const animationStore = useAnimationStore();
   const [user, setUser] = useState<DomainUserWithProfile | null>(
-    parseCookie(getCookie("user")!)
+    parseCookie(getCookie("user")!),
   );
   const router = useRouter();
   const handleRoute = (route: string, status: boolean) => {
@@ -82,7 +82,7 @@ export default function Chasier() {
       <div className="w-full flex flex-row justify-center md:justify-start flex-wrap gap-5 p-5">
         {route
           .filter((item) =>
-            item.roles.some((role) => user?.roles.includes(role))
+            item.roles.some((role) => user?.roles.includes(role)),
           )
           .map((item, index) => (
             <div

@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { useAnimationStore } from "@/store/AnimateStore";
 import { DomainStocks } from "@/domain/Stocks";
 import { Button } from "primereact/button";
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
-import { Toast } from 'primereact/toast';
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { Toast } from "primereact/toast";
 import { StocksViewModel } from "@/viewmodel/Stocks.vm";
 import StockModal from "@/components/stocks/StockModal";
 export default function page() {
@@ -15,10 +15,10 @@ export default function page() {
   const vm = StocksViewModel();
   const toast = useRef<Toast>(null);
   const onRowSelect = async (event: DataTableSelectEvent) => {
-       console.log(event.data)
-       vm.setStock(event.data)
-       vm.setIsOpen(true)
-       vm.setUpdating(true)
+    console.log(event.data);
+    vm.setStock(event.data);
+    vm.setIsOpen(true);
+    vm.setUpdating(true);
   };
   function convertToISOWithoutOffset(dateString: string) {
     const date = new Date(dateString);
@@ -41,9 +41,7 @@ export default function page() {
     return animationStore.setIsOpen(true);
   }, [animationStore.isOpen]);
 
-  useEffect(()=>{
-
-  },[vm.updating])
+  useEffect(() => {}, [vm.updating]);
 
   return (
     <main className="min-h-screen pt-20">
@@ -51,18 +49,18 @@ export default function page() {
       <ConfirmDialog />
       <div className="w-full h-full flex gap-4 px-5">
         <div className="w-full flex flex-col gap-3 bg-white rounded-sm ">
-            <div className="w-full flex justify-between items-center">
-                <span>Stocks</span>
-                <Button
-                size="small"
-                label="Add Stock"
-                onClick={()=>vm.setIsOpen(true)}
-                />
-            </div>
+          <div className="w-full flex justify-between items-center">
+            <span>Stocks</span>
+            <Button
+              size="small"
+              label="Add Stock"
+              onClick={() => vm.setIsOpen(true)}
+            />
+          </div>
           <div className="w-full flex flex-row  gap-3 border-r  border-neutral-60/30">
             <DataTable
-            key={"uuid"}
-            className="w-full"
+              key={"uuid"}
+              className="w-full"
               value={vm.data.data?.data ?? []}
               emptyMessage="No Orders found."
               scrollable
@@ -118,11 +116,11 @@ export default function page() {
         </div>
       </div>
       <StockModal
-      visible={vm.isOpen}
-      udpating={vm.updating}
-      submit={(e)=>vm.createStock(e)}
-      closeModal={() => (vm.setIsOpen(false),vm.setUpdating(false))}
-      data={vm.stock}
+        visible={vm.isOpen}
+        udpating={vm.updating}
+        submit={(e) => vm.createStock(e)}
+        closeModal={() => (vm.setIsOpen(false), vm.setUpdating(false))}
+        data={vm.stock}
       />
     </main>
   );

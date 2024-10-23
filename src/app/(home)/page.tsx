@@ -3,7 +3,13 @@ import { MainButton } from "@/components/button/MainButton.component";
 import { SelectedButton } from "@/components/button/SelectedButton";
 import { ProductCard } from "@/components/product/Card.product";
 import TextInput from "@/components/input/TextInput.component";
-import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import { CartPopup } from "@/components/CartPopup";
 import { CartResult } from "@/components/CartResult";
 import { CategoryViewModel } from "@/viewmodel/Category";
@@ -12,14 +18,17 @@ import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
 import { DomainOrderItem } from "@/domain/OrderItem";
 import { CartPopFinal } from "@/components/CartPopFinal";
-import { Toast } from 'primereact/toast';
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from "primereact/toast";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { getCookie } from "@/utils/cookies";
 import Image from "next/image";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 // const DynamicCartPopup = dynamic(() => import('@/components/CartPopup'));
-const DynamicCartPopFinal = dynamic(() => import('@/components/CartPopFinal').then((mod) => mod.CartPopFinal), { ssr: false });
+const DynamicCartPopFinal = dynamic(
+  () => import("@/components/CartPopFinal").then((mod) => mod.CartPopFinal),
+  { ssr: false },
+);
 
 export default function Home() {
   const vm_category = CategoryViewModel();
@@ -118,8 +127,8 @@ export default function Home() {
             stage: 1,
             status: "proses",
             uuid_item: generateRandomString(40),
-          })
-      ) || []
+          }),
+      ) || [],
     );
 
     if (vm.orderToCart.length > 0) {
@@ -138,7 +147,7 @@ export default function Home() {
     return vm.orderItemList.filter((v) =>
       v.category?.name
         .toLowerCase()
-        .includes(vm.selectedButton?.name.toLowerCase() ?? "")
+        .includes(vm.selectedButton?.name.toLowerCase() ?? ""),
     );
   }, [vm.orderItemList, vm.selectedButton]);
 
@@ -191,7 +200,14 @@ export default function Home() {
               key={k}
               className="w-full flex flex-col justify-center shadow-xl"
             >
-              <div className="w-full h-44 overflow-hidden mx-auto p-2">
+              <img
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${v.image!}`}
+                alt="lalapan"
+                width={200}
+                height={300}
+                className="rounded mx-auto"
+              />
+              {/* <div className="w-full h-44 overflow-hidden mx-auto p-2">
                 <Image
                   src={process.env.NEXT_PUBLIC_EXTERNAL_URL + v.image}
                   alt={v.name}
@@ -202,7 +218,7 @@ export default function Home() {
                   height={150}
                   className="object-cover object-center w-full h-full rounded-md"
                 />
-              </div>
+              </div> */}
               <div className="px-3 mt-2 flex flex-col py-3">
                 <span className="text-normal text-dark">{v.name}</span>
                 <span className="text-normal text-neutral-500 mt-2">

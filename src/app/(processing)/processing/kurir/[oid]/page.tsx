@@ -113,7 +113,7 @@ export default function page() {
           <span className="text-neutral-40">
             {((vm.data1?.data?.data.total_price || 0) * 1.1).toLocaleString(
               "id-ID",
-              { style: "currency", currency: "IDR" }
+              { style: "currency", currency: "IDR" },
             )}
           </span>
         </div>

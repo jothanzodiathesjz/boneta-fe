@@ -2,7 +2,7 @@
 import { DataTable, DataTableSelectEvent } from "primereact/datatable";
 import { useState } from "react";
 import { Column } from "primereact/column";
-import { useEffect,useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useAnimationStore } from "@/store/AnimateStore";
 import { OrderDashboardViewModel } from "@/viewmodel/OrderDashboard.vm";
 import { DomainOrder } from "@/domain/Orders";
@@ -13,7 +13,7 @@ import OrderDetailModal from "@/components/orders/OrderDetailModal";
 import { Button } from "primereact/button";
 import autoTable from "jspdf-autotable";
 import { RowInput } from "jspdf-autotable";
-import { Dialog } from 'primereact/dialog';
+import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { getCookie, parseCookie } from "@/utils/cookies";
 import { DomainUserWithProfile } from "@/domain/Users";
@@ -28,7 +28,7 @@ export default function page() {
   const [visible, setVisible] = useState(false);
   const [pengguna, setPengguna] = useState<string>("");
   const [user, setUser] = useState<DomainUserWithProfile | null>(
-    parseCookie(getCookie("user")!)
+    parseCookie(getCookie("user")!),
   );
   const dt = useRef<DataTable<any[]>>(null);
   interface ColumnMeta {
@@ -70,7 +70,7 @@ export default function page() {
 
         module.default.saveAs(
           data,
-          fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+          fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION,
         );
       }
     });
@@ -324,7 +324,7 @@ export default function page() {
                     <span className="text-neutral-50">
                       {((vm.data?.data?.total_price ?? 0) * 0.1).toLocaleString(
                         "id-ID",
-                        { style: "currency", currency: "IDR" }
+                        { style: "currency", currency: "IDR" },
                       )}
                     </span>
                   </div>
@@ -336,7 +336,7 @@ export default function page() {
                         {
                           style: "currency",
                           currency: "IDR",
-                        }
+                        },
                       )}
                     </span>
                   </div>
@@ -345,7 +345,7 @@ export default function page() {
                     <span className="text-neutral-50">
                       {((vm.data?.data?.total_price ?? 0) * 1.1).toLocaleString(
                         "id-ID",
-                        { style: "currency", currency: "IDR" }
+                        { style: "currency", currency: "IDR" },
                       )}
                     </span>
                   </div>

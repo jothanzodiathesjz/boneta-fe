@@ -54,7 +54,7 @@ export default function Page() {
           <span>
             Date:{" "}
             {UnixToDateString(
-              vm.data?.data.created_at ? vm.data?.data.created_at : 0
+              vm.data?.data.created_at ? vm.data?.data.created_at : 0,
             )}
           </span>
           <span className="text-danger-pressed">

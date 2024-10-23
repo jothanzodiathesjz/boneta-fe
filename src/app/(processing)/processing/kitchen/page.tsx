@@ -69,7 +69,6 @@ export default function page() {
               selection={vm.selectedOrder}
               onRowSelect={onRowSelect}
               selectionMode={"single"}
-              
             >
               <Column
                 field="order_id"

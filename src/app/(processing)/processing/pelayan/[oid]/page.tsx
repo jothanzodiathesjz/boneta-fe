@@ -1,24 +1,20 @@
-
-"use client"
-import React, { useEffect } from 'react';
-import { PelayanDetailViewModel } from '@/viewmodel/PelayanDetail.vm';
-import { useBackRouteStore } from '@/store/BackRouteStore';
-import { UnixToDateString } from '@/utils/date';
-import { useRouter } from 'next/navigation';
-import { Button } from 'primereact/button';
+"use client";
+import React, { useEffect } from "react";
+import { PelayanDetailViewModel } from "@/viewmodel/PelayanDetail.vm";
+import { useBackRouteStore } from "@/store/BackRouteStore";
+import { UnixToDateString } from "@/utils/date";
+import { useRouter } from "next/navigation";
+import { Button } from "primereact/button";
 export default function page() {
-    const vm = PelayanDetailViewModel()
-    const {route,setBackRoute} = useBackRouteStore((state) => state)
-    const router = useRouter();
+  const vm = PelayanDetailViewModel();
+  const { route, setBackRoute } = useBackRouteStore((state) => state);
+  const router = useRouter();
 
+  useEffect(() => {
+    vm.data1;
+  }, [vm.data1]);
 
-useEffect(() => {
-    vm.data1
-}, [vm.data1])
-
-useEffect(() => {
-
-  }, [vm.submiting])
+  useEffect(() => {}, [vm.submiting]);
 
   return (
     <div className="pt-20 flex flex-col  bg-off-white h-screen">
@@ -99,7 +95,7 @@ useEffect(() => {
           <span className="text-neutral-40">
             {((vm.data1?.data?.data.total_price || 0) * 1.1).toLocaleString(
               "id-ID",
-              { style: "currency", currency: "IDR" }
+              { style: "currency", currency: "IDR" },
             )}
           </span>
         </div>

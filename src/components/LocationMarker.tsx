@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Marker, Popup, useMapEvents } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
+import { useState, useEffect } from "react";
+import { Marker, Popup, useMapEvents } from "react-leaflet";
+import { LatLngExpression } from "leaflet";
 
 interface LocationMarkerProps {
   onLocationFound: (coords: LatLngExpression) => void;
@@ -21,7 +21,7 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({ onLocationFound }) => {
     locationerror(error) {
       console.error("Error getting location: ", error.message);
       alert(`Error getting location: ${error.message}`);
-    }
+    },
   });
 
   useEffect(() => {

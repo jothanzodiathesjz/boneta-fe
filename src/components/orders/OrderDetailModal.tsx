@@ -44,10 +44,10 @@ export default function OrderDetailModal({
   const [selectedUuid, setSelectedUuid] = useState<string | null>(null);
   const buttonEl = useRef(null);
   const getMaxNumber = Math.max(
-    ...(data?.items.map((item) => item.stage) ?? [0])
+    ...(data?.items.map((item) => item.stage) ?? [0]),
   );
   const [user, setUser] = useState<DomainUserWithProfile | null>(
-    parseCookie(getCookie("user")!)
+    parseCookie(getCookie("user")!),
   );
 
   return (
@@ -137,7 +137,7 @@ export default function OrderDetailModal({
                   <span>
                     {((data?.total_price || 0) * (10 / 100)).toLocaleString(
                       "id-ID",
-                      { style: "currency", currency: "IDR" }
+                      { style: "currency", currency: "IDR" },
                     )}
                   </span>
                 </div>

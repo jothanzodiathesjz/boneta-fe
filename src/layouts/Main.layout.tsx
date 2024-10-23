@@ -9,11 +9,8 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-        <div className="flex">
-          
-          <main className="flex-1 p-5">
-            {children}
-          </main>
-        </div>
+    <div className="flex">
+      <main className="flex-1 p-5">{children}</main>
+    </div>
   );
 }

@@ -30,11 +30,10 @@ const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
   const dataObject = jsonString && JSON.parse(jsonString);
 
   const logout = async () => {
-    await authStore.logOut()
+    await authStore.logOut();
     toogle(false);
-    router.push("/")
-  }
-
+    router.push("/");
+  };
 
   useEffect(() => {
     setVisible(isOpen);

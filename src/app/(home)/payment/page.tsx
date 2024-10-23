@@ -21,7 +21,7 @@ export default function Payment() {
     setCoords(newCoords);
     const { lat, lng } = newCoords as { lat: number; lng: number };
     vm.setMapUrl(
-      `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
+      `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
     );
     console.log("New coordinates:", vm.mapUrl);
   }, []);

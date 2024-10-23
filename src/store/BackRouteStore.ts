@@ -1,16 +1,16 @@
-import {create} from 'zustand'
+import { create } from "zustand";
 
 export type BackRouteStore = {
-    route:string;
-}
+  route: string;
+};
 
 export type BackRouteStoreActions = {
-    setBackRoute: (v: string) => void
-}
+  setBackRoute: (v: string) => void;
+};
 
-export const useBackRouteStore = create<BackRouteStore & BackRouteStoreActions>((set) => ({
-    route: '/processing',
-    setBackRoute: (v) => set({route: v})
-}))
-
-
+export const useBackRouteStore = create<BackRouteStore & BackRouteStoreActions>(
+  (set) => ({
+    route: "/processing",
+    setBackRoute: (v) => set({ route: v }),
+  }),
+);

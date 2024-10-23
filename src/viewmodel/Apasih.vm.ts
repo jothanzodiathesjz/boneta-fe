@@ -1,7 +1,3 @@
-import { DomainOrder,DomainOrderSummarry} from "@/domain/Orders"
+import { DomainOrder, DomainOrderSummarry } from "@/domain/Orders";
 
-
-
-export const apasihViewModel = ()=>{
-
-}
+export const apasihViewModel = () => {};
