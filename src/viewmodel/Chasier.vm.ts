@@ -65,7 +65,7 @@ const ChasierViewModel = () => {
 
   const handleProcess = async (e: string) => {
     try {
-      const response = await http.Put<DomainOrder>(`/api/order`, {
+      await http.Put<DomainOrder>(`/api/order`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${coockies}`,
@@ -85,7 +85,7 @@ const ChasierViewModel = () => {
 
   const handleReject = async () => {
     try {
-      const response = await http.Put<DomainOrder>(`/api/order`, {
+      await http.Put<DomainOrder>(`/api/order`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${coockies}`,
@@ -104,7 +104,7 @@ const ChasierViewModel = () => {
 
   const updateSeen = async (uuid: string) => {
     try {
-      const response = await http.Put<DomainOrder>(`/api/order-seen`, {
+      await http.Put<DomainOrder>(`/api/order-seen`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${coockies}`,
@@ -140,7 +140,7 @@ const ChasierViewModel = () => {
 
   const rejectPayment = async () => {
     try {
-      const response = await http.Put<DomainOrder>(
+      await http.Put<DomainOrder>(
         `/api/order/paymentditolak/${selectedOrder?.uuid}`,
         {
           headers: {

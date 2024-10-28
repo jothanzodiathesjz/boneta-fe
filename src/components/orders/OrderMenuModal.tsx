@@ -1,9 +1,5 @@
 import { Sidebar } from "primereact/sidebar";
-import { useState } from "react";
 import { DomainOrder } from "@/domain/Orders";
-import { InputNumber } from "primereact/inputnumber";
-import { Button } from "primereact/button";
-import { Image } from "primereact/image";
 
 type OrderMenuModalProps = {
   data: DomainOrder | null;
@@ -32,12 +28,7 @@ const stylePt = {
   },
 };
 
-export default function OrderMenuModal({
-  data,
-  closeModal,
-  handleProcess,
-  visible,
-}: OrderMenuModalProps) {
+export default function OrderMenuModal({ closeModal, visible }: OrderMenuModalProps) {
   return (
     <Sidebar
       pt={stylePt}

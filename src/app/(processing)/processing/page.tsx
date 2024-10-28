@@ -60,8 +60,8 @@ export default function Chasier() {
   ];
   const authStore = useAuthStore();
   const animationStore = useAnimationStore();
-  const [user, setUser] = useState<DomainUserWithProfile | null>(
-    parseCookie(getCookie("user")!),
+  const [user, _setUser] = useState<DomainUserWithProfile | null>(
+    parseCookie(getCookie("user")!)
   );
   const router = useRouter();
   const handleRoute = (route: string, status: boolean) => {

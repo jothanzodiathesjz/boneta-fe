@@ -39,7 +39,7 @@ export const CategoryViewModel = () => {
   };
   const handleCreateCategory = async () => {
     try {
-      const data = await http.Post<DomainCategory>("/api/create-category", {
+      await http.Post<DomainCategory>("/api/create-category", {
         body: JSON.stringify(categoryForm),
       });
       showSuccess();
@@ -62,29 +62,6 @@ export const CategoryViewModel = () => {
     }, 500);
   };
 
-  const diterima = async () => {
-    try {
-      if (!tbd) throw new Error("Data Tidak Valid");
-      const data = await http.Delete<DomainCategory>(
-        `/api/category/${tbd?.uuid}`,
-      );
-      toast.current?.show({
-        severity: "info",
-        summary: "Confirmed",
-        detail: `${tbd?.name} has been deleted`,
-        life: 3000,
-      });
-    } catch (error) {
-      toast.current?.show({
-        severity: "warn",
-        summary: "Error",
-        detail: "Terjadi Kesalahan",
-        life: 3000,
-      });
-    }
-    setSelectedCategory(null);
-    mutate();
-  };
 
   const reject = () => {
     toast.current?.show({
@@ -99,7 +76,7 @@ export const CategoryViewModel = () => {
     const accept = async () => {
       try {
         if (!tbd) throw new Error("Data Tidak Valid");
-        const data = await http.Delete<DomainCategory>(
+        await http.Delete<DomainCategory>(
           `/api/category/${tbd?.uuid}`,
         );
         toast.current?.show({

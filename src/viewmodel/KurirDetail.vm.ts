@@ -2,7 +2,7 @@ import { HttpClient } from "@/services/httpClient";
 import { DomainOrder } from "@/domain/Orders";
 import { getCookie } from "@/utils/cookies";
 import { useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 const cockies = getCookie("accessToken");
 
 const http = new HttpClient();
@@ -28,7 +28,7 @@ export const kurirDetailViewModel = () => {
   const handleProcess = async (uuid: string, status: string) => {
     setSubmiting(true);
     try {
-      const response = await http.Put<DomainOrder>(`/api/order`, {
+      await http.Put<DomainOrder>(`/api/order`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${cockies}`,

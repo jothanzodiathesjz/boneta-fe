@@ -4,9 +4,8 @@ import { useRef, useState } from "react";
 import { Column } from "primereact/column";
 import { useEffect } from "react";
 import { useAnimationStore } from "@/store/AnimateStore";
-import { DomainStocks } from "@/domain/Stocks";
 import { Button } from "primereact/button";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { UsersViewModel } from "@/viewmodel/User.vm";
 import { DomainUserWithProfile } from "@/domain/Users";
@@ -15,7 +14,7 @@ export default function page() {
   const animationStore = useAnimationStore();
   const vm = UsersViewModel();
   const toast = useRef<Toast>(null);
-  const [uuid, setUuid] = useState("");
+  const [uuid, _] = useState("");
   const onRowSelect = async (event: DataTableSelectEvent) => {
     console.log(event.data);
     vm.setSelectedUser(event.data);

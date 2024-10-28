@@ -39,7 +39,7 @@ export const OrderDetailViewModel = () => {
   const handleUploadImage = async () => {
     setLoading(true);
     try {
-      const data = await http.PostWithFile<DomainOrder>(
+      await http.PostWithFile<DomainOrder>(
         `/api/payment-wimg/${guest}/${oid}`,
         selectedFile!,
       );

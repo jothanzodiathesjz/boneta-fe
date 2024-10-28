@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import DashboardHeader from "@/layouts/Dashboard.header";
 import { usePathname } from "next/navigation";
 import { useAnimationStore } from "@/store/AnimateStore";
@@ -12,15 +12,8 @@ const slideRightVariants = {
   // posisi saat keluar di sebelah kanan dan tidak terlihat
 };
 export default function Template({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(true);
   const animationStore = useAnimationStore();
-  const handleOpen = () => {
-    console.log("handle open");
-  };
   const pathName = usePathname();
-  const handleClose = (v: boolean) => {
-    setIsOpen(v);
-  };
   useEffect(() => {
     animationStore.setIsOpen(true);
     console.log("from store", animationStore.isOpen);
@@ -37,7 +30,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
             exit="exit"
             variants={slideRightVariants}
             transition={{ duration: 0.5 }}
-            className=""
           >
             {/* <div className="sticky top-0 bg-blend-overlay  h-screen bg-black/15">
           </div> */}

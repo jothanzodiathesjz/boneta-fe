@@ -1,6 +1,5 @@
 import {
   OrderItemResult,
-  DomainOrderSummary,
   paymentMethods,
   PaymentMethodType,
 } from "@/domain/OrderItem";
@@ -10,7 +9,6 @@ import { HttpClient } from "@/services/httpClient";
 import { useState } from "react";
 import { generateRandomString } from "@/utils/randomstring";
 import { useRouter } from "next/navigation";
-import { getCookie } from "@/utils/cookies";
 import { DomainUserWithProfile } from "@/domain/Users";
 import { parseCookies } from "nookies";
 
@@ -27,7 +25,7 @@ export const PaymentViewModel = () => {
     ? new DomainUserWithProfile(JSON.parse(cookies.user))
     : null;
   // const orderSummary = JSON.parse(localStorage.getItem('orderSummary') || '')
-  const [guest, setGuest] = useState<string>(guested);
+  const [guest, _setGuest] = useState<string>(guested);
   const [orderItem, setOrderItem] = useState<OrderItemResult>(order);
   const [fullName, setFullName] = useState(user?.profile?.firstName || "");
   const [email, setEmail] = useState("");

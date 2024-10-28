@@ -13,7 +13,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
 import { DropdownChangeEvent } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import { InputNumber, InputNumberChangeEvent } from "primereact/inputnumber";
+import { InputNumber } from "primereact/inputnumber";
 
 type StockModalType = {
   data: DomainStocks | null;
@@ -45,13 +45,7 @@ const stylePt = {
   },
 };
 
-export default function StockModal({
-  data,
-  closeModal,
-  visible,
-  submit,
-  udpating,
-}: StockModalType) {
+export default function StockModal({ data, closeModal, visible, submit }: StockModalType) {
   const toast = useRef<Toast>(null);
   const [formData, setFormData] = useState<DomainStocks>({
     name: "",
@@ -101,7 +95,7 @@ export default function StockModal({
   };
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
 

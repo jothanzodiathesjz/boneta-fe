@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 export default function TextInput({
-  label,
   id,
   type = "text",
   value,

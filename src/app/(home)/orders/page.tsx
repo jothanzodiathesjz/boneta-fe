@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { DateTimeToDateString, UnixToDateString } from "@/utils/date";
+import { UnixToDateString } from "@/utils/date";
 
 import OrdersViewModel from "@/viewmodel/Orders";
 
@@ -9,10 +9,6 @@ export default function Orders() {
   const vm = OrdersViewModel();
   const router = useRouter();
 
-  function unixToDatestring(unix: number) {
-    const date = new Date(unix);
-    return date.toLocaleDateString();
-  }
 
   useEffect(() => {}, [vm.data]);
 

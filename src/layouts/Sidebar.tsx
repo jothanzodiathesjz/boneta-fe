@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar as PSidebar } from "primereact/sidebar";
-import { getCookie, deleteCookie } from "@/utils/cookies";
+import { getCookie } from "@/utils/cookies";
 import { useAuthStore } from "@/store/AuthStore";
 type SidebarProps = {
   toogle: (v: boolean) => void;
@@ -10,19 +10,10 @@ type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ toogle, isOpen }) => {
-  const sidebarRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const authStore = useAuthStore();
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = React.useState(false);
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      sidebarRef.current &&
-      !sidebarRef.current.contains(event.target as Node)
-    ) {
-      toogle(false);
-    }
-  };
+  const [_visible, setVisible] = React.useState(false);
 
   const token = getCookie("accessToken");
   const user = getCookie("user");

@@ -3,7 +3,7 @@ import { Nullable } from "primereact/ts-helpers";
 import { HttpClient } from "@/services/httpClient";
 import { DomainOrder, DomainOrderSummarry } from "@/domain/Orders";
 import { getCookie } from "@/utils/cookies";
-import { UnixToDateString, UnixToDateStringReverse } from "@/utils/date";
+import { UnixToDateStringReverse } from "@/utils/date";
 const coockies = getCookie("accessToken");
 const http = new HttpClient();
 export const OrderDashboardViewModel = () => {

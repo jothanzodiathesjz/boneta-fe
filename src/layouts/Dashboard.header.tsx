@@ -5,9 +5,8 @@ import { DomainUserWithProfile } from "@/domain/Users";
 import { useAuthStore } from "@/store/AuthStore";
 import { useState, useEffect } from "react";
 import { getCookie, parseCookie } from "@/utils/cookies";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
-import { deleteCookie } from "@/utils/cookies";
-export default function DashboardHeader({ toogle }: any) {
+import { destroyCookie } from "nookies";
+export default function DashboardHeader() {
   const { route } = useBackRouteStore((state) => state);
   const authStore = useAuthStore();
   const router = useRouter();

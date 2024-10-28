@@ -10,18 +10,15 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { CartPopup } from "@/components/CartPopup";
 import { CartResult } from "@/components/CartResult";
 import { CategoryViewModel } from "@/viewmodel/Category";
 import { generateRandomString } from "@/utils/randomstring";
 import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
 import { DomainOrderItem } from "@/domain/OrderItem";
-import { CartPopFinal } from "@/components/CartPopFinal";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { getCookie } from "@/utils/cookies";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 
 // const DynamicCartPopup = dynamic(() => import('@/components/CartPopup'));

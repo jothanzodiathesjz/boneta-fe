@@ -1,12 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import { kurirDetailViewModel } from "@/viewmodel/KurirDetail.vm";
-import { useBackRouteStore } from "@/store/BackRouteStore";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 export default function page() {
   const vm = kurirDetailViewModel();
-  const { route, setBackRoute } = useBackRouteStore((state) => state);
   const router = useRouter();
 
   useEffect(() => {
@@ -113,7 +111,7 @@ export default function page() {
           <span className="text-neutral-40">
             {((vm.data1?.data?.data.total_price || 0) * 1.1).toLocaleString(
               "id-ID",
-              { style: "currency", currency: "IDR" },
+              { style: "currency", currency: "IDR" }
             )}
           </span>
         </div>

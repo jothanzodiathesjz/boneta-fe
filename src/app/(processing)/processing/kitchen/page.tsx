@@ -1,7 +1,6 @@
 "use client";
 import { DataTable, DataTableSelectEvent } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { orders, Order } from "@/data/order";
 import { useEffect } from "react";
 KitchenModal;
 import { useAnimationStore } from "@/store/AnimateStore";

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { DomainUserWithProfile } from "@/domain/Users";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { setCookie, destroyCookie } from "nookies";
 import { deleteCookie } from "@/utils/cookies";
 
 export type AuthStore = {

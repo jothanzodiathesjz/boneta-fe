@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Loader from "@/components/Loader";
 import FileUpload from "@/components/input/FileUpload";
 import { OrderDetailViewModel } from "@/viewmodel/OrderDetail.vm";
@@ -12,7 +12,6 @@ import Image from "next/image";
 export default function Page() {
   const router = useRouter();
   const vm = OrderDetailViewModel();
-  const contentRef = useRef(null);
   useEffect(() => {
     console.log(vm.data);
   }, [vm.data]);
@@ -54,7 +53,7 @@ export default function Page() {
           <span>
             Date:{" "}
             {UnixToDateString(
-              vm.data?.data.created_at ? vm.data?.data.created_at : 0,
+              vm.data?.data.created_at ? vm.data?.data.created_at : 0
             )}
           </span>
           <span className="text-danger-pressed">

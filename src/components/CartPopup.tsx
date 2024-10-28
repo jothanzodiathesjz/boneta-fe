@@ -16,7 +16,6 @@ export const CartPopup: React.FC<CartPopupProps> = ({
   onVisibleChange,
   data,
   onUpdateData,
-  onSubmit,
 }) => {
   const [localData, setLocalData] = useState(data);
 

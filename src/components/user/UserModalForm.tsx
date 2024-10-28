@@ -10,14 +10,8 @@ import { Sidebar } from "primereact/sidebar";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import { InputNumber } from "primereact/inputnumber";
-import {
-  DomainProfile,
-  DomainUser,
-  DomainUserWithProfile,
-} from "@/domain/Users";
+import { DomainProfile, DomainUserWithProfile } from "@/domain/Users";
 import { DomainAuth } from "@/domain/Auth";
 import { Checkbox } from "primereact/checkbox";
 import { CheckboxChangeEvent } from "primereact/checkbox";
@@ -131,7 +125,7 @@ export default function UserModalForm({
   };
 
   const handleProfileChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setProfile((prevState) => ({
@@ -151,41 +145,6 @@ export default function UserModalForm({
       }));
     }
   };
-
-  const handleNumberChange = (name: string, value: number) => {
-    setProfile((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-
-    if (value <= 0) {
-      setErrors((prevState) => ({
-        ...prevState,
-        [name]: `${name} must be greater than 0`,
-      }));
-    } else {
-      setErrors((prevState) => ({
-        ...prevState,
-        [name]: "",
-      }));
-    }
-  };
-
-  // const handleFullNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //     setFullName(e.target.value);
-
-  //     if (e.target.value.trim() === '') {
-  //         setErrors((prevState) => ({
-  //             ...prevState,
-  //             fullName: 'Full Name is required',
-  //         }));
-  //     } else {
-  //         setErrors((prevState) => ({
-  //             ...prevState,
-  //             fullName: '',
-  //         }));
-  //     }
-  // };
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -293,19 +252,11 @@ export default function UserModalForm({
     }
 
     if (valid) {
-      const userData = {
-        auth,
-        profile,
-        fullName,
-        email,
-        phone,
-      };
       vm.createUser(auth, profile, fullName, roles, email, phone);
       closeModal();
       submit();
     }
   };
-  const phoneRegex = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
   useEffect(() => {
     if (updating && selected) {
       setAuth({

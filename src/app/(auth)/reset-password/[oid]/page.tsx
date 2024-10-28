@@ -23,12 +23,12 @@ export default function page() {
     }
     setLoading(true);
     try {
-      const response = await http.Post<any>("/api/reset-password", {
-        body: JSON.stringify({
-          password,
-          token: oid,
-        }),
-      });
+     await http.Post<any>("/api/reset-password", {
+       body: JSON.stringify({
+         password,
+         token: oid,
+       }),
+     });
       if (toast.current) {
         toast.current.show({
           severity: "success",

@@ -1,15 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useBackRouteStore } from "@/store/BackRouteStore";
 import { UnixToDateString } from "@/utils/date";
 import { useRouter } from "next/navigation";
-import { Button } from "primereact/button";
 import { TabMenu } from "primereact/tabmenu";
 import { KurirIndexViewModel } from "@/viewmodel/KurirIndex.vm";
 export default function page() {
   const vm = KurirIndexViewModel();
-  const { route, setBackRoute } = useBackRouteStore((state) => state);
   const router = useRouter();
   const [activeIndex, setActiveIndex] = useState(0);
   const items = [

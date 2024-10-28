@@ -33,21 +33,11 @@ const stylePt = {
   },
 };
 
-export default function OrderDetailModal({
-  data,
-  closeModal,
-}: OrderDetailModalType) {
-  const [visibleBottom, setVisibleBottom] = useState(true);
-  const [totalBayar, setTotalBayar] = useState(0);
-  const [kembalian, setKembalian] = useState(0);
+export default function OrderDetailModal({ data, closeModal }: OrderDetailModalType) {
   const toast = useRef<Toast>(null);
-  const [selectedUuid, setSelectedUuid] = useState<string | null>(null);
-  const buttonEl = useRef(null);
-  const getMaxNumber = Math.max(
-    ...(data?.items.map((item) => item.stage) ?? [0]),
-  );
-  const [user, setUser] = useState<DomainUserWithProfile | null>(
-    parseCookie(getCookie("user")!),
+
+  const [user, _setUser] = useState<DomainUserWithProfile | null>(
+    parseCookie(getCookie("user")!)
   );
 
   return (
@@ -137,7 +127,7 @@ export default function OrderDetailModal({
                   <span>
                     {((data?.total_price || 0) * (10 / 100)).toLocaleString(
                       "id-ID",
-                      { style: "currency", currency: "IDR" },
+                      { style: "currency", currency: "IDR" }
                     )}
                   </span>
                 </div>

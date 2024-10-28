@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useAnimationStore } from "@/store/AnimateStore";
 import { DomainStocks } from "@/domain/Stocks";
 import { Button } from "primereact/button";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { ConfirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { StocksViewModel } from "@/viewmodel/Stocks.vm";
 import StockModal from "@/components/stocks/StockModal";

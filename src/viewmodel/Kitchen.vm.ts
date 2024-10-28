@@ -9,7 +9,7 @@ const coockies = getCookie("accessToken");
 const http = new HttpClient();
 const kitchenViewModel = () => {
   const [selectedOrder, setSelectedOrder] = useState<DomainOrder | null>(null);
-  const [dates, setDates] = useState<Nullable<(Date | null)[]>>([
+  const [dates, _setDates] = useState<Nullable<(Date | null)[]>>([
     new Date(),
     new Date(),
   ]);
@@ -70,7 +70,7 @@ const kitchenViewModel = () => {
 
   const handleProcess = async (status: string) => {
     try {
-      const response = await http.Put<DomainOrder>(`/api/order`, {
+      await http.Put<DomainOrder>(`/api/order`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${coockies}`,
@@ -91,7 +91,7 @@ const kitchenViewModel = () => {
 
   const updateSeen = async (uuid: string) => {
     try {
-      const response = await http.Put<DomainOrder>(`/api/order-seen`, {
+      await http.Put<DomainOrder>(`/api/order-seen`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${coockies}`,

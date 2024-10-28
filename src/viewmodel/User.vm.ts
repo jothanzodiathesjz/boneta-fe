@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { HttpClient } from "@/services/httpClient";
-import { DomainStocks } from "@/domain/Stocks";
 import { getCookie } from "@/utils/cookies";
 import { Toast } from "primereact/toast";
 import { confirmDialog } from "primereact/confirmdialog";
@@ -40,7 +39,7 @@ export const UsersViewModel = () => {
   const deleteUser = async (d: DomainUserWithProfile) => {
     const accept = async () => {
       try {
-        const response = await http.Delete<DomainUserWithProfile>(
+        await http.Delete<DomainUserWithProfile>(
           `/api/user/${d.uuid}`,
           {
             headers: {
@@ -86,7 +85,6 @@ export const UsersViewModel = () => {
     });
   };
 
-  const confirm2 = () => {};
   return {
     data,
     auth,

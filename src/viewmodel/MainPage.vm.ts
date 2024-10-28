@@ -144,7 +144,7 @@ export const MainPageViewModel = () => {
           };
         }) ?? [];
       console.log(dataCart);
-      const data = await http.Put<DomainOrder>(
+      await http.Put<DomainOrder>(
         `/api/order-with-adjustment/${oid}`,
         {
           body: JSON.stringify({

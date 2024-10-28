@@ -4,7 +4,6 @@ import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
-import { InputNumber } from "primereact/inputnumber";
 import { useRouter } from "next/navigation";
 import { HttpClient } from "@/services/httpClient";
 import { DomainUser } from "@/domain/Users";

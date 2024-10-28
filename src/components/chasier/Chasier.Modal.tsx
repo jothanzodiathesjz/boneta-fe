@@ -4,9 +4,8 @@ import { DomainOrder } from "@/domain/Orders";
 import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
-import { Menu } from "primereact/menu";
 import { Toast } from "primereact/toast";
-import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
+import { ConfirmPopup } from "primereact/confirmpopup";
 
 type ChasierModalProps = {
   data: DomainOrder | null;
@@ -47,7 +46,6 @@ export default function ChasierModal({
   handleDeleteItem,
   handleRejectPayment,
 }: ChasierModalProps) {
-  const [visibleBottom, setVisibleBottom] = useState(true);
   const [totalBayar, setTotalBayar] = useState(0);
   const [kembalian, setKembalian] = useState(0);
   const toast = useRef<Toast>(null);
@@ -73,7 +71,7 @@ export default function ChasierModal({
   };
 
   const getMaxNumber = Math.max(
-    ...(data?.items.map((item) => item.stage) ?? [0]),
+    ...(data?.items.map((item) => item.stage) ?? [0])
   );
 
   return (
@@ -214,7 +212,7 @@ export default function ChasierModal({
               <span>
                 {((data?.total_price ?? 0) * (10 / 100)).toLocaleString(
                   "id-ID",
-                  { style: "currency", currency: "IDR" },
+                  { style: "currency", currency: "IDR" }
                 )}
               </span>
             </div>

@@ -7,6 +7,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/**/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/primereact/**/*.{js,ts,jsx,tsx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/layouts/**/*.{js,ts,jsx,tsx,mdx}",
   ],

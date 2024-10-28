@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputNumber } from "primereact/inputnumber";
 import MenuViewModel from "@/viewmodel/Menu.vm";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { FileUpload } from "primereact/fileupload";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { CategoryViewModel } from "@/viewmodel/Category";

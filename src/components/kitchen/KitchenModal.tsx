@@ -1,11 +1,9 @@
 import { Sidebar } from "primereact/sidebar";
 import { useState, useRef } from "react";
 import { DomainOrder } from "@/domain/Orders";
-import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
-import { Image } from "primereact/image";
 import { Toast } from "primereact/toast";
-import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
+import { ConfirmPopup } from "primereact/confirmpopup";
 
 type KitchenModalProps = {
   data: DomainOrder | null;
@@ -42,14 +40,11 @@ export default function KitchenModal({
   handleProcess,
   handleDeleteItem,
 }: KitchenModalProps) {
-  const [visibleBottom, setVisibleBottom] = useState(true);
-  const [totalBayar, setTotalBayar] = useState(0);
-  const [kembalian, setKembalian] = useState(0);
   const toast = useRef<Toast>(null);
   const [selectedUuid, setSelectedUuid] = useState<string | null>(null);
   const buttonEl = useRef(null);
   const getMaxNumber = Math.max(
-    ...(data?.items.map((item) => item.stage) ?? [0]),
+    ...(data?.items.map((item) => item.stage) ?? [0])
   );
 
   const accept = () => {
@@ -171,7 +166,7 @@ export default function KitchenModal({
                 <span>
                   {((data?.total_price || 0) * (10 / 100)).toLocaleString(
                     "id-ID",
-                    { style: "currency", currency: "IDR" },
+                    { style: "currency", currency: "IDR" }
                   )}
                 </span>
               </div>

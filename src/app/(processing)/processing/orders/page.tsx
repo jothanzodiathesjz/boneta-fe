@@ -5,10 +5,8 @@ import { Column } from "primereact/column";
 import { useEffect, useRef } from "react";
 import { useAnimationStore } from "@/store/AnimateStore";
 import { OrderDashboardViewModel } from "@/viewmodel/OrderDashboard.vm";
-import { DomainOrder } from "@/domain/Orders";
 import { Calendar } from "primereact/calendar";
 import { Nullable } from "primereact/ts-helpers";
-import { UnixToDateStringReverse } from "@/utils/date";
 import OrderDetailModal from "@/components/orders/OrderDetailModal";
 import { Button } from "primereact/button";
 import autoTable from "jspdf-autotable";
@@ -24,11 +22,10 @@ export default function page() {
     new Date(),
     new Date(),
   ]);
-  const [date, setDate] = useState<Nullable<Date | null>>(null);
   const [visible, setVisible] = useState(false);
   const [pengguna, setPengguna] = useState<string>("");
-  const [user, setUser] = useState<DomainUserWithProfile | null>(
-    parseCookie(getCookie("user")!),
+  const [user, _] = useState<DomainUserWithProfile | null>(
+    parseCookie(getCookie("user")!)
   );
   const dt = useRef<DataTable<any[]>>(null);
   interface ColumnMeta {
@@ -54,27 +51,6 @@ export default function page() {
     title: col.header,
     dataKey: col.field,
   }));
-  const exportCSV = (selectionOnly: any) => {
-    dt.current?.exportCSV({ selectionOnly });
-  };
-
-  const saveAsExcelFile = (buffer: any, fileName: any) => {
-    import("file-saver").then((module) => {
-      if (module && module.default) {
-        let EXCEL_TYPE =
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-        let EXCEL_EXTENSION = ".xlsx";
-        const data = new Blob([buffer], {
-          type: EXCEL_TYPE,
-        });
-
-        module.default.saveAs(
-          data,
-          fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION,
-        );
-      }
-    });
-  };
 
   const exportPdf = (nama: string) => {
     const newData = vm.data?.data.orders.flatMap((v): RowInput[] => {
@@ -177,27 +153,6 @@ export default function page() {
     });
   };
 
-  const exportExcel = () => {
-    const newData = vm.data?.data.orders.map((v) => {
-      return {
-        order_id: v.order_id,
-        status: v.status,
-        table: v.table,
-        total_price: v.total_price,
-      };
-    });
-    import("xlsx").then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(newData ?? []);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
-      const excelBuffer = xlsx.write(workbook, {
-        bookType: "xlsx",
-        type: "array",
-      });
-
-      saveAsExcelFile(excelBuffer, vm.date);
-    });
-  };
-
   const header = (
     <div className="flex align-items-center justify-content-end gap-2">
       {/* <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" /> */}
@@ -222,15 +177,6 @@ export default function page() {
     const date = new Date(dateString);
     return date.toISOString().split("T")[0];
   }
-  const bodyTambahan = (rowData: DomainOrder) => {
-    return (
-      <div className="flex flex-row gap-3">
-        <span className="w-full">
-          {rowData.total_price.toLocaleString("id-ID")}
-        </span>
-      </div>
-    );
-  };
   useEffect(() => {
     console.log(convertToISOWithoutOffset("2024/07/29"));
     return animationStore.setIsOpen(true);
@@ -324,7 +270,7 @@ export default function page() {
                     <span className="text-neutral-50">
                       {((vm.data?.data?.total_price ?? 0) * 0.1).toLocaleString(
                         "id-ID",
-                        { style: "currency", currency: "IDR" },
+                        { style: "currency", currency: "IDR" }
                       )}
                     </span>
                   </div>
@@ -336,7 +282,7 @@ export default function page() {
                         {
                           style: "currency",
                           currency: "IDR",
-                        },
+                        }
                       )}
                     </span>
                   </div>
@@ -345,7 +291,7 @@ export default function page() {
                     <span className="text-neutral-50">
                       {((vm.data?.data?.total_price ?? 0) * 1.1).toLocaleString(
                         "id-ID",
-                        { style: "currency", currency: "IDR" },
+                        { style: "currency", currency: "IDR" }
                       )}
                     </span>
                   </div>

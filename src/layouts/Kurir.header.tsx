@@ -1,7 +1,7 @@
 import { useBackRouteStore } from "@/store/BackRouteStore";
 import { useRouter } from "next/navigation";
 
-export default function DashboardHeader({ toogle }: any) {
+export default function DashboardHeader() {
   const { route } = useBackRouteStore((state) => state);
   const router = useRouter();
   return (

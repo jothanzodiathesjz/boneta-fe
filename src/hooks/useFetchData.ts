@@ -1,5 +1,4 @@
 import useSWR, { Fetcher } from "swr";
-import { HttpClient } from "@/services/httpClient";
 import { Response } from "@/domain/DomainHttp";
 
 export function useFetchData<T>(endpoint: string) {

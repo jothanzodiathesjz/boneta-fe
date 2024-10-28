@@ -4,30 +4,19 @@ import { SelectedButton } from "@/components/button/SelectedButton";
 import { ProductCard } from "@/components/product/Card.product";
 import TextInput from "@/components/input/TextInput.component";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { CartPopup } from "@/components/CartPopup";
 import { CartResult } from "@/components/CartResult";
 import { CategoryViewModel } from "@/viewmodel/Category";
 import { generateRandomString } from "@/utils/randomstring";
-import { useRouteAnimation } from "@/utils/handleroute";
 import { MainPageViewModel } from "@/viewmodel/MainPage.vm";
-import { DomainOrderItem, OrderItemResult } from "@/domain/OrderItem";
+import { DomainOrderItem } from "@/domain/OrderItem";
 import { CartPopFinal } from "@/components/CartPopFinal";
 import Loader from "@/components/Loader";
 
 export default function Home() {
   const vm_category = CategoryViewModel();
-  const routeAnimation = useRouteAnimation();
   const [cartVisible, setCartVisible] = useState(false);
 
   const vm = MainPageViewModel();
-
-  function handleProsesOrder() {
-    localStorage.setItem("order", JSON.stringify(vm.cartResult));
-    routeAnimation.handleRoute("/payment");
-  }
-
-  const order = localStorage.getItem("order");
 
   useEffect(() => {
     if (vm.isLoading) {
@@ -52,8 +41,8 @@ export default function Home() {
             stage: 1,
             status: "proses",
             uuid_item: generateRandomString(40),
-          }),
-      ) || [],
+          })
+      ) || []
     );
     if (vm.orderToCart.length > 0) {
       vm.setCartResult({

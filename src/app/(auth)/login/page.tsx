@@ -2,8 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { AuthViewModel, auth } from "@/viewmodel/Auth.vm";
-import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { AuthViewModel } from "@/viewmodel/Auth.vm";
+import { setCookie } from "nookies";
 import { Messages } from "primereact/messages";
 import { useAuthStore } from "@/store/AuthStore";
 import { useRouter } from "next/navigation";
@@ -28,7 +28,6 @@ export default function Login() {
       });
       await auth.fetchUser(response.data);
     } catch (error) {
-      const errormsg = (error as Error).message;
       if (msgs.current) {
         msgs.current.clear();
         msgs.current.show({

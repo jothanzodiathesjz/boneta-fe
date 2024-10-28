@@ -5,11 +5,9 @@ import {
   Marker,
   Popup,
   useMapEvents,
-  Tooltip,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
-import { Button } from "primereact/button";
 
 // Set default icon for Leaflet
 L.Icon.Default.mergeOptions({

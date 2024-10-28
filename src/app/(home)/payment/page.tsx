@@ -1,27 +1,22 @@
 "use client";
 import { Button } from "primereact/button";
 import { SelectedButton } from "@/components/button/SelectedButton";
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import dynamic from "next/dynamic";
+import React, { useEffect, useState, useCallback } from "react";
 import { InputText } from "primereact/inputtext";
 import { useRouter } from "next/navigation";
-import { useCountStore } from "@/store/TriggerStore";
 import { PaymentViewModel } from "@/viewmodel/Payment.vm";
 import { LatLngExpression } from "leaflet";
 import Loader from "@/components/Loader";
-const MapComponent = dynamic(() => import("@/components/Map"), { ssr: true });
 export default function Payment() {
-  const store = useCountStore();
-
   const router = useRouter();
   const vm = PaymentViewModel();
-  const [coords, setCoords] = useState<LatLngExpression | null>(null);
+  const [_coords, setCoords] = useState<LatLngExpression | null>(null);
 
   const handleCoordsChange = useCallback((newCoords: LatLngExpression) => {
     setCoords(newCoords);
     const { lat, lng } = newCoords as { lat: number; lng: number };
     vm.setMapUrl(
-      `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
+      `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`
     );
     console.log("New coordinates:", vm.mapUrl);
   }, []);
@@ -180,7 +175,6 @@ export default function Payment() {
         {vm.table === undefined && (
           <div className="w-full flex flex-col gap-3">
             <span>Pilih Lokasi Anda</span>
-            <MapComponent onCoordsChange={handleCoordsChange} />
           </div>
         )}
       </div>

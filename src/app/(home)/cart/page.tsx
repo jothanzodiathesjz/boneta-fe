@@ -3,17 +3,12 @@ import React, { useEffect, useState } from "react";
 import { QuantityInput } from "@/components/input/Quantity.input";
 import { Button } from "primereact/button";
 import { useRouter } from "next/navigation";
-import { useAnimationStore } from "@/store/AnimateStore";
 import { useCountStore } from "@/store/TriggerStore";
 
 export default function OrderPage() {
-  const [contentTiger, setContentTiger] = useState(false);
+  const [_, setContentTiger] = useState(false);
   const store = useCountStore();
-  const animationStore = useAnimationStore();
   const router = useRouter();
-  function handleRouter() {
-    router.push("/payment");
-  }
 
   useEffect(() => {
     console.log(store.count);

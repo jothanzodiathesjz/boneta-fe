@@ -43,7 +43,7 @@ export const StocksViewModel = () => {
   const createStock = async (d: DomainStocks) => {
     try {
       if (updating) {
-        const response = await http.Put<DomainStocks>(`/api/stock/${d.uuid}`, {
+        await http.Put<DomainStocks>(`/api/stock/${d.uuid}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${coockies}`,
@@ -55,7 +55,7 @@ export const StocksViewModel = () => {
           ),
         });
       } else {
-        const response = await http.Post<DomainStocks>("/api/stock", {
+        await http.Post<DomainStocks>("/api/stock", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${coockies}`,
@@ -78,7 +78,7 @@ export const StocksViewModel = () => {
   const deleteStock = async (d: DomainStocks) => {
     const accept = async () => {
       try {
-        const response = await http.Delete<DomainStocks>(
+        await http.Delete<DomainStocks>(
           `/api/stock/${d.uuid}`,
           {
             headers: {
@@ -124,7 +124,6 @@ export const StocksViewModel = () => {
     });
   };
 
-  const confirm2 = () => {};
   return {
     createStock,
     setIsOpen,

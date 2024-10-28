@@ -6,10 +6,7 @@ interface QuantityInputProps {
   onAdd?: () => void;
 }
 
-export const QuantityInput: React.FC<QuantityInputProps> = ({
-  initialValue = 0,
-  onAdd,
-}) => {
+export const QuantityInput: React.FC<QuantityInputProps> = ({ initialValue = 0 }) => {
   const [value, setValue] = useState<number>(initialValue);
 
   const increment = () => {
